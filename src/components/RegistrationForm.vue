@@ -58,16 +58,17 @@
 
 <script lang="ts">
 
-import { defineComponent, ref, reactive, type Ref, computed } from 'vue';
+import { defineComponent, ref, reactive, computed } from 'vue';
+import type { Ref } from 'vue';
 import { useVuelidate } from '@vuelidate/core';
 import { required, minLength, helpers, sameAs } from '@vuelidate/validators';
 
 import { setJwtToken, setUserId } from '@/utils/jwt';
 import { registration } from '@/api/auth';
+import { RegistrationFormFields } from '@/types/auth';
 
 import TextField from './ui-components/TextField.vue';
 
-type FormFields = 'login' | 'name' | 'password' | 'confirmPassword';
 type FormMode = 'inputLogin' | 'inputPassword';
 
 export default defineComponent({
@@ -85,7 +86,7 @@ export default defineComponent({
 
         let mode: Ref<FormMode> = ref('inputLogin');
 
-        const changeField = (field: FormFields, value: string) => {
+        const changeField = (field: RegistrationFormFields, value: string) => {
             switch(field) {
                 case 'login':
                     formData.login = value;

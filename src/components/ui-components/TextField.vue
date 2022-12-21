@@ -21,7 +21,7 @@
 <script lang="ts">
 
 import { defineComponent, computed } from 'vue';
-import { type BaseValidation } from '@vuelidate/core';
+import type { BaseValidation } from '@vuelidate/core';
 
 const haveErrorMessage = (rule: BaseValidation) => {
     return Object.keys(rule).length && rule.$errors.length

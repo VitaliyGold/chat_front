@@ -1,7 +1,11 @@
-interface RegistrationData {
+
+interface LoginData {
     login: string,
-    name: string,
     password: string
+}
+
+interface RegistrationData extends LoginData {
+   name: string
 }
 
 
@@ -10,8 +14,15 @@ interface AutorizationData {
     user_id: string
 }
 
+type LoginFormFields = 'login' | 'password';
+
+type RegistrationFormFields = LoginFormFields | 'name' | 'confirmPassword';
+
 
 export {
+    LoginData,
     RegistrationData,
-    AutorizationData
+    AutorizationData,
+    RegistrationFormFields,
+    LoginFormFields
 }

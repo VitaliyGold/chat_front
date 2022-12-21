@@ -4,14 +4,14 @@
             labelText="Логин"
             v-model="login"
             :validationRule="v$.login"
-            @update:modelValue="login = $event"
+            @update:modelValue="(value) => changeField('login', value)"
             
         />
         <text-field-component
             labelText="Пароль"
             v-model="password"
             :validationRule="v$.password"
-            @update:modelValue="password = $event"
+            @update:modelValue="(value) => changeField('password', value)"
             
         />
         
@@ -34,10 +34,13 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import TextField from './ui-components/TextField.vue';
 import { useVuelidate } from '@vuelidate/core';
 import { required, minLength, helpers } from '@vuelidate/validators';
-import type { Ref } from 'vue'
+
+import { LoginFormFields } from '@/types/auth';
+import { login } from '@/api/auth';
+
+import TextField from './ui-components/TextField.vue';
 
 const rules = {
     login: {
@@ -46,7 +49,7 @@ const rules = {
     },
     password: {
         required: helpers.withMessage('Поле не может быть пустым', required),
-        minLength: helpers.withMessage('Минимальная длина 5 символов', minLength(5)),
+        minLength: helpers.withMessage('Минимальная длина 3 символов', minLength(3)),
 
     }
 };
@@ -60,34 +63,36 @@ export default defineComponent({
         const password = ref('');
 
         const v$ = useVuelidate(rules, { login, password });
+
+        const changeField = (field: LoginFormFields, value: string) => {
+            switch(field) {
+                case 'login':
+                    login.value = value;
+                    break;
+                case 'password':
+                    password.value = value;
+                    break;
+            }
+        };
+
         return {
             login,
             password,
-            v$
+            v$,
+            changeField
         }
-    },
-    computed: {
-        getLoginError(): string | Ref<string> {
-            if (this.v$.login.$errors.length) {
-                return this.v$.login.$errors[0].$message
-            }
-            return ''
-        },
-        getPasswordError(): string | Ref<string> {
-            if (this.v$.password.$errors.length) {
-                return this.v$.password.$errors[0].$message
-            }
-            return ''
-        },
+
+        
     },
     methods: {
-        loginSubmit() {
+        async loginSubmit() {
             this.v$.$touch();
             if (this.v$.$error) {
-                console.log('есть ошибки')
-                return
+                return;
             }
-            console.log('ошибок нет')
+            const data = await login({ login: this.login, password: this.password })
+            console.log(data)
+            
         }
     }
     
