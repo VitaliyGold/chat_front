@@ -1,9 +1,5 @@
 <template>
-    <p>
-        Это главная страница
-        <router-link to="/registration">registration</router-link>
-        <router-link to="/login">login</router-link>
-    </p>
+    <loader-component/>
 </template>
 
 <script lang="ts">
@@ -12,6 +8,8 @@ import { defineComponent, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router'
 
 import { setJwtToken, setUserId } from '@/utils/jwt';
+
+import Loader from '@/components/ui-components/Loader.vue';
 
 export default defineComponent({
   name: 'MainPage',
@@ -23,6 +21,9 @@ export default defineComponent({
       console.log(route);
       console.log(router);
     })
+  },
+  components: {
+    'loader-component': Loader
   }
 
 })
