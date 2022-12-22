@@ -5,6 +5,6 @@ export function registration(registrationData: RegistrationData): Promise<Autori
     return axiosInstance.post('auth/registration', registrationData);
 }
 
-export function login(loginData: LoginData) {
+export function login(loginData: LoginData): Promise<AutorizationData> {
     return axiosInstance.post('auth/login', loginData);
 }

@@ -8,10 +8,22 @@
 
 <script lang="ts">
 
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router'
+
+import { setJwtToken, setUserId } from '@/utils/jwt';
 
 export default defineComponent({
-  name: 'MainPage'
+  name: 'MainPage',
+  setup() {
+    const route = useRoute()
+    const router = useRouter()
+
+    onMounted(() => {
+      console.log(route);
+      console.log(router);
+    })
+  }
 
 })
 

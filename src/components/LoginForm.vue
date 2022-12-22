@@ -39,6 +39,7 @@ import { required, minLength, helpers } from '@vuelidate/validators';
 
 import { LoginFormFields } from '@/types/auth';
 import { login } from '@/api/auth';
+import { setJwtToken, setUserId } from '@/utils/jwt';
 
 import TextField from './ui-components/TextField.vue';
 
@@ -89,9 +90,19 @@ export default defineComponent({
             this.v$.$touch();
             if (this.v$.$error) {
                 return;
+            };
+            const formData = { 
+                login: this.login, 
+                password: this.password 
+            };
+
+            try {
+                const { token, user_id } = await login(formData);
+                setJwtToken(token);
+                setUserId(user_id);
+            } catch(e) {
+                console.log(e);
             }
-            const data = await login({ login: this.login, password: this.password })
-            console.log(data)
             
         }
     }
