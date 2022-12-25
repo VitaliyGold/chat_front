@@ -164,9 +164,9 @@ export default defineComponent({
             }
 
             try {
-                const { user_id, token } = await registration(this.formData);
-                setJwtToken(token);
-                setUserId(user_id);
+                const { data } = await registration(this.formData);
+                setJwtToken(data.token);
+                setUserId(data.user_id);
             } catch(e) {
                 console.log(e);
             }

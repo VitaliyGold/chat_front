@@ -36,6 +36,7 @@
 import { defineComponent, ref } from 'vue';
 import { useVuelidate } from '@vuelidate/core';
 import { required, minLength, helpers } from '@vuelidate/validators';
+import { useRoute, useRouter } from 'vue-router';
 
 import { LoginFormFields } from '@/types/auth';
 import { login } from '@/api/auth';
@@ -60,6 +61,9 @@ export default defineComponent({
         'text-field-component': TextField
     },
     setup(_, context) {
+
+        const router = useRouter();
+
         const login = ref('');
         const password = ref('');
 
@@ -80,6 +84,7 @@ export default defineComponent({
             login,
             password,
             v$,
+            router,
             changeField
         }
 
@@ -97,9 +102,11 @@ export default defineComponent({
             };
 
             try {
-                const { token, user_id } = await login(formData);
-                setJwtToken(token);
-                setUserId(user_id);
+                const { data } = await login(formData);
+                console.log(data.token)
+                setJwtToken(data.token);
+                setUserId(data.user_id);
+                this.router.push('/')
             } catch(e) {
                 console.log(e);
             }

@@ -14,15 +14,11 @@
 </template>
 
 <script lang="ts">
-import SvgIcon from './SvgIcon.vue';
 
 import { defineComponent } from 'vue'
 
 export default defineComponent({
     name: 'Loader',
-    components: {
-        'svg-icon-component': SvgIcon
-    },
     setup() {
         
     },
