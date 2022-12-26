@@ -2,9 +2,9 @@
     <loader-component
       v-if="loading"
     />
-    <p v-else>
-      Данные в наличии
-    </p>
+    <main-display-component
+      v-else
+    />
 </template>
 
 <script lang="ts">
@@ -16,6 +16,7 @@ import { setJwtToken, setUserId } from '@/utils/jwt';
 import { getChats } from '@/api/chats';
 
 import Loader from '@/components/ui-components/Loader.vue';
+import MainDisplay from '@/components/MainDisplay.vue';
 
 export default defineComponent({
   name: 'MainPage',
@@ -23,7 +24,7 @@ export default defineComponent({
     const router = useRouter();
 
     let loading = ref(true);
-
+    /*
     onMounted(async () => {
 
       try {
@@ -34,19 +35,17 @@ export default defineComponent({
       } catch(e) {
         router.push('login')
       }
-      
-
-      
-      //console.log(route);
-      //console.log(router);
     })
+    */
+    loading.value = false;
 
     return {
       loading
     }
   },
   components: {
-    'loader-component': Loader
+    'loader-component': Loader,
+    'main-display-component': MainDisplay
   }
 
 })
