@@ -23,5 +23,6 @@ export default defineComponent({
     .action_display {
         background-color: red;
         height: 85vh;
+        width: 95%;
     }
 </style>
