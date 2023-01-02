@@ -26,7 +26,7 @@
     padding: 6px 8px;
     border: none;
     border-radius: 5px;
-    &.chat_btn {
+    &.action-panel-btn {
         width: 50px;
         height: 50px;
         display: flex;
@@ -47,6 +47,18 @@
             }
         }
     }
+    &.single-icon {
+        background: transparent;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        &:hover {
+            background-color: gray;
+            .material-design-icon__svg {
+                color: white;
+            }
+        }
+    }
 }
 
 .link {
@@ -59,11 +71,26 @@
 .material-design-icon {
     display: flex;
     justify-content: center;
+    align-items: center;
+    
 }
 
-.material-design-icon__svg {
-    font-size: 18px;
+.icon-3x {
+    &.material-design-icon {
+        width: 3em;
+        height: 3em;
+    }
+    &.material-design-icon > .material-design-icon__svg {
+        width: 2em;
+        height: 2em;
+    }
 }
+
+.material-design-icon > .material-design-icon__svg {
+    bottom: 0;
+    position: relative;
+}
+
 
 
 .btn-container {

@@ -1,11 +1,20 @@
 <template>
     <div class="action_display">
-        <window-component/>
+        <template
+            v-for="window of getWindowsList"
+            :key="window.window_id"
+        >
+            <window-component
+                :window="window"
+                v-if="window.hide"
+            />
+        </template>
     </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, computed } from 'vue';
 
+import useWindows from '@/store/windows';
 import Window from './Window.vue';
 
 export default defineComponent({
@@ -14,7 +23,13 @@ export default defineComponent({
         'window-component': Window
     },
     setup() {
-        
+        const store = useWindows();
+
+        const getWindowsList = computed(() => store.getWindowsList)
+
+        return {
+            getWindowsList 
+        }
     },
 })
 </script>
@@ -24,5 +39,7 @@ export default defineComponent({
         background-color: red;
         height: 85vh;
         width: 95%;
+        padding: 10px;
+        display: flex;
     }
 </style>

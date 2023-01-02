@@ -1,6 +1,6 @@
 <template>
     <div class="chat_window">
-    
+        Чатик
     </div>
 </template>
 

@@ -1,22 +1,45 @@
 <template>
     <div class="window">
-        <control-window-panel/>
-        <chat-main-component/>
+        <control-window-panel
+            :window_id="window.window_id"
+            :window_name="window.name"
+        />
+        <settings-window-component
+            v-if="window.type === 'settings'"
+            
+        />
+        <invite-window-component
+            v-else-if="window.type === 'invite'"
+        />
+        <chat-window-component
+            v-else-if="window.type === 'chat'"
+        />
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import ChatMain from './chats/ChatMain.vue';
+import { defineComponent, PropType } from 'vue';
+import ChatWindow from './chats/ChatWindow.vue';
 import ControlWindowPanel from '@/components/ControlWindowPanel.vue';
+import { Window } from '@/types/window';
+import SettingsWindow from '@/components/settings/SettingsWindow.vue';
+import InviteWindow from './invite/InviteWindow.vue';
 
 export default defineComponent({
+    props: {
+        window: {
+            type: Object as PropType<Window>,
+            required: true
+        }
+    },
     setup() {
         
     },
     components: {
-        'chat-main-component': ChatMain,
-        'control-window-panel': ControlWindowPanel
+        'chat-window-component': ChatWindow,
+        'settings-window-component': SettingsWindow,
+        'control-window-panel': ControlWindowPanel,
+        'invite-window-component': InviteWindow
     }
 })
 </script>
@@ -28,5 +51,9 @@ export default defineComponent({
         height: 100%;
         background-color: white;
         border-radius: 7px;
+    }
+
+    .window + .window {
+        margin-left: 10px;
     }
 </style>
