@@ -10,6 +10,7 @@
     </button>
     <menu-component
         v-if="opened_menu"
+        @openWindow="changeStateMenu"
     />
 </template>
 
@@ -31,7 +32,6 @@ export default defineComponent({
             };
             opened_menu.value = true;
         }
-
 
         return {
             opened_menu,

@@ -26,3 +26,14 @@ export function getChatWindow(chat_id: string): Window {
         name: 'Чат'
     }
 }
+
+export function debounce(fn: any, delay: number) {
+    let timeoutID: ReturnType<typeof setTimeout>;
+    return function(...args: any) {
+        if(timeoutID)
+          clearTimeout(timeoutID);
+        timeoutID = setTimeout(() => {
+          fn(...args)
+        }, delay);
+    }
+ }

@@ -12,7 +12,10 @@
                 :class="{ 'error': haveError }"
             >
         </div>
-        <span class="validation_message" v-if="haveError && errorMessageText">
+        <span 
+            class="validation_message" 
+            v-if="haveError && errorMessageText"
+        >
             {{ errorMessageText }}
         </span>
     </div>

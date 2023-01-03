@@ -3,7 +3,7 @@
         <li>
             <button
                 class="btn single-icon"
-                @click="openSettingsWindow('invite')"
+                @click="openWindow('invite')"
             >
                 <invite-icon-component
                     :size="36"
@@ -14,7 +14,7 @@
         <li>
             <button
                 class="btn single-icon"
-                @click="openSettingsWindow('settings')"
+                @click="openWindow('settings')"
             >
                 <settings-icon-component
                     :size="36"
@@ -37,16 +37,16 @@ export default defineComponent({
         'invite-icon-component': InviteIcon,
         'settings-icon-component': SettingsIcon
     },
-    setup() {
+    setup(_, { emit }) {
         const store = useWindows();
 
-        const openSettingsWindow = (type: 'invite' | 'settings') => {
+        const openWindow = (type: 'invite' | 'settings') => {
             store.addWindow(type)
-            $emit('openSettingsWindow')
+            emit('openWindow')
         }
 
         return {
-            openSettingsWindow
+            openWindow
         }
     }
 })
