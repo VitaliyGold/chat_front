@@ -24,20 +24,16 @@ export default defineComponent({
     const router = useRouter();
 
     let loading = ref(true);
-    /*
     onMounted(async () => {
-
       try {
         const chatsData = await getChats();
         console.log(chatsData);
-
-        loading.value = false;
       } catch(e) {
         router.push('login')
+      } finally {
+        loading.value = false;
       }
     })
-    */
-    loading.value = false;
 
     return {
       loading

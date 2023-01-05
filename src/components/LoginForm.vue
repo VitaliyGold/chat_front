@@ -36,7 +36,7 @@
 import { defineComponent, ref } from 'vue';
 import { useVuelidate } from '@vuelidate/core';
 import { required, minLength, helpers } from '@vuelidate/validators';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 import { LoginFormFields } from '@/types/auth';
 import { login } from '@/api/auth';
@@ -106,7 +106,7 @@ export default defineComponent({
                 console.log(data.token)
                 setJwtToken(data.token);
                 setUserId(data.user_id);
-                this.router.push('/')
+                this.router.push('/');
             } catch(e) {
                 console.log(e);
             }

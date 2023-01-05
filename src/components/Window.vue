@@ -51,6 +51,7 @@ export default defineComponent({
         height: 100%;
         background-color: white;
         border-radius: 7px;
+        overflow: auto;
     }
 
     .window + .window {

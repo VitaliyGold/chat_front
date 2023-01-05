@@ -1,5 +1,6 @@
 export interface User {
     name: string,
-    id: string,
-    have_chat: boolean
+    user_id: string,
+    have_chat: boolean,
+    chat_id: null | string
 }

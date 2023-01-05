@@ -62,6 +62,7 @@ import { defineComponent, ref, reactive, computed } from 'vue';
 import type { Ref } from 'vue';
 import { useVuelidate } from '@vuelidate/core';
 import { required, minLength, helpers, sameAs } from '@vuelidate/validators';
+import { useRouter } from 'vue-router';
 
 import { setJwtToken, setUserId } from '@/utils/jwt';
 import { registration } from '@/api/auth';
@@ -76,6 +77,8 @@ export default defineComponent({
         'text-field-component': TextField
     },
     setup(_, context) {
+
+        const router = useRouter();
         const formData = reactive({
             login: '',
             name: '',
@@ -148,6 +151,7 @@ export default defineComponent({
             mode,
             changeField,
             changeMode,
+            router,
             v$
         }
     },
@@ -155,7 +159,6 @@ export default defineComponent({
         async submit() {
             this.v$.$touch();
             if (this.v$.$error) {
-                console.log(this.v$);
                 return
             }
             if (this.mode === 'inputLogin') {
@@ -167,11 +170,12 @@ export default defineComponent({
                 const { data } = await registration(this.formData);
                 setJwtToken(data.token);
                 setUserId(data.user_id);
+
             } catch(e) {
                 console.log(e);
             }
             
-            
+            this.router.push('/');
            
         }
     }

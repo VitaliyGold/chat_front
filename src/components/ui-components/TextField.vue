@@ -1,7 +1,7 @@
 <template>
-    <div class="input_wrapper">
+    <div class="input-wrapper">
         <div 
-            class="input_wrapper__inner"
+            class="input-wrapper__inner"
         >
             <label>
                 {{ labelText }}
@@ -13,7 +13,7 @@
             >
         </div>
         <span 
-            class="validation_message" 
+            class="validation-message" 
             v-if="haveError && errorMessageText"
         >
             {{ errorMessageText }}
@@ -96,7 +96,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
-.input_wrapper {
+.input-wrapper {
    
     width: 100%;
     label {
@@ -115,7 +115,7 @@ export default defineComponent({
             border: 1px solid var(--error-color);
         }
     }
-    .validation_message {
+    .validation-message {
         font-size: 10px;
         display: block;
         color: var(--error-color);
