@@ -1,4 +1,9 @@
-import { Window, InviteWindow, SettingsWindow } from "@/types/window"
+import { 
+    ChatWindow, 
+    InviteWindow, 
+    SettingsWindow, 
+    ChatWindowConfig 
+} from "@/types/window"
 
 export function getSettingsWindow(): SettingsWindow {
     return {
@@ -18,11 +23,13 @@ export function getInviteWindow(): InviteWindow {
     }
 }
 
-export function getChatWindow(chat_id: string): Window {
+export function getChatWindow({ chat_id = '', is_new_chat, user_id = '' } : ChatWindowConfig): ChatWindow {
     return {
         hide: true,
         type: 'chat',
         window_id: chat_id,
+        is_new_chat,
+        user_id,
         name: 'Чат'
     }
 }

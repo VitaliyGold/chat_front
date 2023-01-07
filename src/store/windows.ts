@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { Window, WindowsList, WindowsTypes } from "@/types/window";
+import { WindowsList, WindowsTypes, ChatWindowConfig } from "@/types/window";
 import { getChatWindow, getInviteWindow, getSettingsWindow } from "@/utils/helpers";
 
 const useWindows = defineStore('windows', {
@@ -7,11 +7,11 @@ const useWindows = defineStore('windows', {
         windows_list: {} as WindowsList
     }),
     actions: {
-        addWindow(type: WindowsTypes, chat_id: string | null = null) {
-            console.log(type)
+        addWindow(type: WindowsTypes, config: ChatWindowConfig | null = null) {
             if (this.windows_list[type]) {
                 return;
             }
+            console.log(type);
             switch(type) {
                 case 'settings':
                     this.windows_list[type] = getSettingsWindow();
@@ -20,10 +20,17 @@ const useWindows = defineStore('windows', {
                     this.windows_list[type] = getInviteWindow();
                     break;
                 case 'chat':
+                    console.log(config);
+                    if (!config ) {
+                        break;
+                    }
+
+                    const chat_id = config.user_id ? config.user_id : config.chat_id;
                     if (!chat_id) {
                         break;
                     }
-                    this.windows_list[chat_id] = getChatWindow(chat_id);
+
+                    this.windows_list[chat_id] = getChatWindow(config);
                     break;
             }
             console.log(this.windows_list);

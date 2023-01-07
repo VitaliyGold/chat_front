@@ -17,8 +17,20 @@ interface InviteWindow extends Window {
     window_id: 'invite'
 }
 
+interface ChatWindow extends Window {
+    is_new_chat: boolean,
+    user_id: string
+}
+
 interface WindowsList {
-    [index: string] : Window | SettingsWindow | InviteWindow
+    [index: string] : ChatWindow | SettingsWindow | InviteWindow
+}
+
+
+interface ChatWindowConfig {
+    chat_id?: string,
+    user_id?: string,
+    is_new_chat: boolean
 }
 
 type WindowsTypes = 'chat' | 'settings' | 'invite'
@@ -28,5 +40,7 @@ export {
     WindowsTypes,
     WindowsList,
     SettingsWindow,
-    InviteWindow
+    InviteWindow,
+    ChatWindow,
+    ChatWindowConfig
 }

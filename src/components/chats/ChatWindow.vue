@@ -1,13 +1,20 @@
 <template>
     <div class="chat_window">
-        Чатик
+        {{ window }}
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue';
+
+import { ChatWindow } from '@/types/window';
 
 export default defineComponent({
+    props: {
+        window: {
+            type: Object as PropType<ChatWindow>
+        }
+    },
     setup() {
         
     },
