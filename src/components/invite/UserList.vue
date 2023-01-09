@@ -17,13 +17,15 @@
         class="users-list"
         v-else
     >
-        <user-item
-            v-for="user in userList"
-            :user_name="user.name"
-            :user_id="user.user_id"
-            :have_chat="user.have_chat"
-            :chat_id="user.chat_id"
-        />
+    <user-item
+        v-for="user in userList"
+        :user_info="user"
+        :have_chat="user.have_chat"
+        :chat_id="user.chat_id"
+        :is_profile="false"
+        
+    />
+        
     </ul>
     
 </template>
@@ -33,9 +35,10 @@
 import { defineComponent, PropType } from 'vue';
 
 import { User } from '@/types/users';
+import useProfile from '@/store/profile';
 
-import UserItem from './UserItem.vue';
-import Loader from '../ui-components/Loader.vue';
+import UserItem from '@/components/ui-components/UserItem.vue';
+import Loader from '@/components/ui-components/Loader.vue';
 
 export default defineComponent({
     name: 'UserList',
@@ -49,6 +52,14 @@ export default defineComponent({
             type: Boolean
         }
     },
+    setup() {
+        const profile_store = useProfile();
+
+        return {
+            current_user_id: profile_store.user_profile?.user_id
+        }
+    },
+
     components: {
         'user-item': UserItem,
         'loader-component': Loader

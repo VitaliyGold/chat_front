@@ -1,7 +1,7 @@
 <template>
     <div class="action_panel">
         <action-panel-item-components
-            v-for="window of getWindowsList"
+            v-for="window of get_windows_list"
             :item_id="window.window_id"
             :item_name="window.name"
             :hide="window.hide"
@@ -20,12 +20,12 @@ export default defineComponent({
         'action-panel-item-components': ActionPanelItem
     },
     setup() {
-        const store = useWindows();
+        const windows_store = useWindows();
 
-        const getWindowsList = computed(() => store.getWindowsList)
+        const get_windows_list = computed(() => windows_store.getWindowsList)
 
         return {
-            getWindowsList
+            get_windows_list
         }
     },
 })

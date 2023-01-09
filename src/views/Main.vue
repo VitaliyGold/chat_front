@@ -12,22 +12,30 @@
 import { defineComponent, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { setJwtToken, setUserId } from '@/utils/jwt';
-import { getChats } from '@/api/chats';
-
 import Loader from '@/components/ui-components/Loader.vue';
 import MainDisplay from '@/components/MainDisplay.vue';
+import { getProfile } from '@/api/profile';
+import useProfile from '@/store/profile';
+
 
 export default defineComponent({
   name: 'MainPage',
   setup() {
     const router = useRouter();
+    const profile_store = useProfile();
+
 
     let loading = ref(true);
     onMounted(async () => {
       try {
-        const chatsData = await getChats();
-        console.log(chatsData);
+
+        const user_profile = await getProfile();
+
+        console.log(user_profile);
+
+        profile_store.fillUserProfile(user_profile);
+
+        
       } catch(e) {
         router.push('login')
       } finally {

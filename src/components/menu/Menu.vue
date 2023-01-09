@@ -38,10 +38,10 @@ export default defineComponent({
         'settings-icon-component': SettingsIcon
     },
     setup(_, { emit }) {
-        const store = useWindows();
+        const windowsStore = useWindows();
 
         const openWindow = (type: 'invite' | 'settings') => {
-            store.addWindow(type)
+            windowsStore.addWindow(type)
             emit('openWindow')
         }
 

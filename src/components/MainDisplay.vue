@@ -10,7 +10,7 @@
 import { defineComponent } from 'vue';
 
 import ActionDisplay from './ActionDisplay.vue';
-import ActionPanel from './ActionPanel/ActionPanel.vue';
+import ActionPanel from './actionPanel/ActionPanel.vue';
 import Settings from './menu/MenuBtn.vue';
 
 export default defineComponent({

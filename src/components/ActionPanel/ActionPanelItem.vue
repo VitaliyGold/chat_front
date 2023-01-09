@@ -52,10 +52,10 @@ export default defineComponent({
         'person-icon-component': PersonIcon
     },
     setup(props) {
-        const store = useWindows();
+        const windowsStore = useWindows();
         return {
-            openWindow: () => store.openWindow(props.item_id),
-            closeWindow: () => store.closeWindow(props.item_id)
+            openWindow: () => windowsStore.openWindow(props.item_id),
+            closeWindow: () => windowsStore.closeWindow(props.item_id)
         }
     },
     props: {
