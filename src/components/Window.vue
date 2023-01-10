@@ -12,6 +12,7 @@
             v-else-if="window.type === 'invite'"
         />
         <chat-window-component
+            :window="window"
             v-else-if="window.type === 'chat'"
         />
     </div>

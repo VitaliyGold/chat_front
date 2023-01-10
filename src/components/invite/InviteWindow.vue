@@ -41,7 +41,6 @@ export default defineComponent({
         const userList = ref<User[]>([]);
 
         const getUsers = async (name = '') => {
-            console.log(name);
             try {
                 loading.value = true;
                 userList.value = [];

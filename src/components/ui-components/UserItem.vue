@@ -9,37 +9,24 @@
         <div class="user-info">
             {{ user_info.name }}
         </div>
-        <div 
-            class="user-actions"
-            v-if="!is_profile"
-        >
-            <button 
-                class="btn"
-                v-if="have_chat"
-                @click="() => openChat(chat_id)"
-            >
-                В чат
-            </button>
-            <button 
-                class="btn"
-                
-                @click="() => createChat(user_info.user_id)"
-                v-else
-            >
-                Создать чат
-            </button>
-        </div>
+        <user-actions-component
+            :user_id="user_info.user_id"
+            :chat_id="chat_id"
+            :have_chat="have_chat"
+        />
     </li>
     
 </template>
 
 <script lang="ts">
-import useWindows from '@/store/windows';
-import { Profile } from '@/types/profile';
-import { defineComponent, PropType } from 'vue';
-import PersonIcon from 'vue-material-design-icons/Account.vue';
 
-type Chat_ID = string | null;
+import { defineComponent, PropType } from 'vue';
+
+import { Profile } from '@/types/profile';
+import { Chat_ID } from '@/types/chats';
+
+import PersonIcon from 'vue-material-design-icons/Account.vue';
+import UserActions from '../invite/UserActions.vue';
 
 export default defineComponent({
     name: 'UserItem',
@@ -65,28 +52,9 @@ export default defineComponent({
 
         }
     },
-    setup() {
-
-        const store = useWindows();
-
-        const openChat = ( chat_id: Chat_ID) => {
-            if (!chat_id) {
-                return;
-            }
-            store.addWindow('chat', { chat_id, is_new_chat: false });
-        };
-
-        const createChat = ( user_id: string ) => {
-            store.addWindow('chat', { user_id, is_new_chat: true });
-        }
-
-        return {
-            openChat,
-            createChat
-        }
-    },
     components: {
-        'person-icon-component': PersonIcon
+        'person-icon-component': PersonIcon,
+        'user-actions-component': UserActions
     }
 })
 

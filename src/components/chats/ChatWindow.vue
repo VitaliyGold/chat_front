@@ -1,6 +1,6 @@
 <template>
     <div class="chat_window">
-        {{ window }}
+        <message-input-component/>
     </div>
 </template>
 
@@ -8,18 +8,23 @@
 import { defineComponent, PropType } from 'vue';
 
 import { ChatWindow } from '@/types/window';
+import useProfile from '@/store/profile';
+
+import MessageInput from './MessageInput.vue';
 
 export default defineComponent({
     props: {
         window: {
-            type: Object as PropType<ChatWindow>
+            type: Object as PropType<ChatWindow>,
+            required: true
         }
     },
-    setup() {
-        
-    },
+    components: {
+        'message-input-component': MessageInput
+    }
+
 })
 </script>
-<style lang="less" scoped>
+<style lang='less' scoped>
 
 </style>

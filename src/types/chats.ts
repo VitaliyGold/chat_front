@@ -4,6 +4,8 @@ export interface CreateChatInfoDto {
     start_message: string
 }
 
+export type Chat_ID = string | null;
+
 export interface ChatDto extends CreateChatInfoDto {
     chat_id: string,
     owner_id: string
