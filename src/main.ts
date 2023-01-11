@@ -6,7 +6,8 @@ import { createPinia } from 'pinia';
 
 const pinia = createPinia()
 
-createApp(App)
+const app = createApp(App)
     .use(router)
     .use(pinia)
     .mount('#app')
+

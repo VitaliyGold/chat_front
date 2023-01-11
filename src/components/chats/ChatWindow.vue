@@ -1,5 +1,6 @@
 <template>
     <div class="chat_window">
+        <message-list-component/>
         <message-input-component/>
     </div>
 </template>
@@ -11,6 +12,7 @@ import { ChatWindow } from '@/types/window';
 import useProfile from '@/store/profile';
 
 import MessageInput from './MessageInput.vue';
+import MessageList from './MessageList.vue';
 
 export default defineComponent({
     props: {
@@ -20,11 +22,15 @@ export default defineComponent({
         }
     },
     components: {
-        'message-input-component': MessageInput
+        'message-input-component': MessageInput,
+        'message-list-component': MessageList
     }
 
 })
 </script>
 <style lang='less' scoped>
+.chat_window {
+    padding: 5px;
+}
 
 </style>

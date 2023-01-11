@@ -64,8 +64,8 @@ export default defineComponent({
 
         const router = useRouter();
 
-        const login = ref('');
-        const password = ref('');
+        const login = ref('kysko3');
+        const password = ref('123456');
 
         const v$ = useVuelidate(rules, { login, password });
 
