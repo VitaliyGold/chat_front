@@ -2,9 +2,10 @@
     <div class="loader-wrapper">
         <svg xmlns="http://www.w3.org/2000/svg" 
             xmlns:xlink="http://www.w3.org/1999/xlink" 
-            viewBox="0 0 100 100" 
+            :viewBox="containerViewBox" 
             preserveAspectRatio="xMidYMid"
             class="loader-icon"
+            :style="{ height: sizeLoader, width: sizeLoader }"
         >
             <path d="M20 50A30 30 0 0 0 80 50A30 31 0 0 1 20 50" fill="#1b077b" stroke="none">
                 <animateTransform attributeName="transform" type="rotate" dur="1s" repeatCount="indefinite" keyTimes="0;1" values="0 50 50.5;360 50 50.5"></animateTransform>
@@ -15,13 +16,25 @@
 
 <script lang="ts">
 
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
+
+interface SizeProps {
+    size: number,
+}
 
 export default defineComponent({
     name: 'Loader',
-    setup() {
+    
+    setup({ size } : SizeProps) {
+        const containerViewBox = `0 0 ${size * 2} ${size * 2}`;
+        const sizeLoader = `${size} px`;
         
-    },
+        return {
+            containerViewBox,
+            sizeLoader
+        }
+
+    }
 })
 </script>
 
@@ -35,8 +48,6 @@ export default defineComponent({
     .loader-icon {
         display: flex;
         justify-content: center;
-        width: 64px;
-        height: 64px;
     }
 }
 

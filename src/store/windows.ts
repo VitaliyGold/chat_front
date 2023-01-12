@@ -11,7 +11,6 @@ const useWindows = defineStore('windows', {
             if (this.windows_list[type]) {
                 return;
             }
-            console.log(type);
             switch(type) {
                 case 'settings':
                     this.windows_list[type] = getSettingsWindow();
@@ -33,7 +32,6 @@ const useWindows = defineStore('windows', {
                     this.windows_list[chat_id] = getChatWindow(config);
                     break;
             }
-            console.log(this.windows_list);
         },
         closeWindow(window_id: keyof WindowsList) {
             delete this.windows_list[window_id];
