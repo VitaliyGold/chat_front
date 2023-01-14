@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 
 const useProfile = defineStore('profile', {
     state: () => ({
-        user_profile: null as Profile | null
+        user_profile: {} as Profile
     }),
     actions: {
         fillUserProfile(user_data: Profile) {

@@ -1,10 +1,10 @@
 <template>
-    <div>
+    <div class="message">
         <p>
-            {{ owner_name }}
+            {{ ownerName }}
         </p>
         <p>
-            {{ message_text }}
+            {{ messageText }}
         </p>
         <message-status-component
             :status="status"
@@ -23,15 +23,15 @@ import { MessageStatus } from '@/types/message';
 export default defineComponent({
     name: 'Message',
     props: {
-        message_text: {
+        messageText: {
             required: true,
             type: String
         },
-        is_own_message: {
+        isOwnMessage: {
             required: true,
             type: Boolean
         },
-        owner_name: {
+        ownerName: {
             required: true,
             type: String
         },

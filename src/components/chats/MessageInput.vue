@@ -4,24 +4,35 @@
             contenteditable='true'
             @input='changeMessageField'
             class='editable-wrapper'
-            ref='input_field'
+            ref='inputField'
             @focus="() => focusOnInput(true)"
             @blur="() => focusOnInput(false)"
             v-focus
         >
             <p 
                 class="placeholder" 
-                v-if="!display_placeholder"
+                v-if="!displayPlaceholder"
             >
                 Введите сообщение...
             </p>
+        </div>
+        <div class="">
+            <button-component
+                :btn-text="'Отправить'"
+                :type="'medium'"
+                @click="sendMessage"
+            />
         </div>
     </div>
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, ref, computed, PropType } from 'vue';
 
+import { createChat } from '@/api/chats';
+
+import Button from '@/components/ui-components/Button.vue';
+import { numberLiteralTypeAnnotation } from '@babel/types';
 
 export default defineComponent({
     name: 'MessageInput',
@@ -32,36 +43,60 @@ export default defineComponent({
             }
         }
     },
-    setup() {
-        const input_value = ref('');
+    props: {
+        members: {
+            required: true,
+            type: Array as PropType<string[]>
+        }
+    },
+    setup(props) {
+        const inputValue = ref('');
 
-        const input_focus = ref(true);
+        const inputFocus = ref(true);
 
-        const input_ref = ref<HTMLElement | null>(null);
+        const inputRef = ref<HTMLElement | null>(null);
 
         const changeMessageField =  (e: Event) => {
             let target = e.target as HTMLInputElement;
-            if (target && input_ref.value) {
-                input_ref.value.innerHTML = target.innerHTML;
+            if (target && inputRef.value) {
+                inputRef.value.innerHTML = target.innerHTML;
             }
         }
 
-        const display_placeholder = computed(() => {
-            return input_focus.value || input_value.value;
+        const displayPlaceholder = computed(() => {
+            return inputFocus.value || inputValue.value;
         })
 
         const focusOnInput = (focus : boolean) => {
-            input_focus.value = focus;
+            inputFocus.value = focus;
+        }
+
+        const sendMessage = async () => {
+
+            const chatData = {
+                members: props.members,
+                chat_type: 1,
+                start_message: inputValue.value
+            }
+
+            const chat = await createChat(chatData);
+
+            console.log(chat);
+            //console.log(`Отправить сообщение ${inputValue.value}`)
         }
 
         return {
-            input_ref,
-            input_value,
-            input_focus,
-            display_placeholder,
+            inputRef,
+            inputValue,
+            inputFocus,
+            displayPlaceholder,
             changeMessageField,
-            focusOnInput
+            focusOnInput,
+            sendMessage
         }
+    },
+    components: {
+        'button-component': Button
     }
 
 })

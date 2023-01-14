@@ -1,7 +1,7 @@
 <template>
     <div class="action_display">
         <template
-            v-for="window of getWindowsList"
+            v-for="window of windowsList"
             :key="window.window_id"
         >
             <window-component
@@ -25,10 +25,10 @@ export default defineComponent({
     setup() {
         const store = useWindows();
 
-        const getWindowsList = computed(() => store.getWindowsList)
+        const windowsList = store.windowsList;
 
         return {
-            getWindowsList 
+            windowsList 
         }
     },
 })

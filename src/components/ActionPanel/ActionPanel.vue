@@ -1,7 +1,7 @@
 <template>
     <div class="action_panel">
-        <action-panel-item-components
-            v-for="window of get_windows_list"
+        <action-panel-item-component
+            v-for="window of windowsList"
             :item_id="window.window_id"
             :item_name="window.name"
             :hide="window.hide"
@@ -17,15 +17,15 @@ import ActionPanelItem from './ActionPanelItem.vue';
 export default defineComponent({
     name: 'ActionPanel',
     components: {
-        'action-panel-item-components': ActionPanelItem
+        'action-panel-item-component': ActionPanelItem
     },
     setup() {
-        const windows_store = useWindows();
+        const windowsStore = useWindows();
 
-        const get_windows_list = computed(() => windows_store.getWindowsList)
+        const windowsList = windowsStore.windowsList;
 
         return {
-            get_windows_list
+            windowsList
         }
     },
 })

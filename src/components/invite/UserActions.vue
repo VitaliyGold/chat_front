@@ -24,6 +24,7 @@ import { defineComponent, PropType } from 'vue';
 const { v4: uuidv4 } = require('uuid');
 
 import useWindows from '@/store/windows';
+import useProfile from '@/store/profile';
 import { Chat_ID } from '@/types/chats';
 
 export default defineComponent({
@@ -45,20 +46,26 @@ export default defineComponent({
     },
     setup() {
 
-        const store = useWindows();
+        const windowStore = useWindows();
+
+        const profileStore = useProfile();
 
         const createChat = (user_id: string):void => {
 
             const temporal_window_id = uuidv4();
 
-            store.addWindow('chat', { user_id, is_new_chat: true, chat_id: temporal_window_id });
+            const currentUserId = profileStore.user_profile.user_id;
+
+            const members = [user_id, currentUserId]
+
+            windowStore.addWindow('chat', { is_new_chat: true, chat_id: temporal_window_id, members });
         };
 
         const openChat = (chat_id: Chat_ID):void => {
             if (!chat_id) {
                 return;
             }
-            store.addWindow('chat', { chat_id, is_new_chat: false });
+            windowStore.addWindow('chat', { chat_id, is_new_chat: false });
         }
     
         return {

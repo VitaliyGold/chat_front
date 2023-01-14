@@ -23,13 +23,15 @@ export function getInviteWindow(): InviteWindow {
     }
 }
 
-export function getChatWindow({ chat_id = '', is_new_chat, user_id = '' } : ChatWindowConfig): ChatWindow {
+export function getChatWindow({ chat_id = '', is_new_chat, members } : ChatWindowConfig): ChatWindow {
     return {
         hide: true,
         type: 'chat',
+        // при создании присваивается временный id
         window_id: chat_id,
+        chat_id: is_new_chat ? '' : chat_id,
         is_new_chat,
-        user_id,
+        members,
         name: 'Чат'
     }
 }

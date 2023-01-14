@@ -18,14 +18,17 @@
 
 import { defineComponent, PropType } from 'vue'
 
-interface SizeProps {
-    size: number,
-}
-
 export default defineComponent({
     name: 'Loader',
+    props: {
+        size: {
+            type: Number,
+            required: false,
+            default: 32
+        }
+    },
     
-    setup({ size } : SizeProps) {
+    setup({ size }) {
         const containerViewBox = `0 0 ${size * 2} ${size * 2}`;
         const sizeLoader = `${size} px`;
         

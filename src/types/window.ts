@@ -1,44 +1,47 @@
-interface Window {
+interface BaseWindow {
     hide: boolean,
     type: WindowsTypes,
     window_id: string,
     name: string
 }
 
-interface SettingsWindow extends Window {
+interface SettingsWindow extends BaseWindow {
     name: 'Настройки',
     type: 'settings',
     window_id: 'settings'
 }
 
-interface InviteWindow extends Window {
+interface InviteWindow extends BaseWindow {
     name: 'Создать чат',
     type: 'invite',
     window_id: 'invite'
 }
 
-interface ChatWindow extends Window {
+interface ChatWindow extends BaseWindow {
     is_new_chat: boolean,
-    user_id: string
+    chat_id: string,
+    members?: string[]
 }
 
-interface WindowsList {
-    [index: string] : ChatWindow | SettingsWindow | InviteWindow
+export type WindowObject = ChatWindow | SettingsWindow | InviteWindow;
+
+interface WindowsListType {
+    [index: string] : WindowObject
 }
 
 
 interface ChatWindowConfig {
-    chat_id?: string,
-    user_id?: string,
+    chat_id: string,
+    members?: string[],
     is_new_chat: boolean
 }
 
 type WindowsTypes = 'chat' | 'settings' | 'invite'
 
 export {
-    Window,
+    BaseWindow,
     WindowsTypes,
-    WindowsList,
+    WindowsListType,
     SettingsWindow,
     InviteWindow,
     ChatWindow,

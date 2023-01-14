@@ -1,54 +1,49 @@
 import { defineStore } from "pinia";
-import { WindowsList, WindowsTypes, ChatWindowConfig } from "@/types/window";
+
+import useMessages from "./messages";
+
+import { WindowsListType, WindowsTypes, ChatWindowConfig } from "@/types/window";
 import { getChatWindow, getInviteWindow, getSettingsWindow } from "@/utils/helpers";
+
 
 const useWindows = defineStore('windows', {
     state: () => ({
-        windows_list: {} as WindowsList
+        windowsList: {} as WindowsListType
     }),
     actions: {
         addWindow(type: WindowsTypes, config: ChatWindowConfig | null = null) {
-            if (this.windows_list[type]) {
+            if (this.windowsList[type]) {
                 return;
             }
             switch(type) {
                 case 'settings':
-                    this.windows_list[type] = getSettingsWindow();
+                    this.windowsList[type] = getSettingsWindow();
                     break;
                 case 'invite':
-                    this.windows_list[type] = getInviteWindow();
+                    this.windowsList[type] = getInviteWindow();
                     break;
                 case 'chat':
-                    console.log(config);
                     if (!config ) {
                         break;
                     }
+                    const messageStore = useMessages();
+                    this.windowsList[config.chat_id] = getChatWindow(config);
+                    messageStore.addTempChatMessageList(config.chat_id);
 
-                    const chat_id = config.user_id ? config.user_id : config.chat_id;
-                    if (!chat_id) {
-                        break;
-                    }
-
-                    this.windows_list[chat_id] = getChatWindow(config);
                     break;
             }
         },
-        closeWindow(window_id: keyof WindowsList) {
-            delete this.windows_list[window_id];
+        closeWindow(window_id: keyof WindowsListType) {
+            delete this.windowsList[window_id];
 
         },
-        hideWindow(window_id: keyof WindowsList) {
-            this.windows_list[window_id].hide = false; 
+        hideWindow(window_id: keyof WindowsListType) {
+            this.windowsList[window_id].hide = false; 
         },
-        openWindow(window_id: keyof WindowsList) {
-            this.windows_list[window_id].hide = true; 
+        openWindow(window_id: keyof WindowsListType) {
+            this.windowsList[window_id].hide = true; 
         }
     },
-    getters: {
-        getWindowsList(state) {
-            return Object.values(state.windows_list);
-        }
-    }
 })
 
 export default useWindows;

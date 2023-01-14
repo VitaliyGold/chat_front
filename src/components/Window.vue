@@ -22,19 +22,17 @@
 import { defineComponent, PropType } from 'vue';
 import ChatWindow from './chats/ChatWindow.vue';
 import ControlWindowPanel from '@/components/ControlWindowPanel.vue';
-import { Window } from '@/types/window';
+import { WindowObject } from '@/types/window';
 import SettingsWindow from '@/components/settings/SettingsWindow.vue';
 import InviteWindow from './invite/InviteWindow.vue';
+
 
 export default defineComponent({
     props: {
         window: {
-            type: Object as PropType<Window>,
-            required: true
+            required: true,
+            type: Object as PropType<WindowObject>
         }
-    },
-    setup() {
-        
     },
     components: {
         'chat-window-component': ChatWindow,
