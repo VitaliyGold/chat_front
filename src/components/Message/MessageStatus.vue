@@ -2,6 +2,7 @@
     <div>
         <loader-component 
             :size="20"
+            addClass="icon-2x"
             v-if="status === 'loading'"
         />
         <span v-else>
@@ -12,7 +13,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import Loader from '../ui-components/Loader.vue';
+import LoaderWrapper from '@/components/ui-components/Loader.vue';
 
 import { MessageStatus } from '@/types/message';
 
@@ -24,7 +25,7 @@ export default defineComponent({
         }
     },
     components: {
-        'loader-component': Loader
+        'loader-component': LoaderWrapper
     },
     setup() {
         

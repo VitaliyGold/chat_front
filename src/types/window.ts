@@ -25,10 +25,7 @@ interface ChatWindow extends BaseWindow {
 
 export type WindowObject = ChatWindow | SettingsWindow | InviteWindow;
 
-interface WindowsListType {
-    [index: string] : WindowObject
-}
-
+type WindowsListType = Map<string, WindowObject>;
 
 interface ChatWindowConfig {
     chat_id: string,

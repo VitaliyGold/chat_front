@@ -1,8 +1,8 @@
 <template>
     <div class="action_display">
         <template
-            v-for="window of windowsList"
-            :key="window.window_id"
+            v-for="[windowId, window] in windowsList"
+            :key="windowId"
         >
             <window-component
                 :window="window"

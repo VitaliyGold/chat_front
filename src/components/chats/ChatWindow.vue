@@ -1,27 +1,28 @@
 <template>
     <div class="chat_window">
         <message-list-component
-            v-if="messageList"
+            v-if="messageList || tempMessageList"
             :user_id="userId"
             :messageList="messageList"
+            :tempMessageList="tempMessageList"
         />
         <p v-else>
             ошибка
         </p>
         <message-input-component
             v-if="window.members"
+            :tempChatId="windowId"
+            :chatId="chatId"
             :members="window.members"
         />
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, PropType } from 'vue';
+import { defineComponent, computed, PropType, toRefs } from 'vue';
 
 import { ChatWindow } from '@/types/window';
-import { MessageList } from '@/types/message';
 import useProfile from '@/store/profile';
-import useChats from '@/store/chats';
 import useMessages from '@/store/messages';
 
 import MessageInputComponent from './MessageInput.vue';
@@ -35,25 +36,26 @@ export default defineComponent({
             type: Object as PropType<ChatWindow>
         }
     },
-    setup({ window }) {
+    setup(props) {
         const profileStore = useProfile();
         const messageStore = useMessages();
 
-        const userId = profileStore.user_profile.user_id;
+        const {
+            window
+        } = toRefs(props);
 
-        const chatId = computed(() => window.is_new_chat ? window.window_id : window.chat_id);
-        const messageList = computed(
-            () => { 
-                return window.is_new_chat ? 
-                    messageStore.getTempMessageListForId(chatId.value) 
-                : 
-                    messageStore.getMessageListForId(chatId.value);
-            });
-        console.log(messageList)
+        const userId = profileStore.user_profile.user_id;
+        
+        const messageList = computed(() => messageStore.getMessageListForId(window.value.chat_id));
+        const tempMessageList = computed(() => messageStore.getTempMessageListForId(window.value.window_id));
+
         return {
             window,
+            windowId: window.value.window_id,
             userId,
-            messageList
+            chatId: window.value.chat_id,
+            messageList: messageList,
+            tempMessageList: tempMessageList
         }
     },
     components: {

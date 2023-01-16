@@ -1,22 +1,18 @@
 <template>
-    <div class="loader-wrapper">
-        <svg xmlns="http://www.w3.org/2000/svg" 
-            xmlns:xlink="http://www.w3.org/1999/xlink" 
-            :viewBox="containerViewBox" 
-            preserveAspectRatio="xMidYMid"
-            class="loader-icon"
-            :style="{ height: sizeLoader, width: sizeLoader }"
-        >
-            <path d="M20 50A30 30 0 0 0 80 50A30 31 0 0 1 20 50" fill="#1b077b" stroke="none">
-                <animateTransform attributeName="transform" type="rotate" dur="1s" repeatCount="indefinite" keyTimes="0;1" values="0 50 50.5;360 50 50.5"></animateTransform>
-            </path>
-        </svg>
+    <div class="loader-wrapper"
+        :style="{ height: sizeLoader, width: sizeLoader }"
+    >
+        <loading-icon-component
+            :size="size"
+            :addClass="'addClass'"
+        />
     </div>
 </template>
 
 <script lang="ts">
 
-import { defineComponent, PropType } from 'vue'
+import { defineComponent } from 'vue';
+import Loading from 'vue-material-design-icons/Loading.vue';
 
 export default defineComponent({
     name: 'Loader',
@@ -25,12 +21,20 @@ export default defineComponent({
             type: Number,
             required: false,
             default: 32
+        },
+        addClass: {
+            type: String,
+            required: false,
+            default: 'icon-2x'
         }
+    },
+    components: {
+        'loading-icon-component': Loading
     },
     
     setup({ size }) {
         const containerViewBox = `0 0 ${size * 2} ${size * 2}`;
-        const sizeLoader = `${size} px`;
+        const sizeLoader = `${size}px`;
         
         return {
             containerViewBox,
@@ -48,10 +52,25 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: center;
+    animation-name: rotation;
+    animation-duration: 2.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+
+    
     .loader-icon {
         display: flex;
         justify-content: center;
     }
 }
+
+@keyframes rotation {
+    0% {
+        transform:rotate(0deg);
+    }
+    100% {
+        transform:rotate(360deg);
+    }
+    }
 
 </style>

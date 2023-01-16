@@ -1,10 +1,19 @@
 <template>
     <div class="message-list">
         <message-component
-            v-for="[message_id, message] of messageList"
+            v-for="[messageId, message] of messageList"
             :messageText="message.messageText"
             :isOwnMessage="message.ownerId === user_id"
             :ownerName="message.ownerName"
+            :messageId="messageId"
+            :status="message.status"
+        />
+        <message-component
+            v-for="[messageId, message] of tempMessageList"
+            :messageText="message.messageText"
+            :isOwnMessage="message.ownerId === user_id"
+            :ownerName="message.ownerName"
+            :messageId="messageId"
             :status="message.status"
         />
     </div>
@@ -15,7 +24,7 @@ import { defineComponent, PropType } from 'vue';
 
 import { MessageList } from '@/types/message';
 
-import Message from '../Message/Message.vue';
+import Message from '@/components/Message/Message.vue';
 
 export default defineComponent({
     name: 'MessageList',
@@ -24,6 +33,10 @@ export default defineComponent({
     },
     props: {
         messageList: {
+            type: Map as PropType<MessageList>,
+            required: true
+        },
+        tempMessageList: {
             type: Map as PropType<MessageList>,
             required: true
         },

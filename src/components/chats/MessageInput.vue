@@ -1,21 +1,9 @@
 <template>
     <div class='message-input'>
-        <div 
-            contenteditable='true'
-            @input='changeMessageField'
-            class='editable-wrapper'
-            ref='inputField'
-            @focus="() => focusOnInput(true)"
-            @blur="() => focusOnInput(false)"
-            v-focus
-        >
-            <p 
-                class="placeholder" 
-                v-if="!displayPlaceholder"
-            >
-                Введите сообщение...
-            </p>
-        </div>
+        <message-text-area-component
+            v-model="messageValue"
+            @changeValue="changeMessageValue"
+        />
         <div class="">
             <button-component
                 :btn-text="'Отправить'"
@@ -27,12 +15,18 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref, computed, PropType } from 'vue';
+import { defineComponent, ref, PropType } from 'vue';
+const { v4: uuidv4 } = require('uuid');
 
 import { createChat } from '@/api/chats';
+import useMessages from '@/store/messages';
+import useProfile from '@/store/profile';
+import useWindows from '@/store/windows';
 
 import Button from '@/components/ui-components/Button.vue';
-import { numberLiteralTypeAnnotation } from '@babel/types';
+import MessageTextArea from './MessageTextArea.vue';
+import { MessageDto } from '@/types/message';
+import { ChatWindow } from '@/types/window';
 
 export default defineComponent({
     name: 'MessageInput',
@@ -47,56 +41,80 @@ export default defineComponent({
         members: {
             required: true,
             type: Array as PropType<string[]>
+        },
+        tempChatId: {
+            required: true,
+            type: String
+        },
+        chatId: {
+            required: true,
+            type: String
         }
     },
     setup(props) {
-        const inputValue = ref('');
 
-        const inputFocus = ref(true);
+        const messageValue = ref('');
 
-        const inputRef = ref<HTMLElement | null>(null);
+        const messageStore = useMessages();
 
-        const changeMessageField =  (e: Event) => {
-            let target = e.target as HTMLInputElement;
-            if (target && inputRef.value) {
-                inputRef.value.innerHTML = target.innerHTML;
-            }
-        }
+        const profileStore = useProfile();
 
-        const displayPlaceholder = computed(() => {
-            return inputFocus.value || inputValue.value;
-        })
+        const windowStore = useWindows();
 
-        const focusOnInput = (focus : boolean) => {
-            inputFocus.value = focus;
+        const changeMessageValue = (messageText: string) => {
+            messageValue.value = messageText;
         }
 
         const sendMessage = async () => {
-
+            console.log(messageValue.value);
+            const tempId = addTempMessage();
+            
             const chatData = {
                 members: props.members,
                 chat_type: 1,
-                start_message: inputValue.value
+                start_message: messageValue.value
             }
 
             const chat = await createChat(chatData);
 
-            console.log(chat);
-            //console.log(`Отправить сообщение ${inputValue.value}`)
+            windowStore.setChatId(props.tempChatId, chat.chatId);
+
+            messageStore.transferMessageFromTemp(tempId, chat.firstMessage.messageId, props.tempChatId, chat.chatId);
+
         }
 
+        const addTempMessage = (): string => {
+
+            const tempId = uuidv4();
+
+            const tempMessage: MessageDto = {
+                messageId: tempId,
+                status: 'loading',
+                chatId: props.tempChatId,
+                messageText: messageValue.value,
+                ownerId: profileStore.user_profile.user_id,
+                createdAt: new Date().toLocaleString(),
+                ownerName: profileStore.user_profile.name
+            }
+
+            if (!messageStore.tempChatsMessagesList.get(props.tempChatId)) {
+                messageStore.tempChatsMessagesList.set(props.tempChatId, new Map([[ tempId, tempMessage ]]));
+            } else {
+                messageStore.tempChatsMessagesList.get(props.tempChatId)?.set(tempId, tempMessage)
+            }
+
+            return tempId;
+        }
+ 
         return {
-            inputRef,
-            inputValue,
-            inputFocus,
-            displayPlaceholder,
-            changeMessageField,
-            focusOnInput,
+            messageValue,
+            changeMessageValue,
             sendMessage
         }
     },
     components: {
-        'button-component': Button
+        'button-component': Button,
+        'message-text-area-component': MessageTextArea
     }
 
 })
