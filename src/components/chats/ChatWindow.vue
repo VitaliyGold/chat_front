@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, PropType, toRefs } from 'vue';
+import { defineComponent, computed, PropType, toRefs, onMounted } from 'vue';
 
 import { ChatWindow } from '@/types/window';
 import useProfile from '@/store/profile';
@@ -48,6 +48,10 @@ export default defineComponent({
         
         const messageList = computed(() => messageStore.getMessageListForId(window.value.chat_id));
         const tempMessageList = computed(() => messageStore.getTempMessageListForId(window.value.window_id));
+
+        onMounted(() => {
+            
+        })
 
         return {
             window,
