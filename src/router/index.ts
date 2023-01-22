@@ -1,29 +1,29 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Login from '@/views/Login.vue'
-import Registration from '@/views/Registration.vue'
-import Main from '@/views/Main.vue'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import Login from '@/views/Login.vue';
+import Registration from '@/views/Registration.vue';
+import Main from '@/views/Main.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '',
     name: 'Main',
-    component: Main
+    component: Main,
   },
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
   },
   {
     path: '/registration',
     name: 'Registration',
-    component: Registration
-  }
-]
+    component: Registration,
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

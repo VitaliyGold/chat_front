@@ -1,15 +1,15 @@
 export function setJwtToken(token: string) {
-    localStorage.setItem('auth_token', token);
+  localStorage.setItem('auth_token', token);
 }
 
-export function setUserId(user_id: string) {
-    localStorage.setItem('user_id', user_id);
+export function setUserId(userId) {
+  localStorage.setItem('user_id', userId);
 }
 
 export function getJwtToken() {
-    return localStorage.getItem('auth_token')
+  return localStorage.getItem('auth_token');
 }
 
 export function getUserId() {
-    localStorage.get('user_id');
+  localStorage.get('user_id');
 }

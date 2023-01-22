@@ -15,57 +15,54 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue';
 
-import TextField from '@/components/ui-components/TextField.vue';
-import UserList from '@/components/invite/UserList.vue';
+import UserList from '@/components/Invite/UserList.vue';
 
 import { debounce } from '@/utils/helpers';
 import { User } from '@/types/users';
-import { getUsersList } from '@/api/users';
-
+import usersController from '@/api/users';
+import TextField from '@/components/UI/TextField.vue';
 
 export default defineComponent({
-    name: 'InviteWindow',
-    components: {
-        'text-field': TextField,
-        'user-list': UserList
-    },
-    setup() {
-        const searchValue = ref('');
-        const loading = ref(true);
+  name: 'InviteWindow',
+  components: {
+    'text-field': TextField,
+    'user-list': UserList,
+  },
+  setup() {
+    const searchValue = ref('');
+    const loading = ref(true);
+    const userList = ref<User[]>([]);
 
-        const searchFunc = debounce((value: string ) => {
-            searchValue.value = value;
-            getUsers(value);
-        }, 500)
+    const getUsers = async (name = '') => {
+      try {
+        loading.value = true;
+        userList.value = [];
+        const data = await usersController.getUsersList(0, name);
+        userList.value = data;
+      } catch (e) {
+        console.log(e);
+      } finally {
+        loading.value = false;
+      }
+    };
 
-        const userList = ref<User[]>([]);
+    const searchFunc = debounce((value: string) => {
+      searchValue.value = value;
+      getUsers(value);
+    }, 500);
 
-        const getUsers = async (name = '') => {
-            try {
-                loading.value = true;
-                userList.value = [];
-                const data = await getUsersList(0, name);
-                userList.value = data;
-            } catch(e) {
-                console.log(e);
-            } finally {
-                loading.value = false;
-            }
-        }
+    onMounted(async () => {
+      getUsers();
+    });
 
-        onMounted(async () => {
-            getUsers();
-        })
-
-        return {
-            searchFunc,
-            searchValue,
-            userList,
-            loading
-        }
-
-    }
-})
+    return {
+      searchFunc,
+      searchValue,
+      userList,
+      loading,
+    };
+  },
+});
 </script>
 
 <style lang="less" scoped>
@@ -77,6 +74,5 @@ export default defineComponent({
         max-width: 500px;
     }
 }
-
 
 </style>

@@ -2,10 +2,11 @@
     <ul>
         <settings-item-component
             v-for="setting of settings_list"
+            :key="setting.name"
             :setting_name="setting.setting_name"
             @click="() => selectSettingsItem(setting.setting_type)"
         >
-            <component 
+            <component
                 :is="setting.setting_icon"
                 :size="36"
                 class="icon-3x"
@@ -17,36 +18,36 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-import { settings_list_data } from './consts';
+import { SettingsType } from '@/types/settings';
+import { settingsListData } from './consts';
 import SettingsItem from './SettingsItem.vue';
 
-import { SettingsType } from '@/types/settings';
-
 export default defineComponent({
-    components: {
-        'settings-item-component': SettingsItem
-    },
-    setup() {
+  components: {
+    'settings-item-component': SettingsItem,
+  },
+  setup() {
+    const selectSettingsItem = (type: SettingsType) => {
+      switch (type) {
+        case 'edit':
+          console.log('Открыть редактирование профиля');
+          break;
+        case 'alert':
+          console.log('Открыть настройки оповещений');
+          break;
+        case 'exit':
+          console.log('Логаут');
+          break;
+        default:
+          break;
+      }
+    };
 
-        const selectSettingsItem = (type: SettingsType) => {
-            switch(type) {
-                case 'edit':
-                    console.log('Открыть редактирование профиля');
-                    break;
-                case 'alert':
-                    console.log('Открыть настройки оповещений');
-                    break;
-                case 'exit':
-                    console.log('Логаут');
-                    break;
-            }
-        }
-
-        return {
-            settings_list: settings_list_data,
-            selectSettingsItem
-        }
-    }
+    return {
+      settingsList: settingsListData,
+      selectSettingsItem,
+    };
+  },
 
 });
 

@@ -2,7 +2,7 @@
     <div class="action-panel-item"
     :title="item_name"
     >
-        <button 
+        <button
             class="btn action-panel-btn"
             @click="openWindow"
         >
@@ -31,7 +31,7 @@
             />
         </button>
     </div>
-    
+
 </template>
 
 <script lang="ts">
@@ -44,38 +44,38 @@ import SettingsIcon from 'vue-material-design-icons/Cog.vue';
 import { WindowsTypes } from '@/types/window';
 
 export default defineComponent({
-    name: 'ActionPanelItem',
-    components: {
-        'close-icon-component': CloseIcon,
-        'invite-icon-component': InviteIcon,
-        'settings-icon-component': SettingsIcon,
-        'person-icon-component': PersonIcon
+  name: 'ActionPanelItem',
+  components: {
+    'close-icon-component': CloseIcon,
+    'invite-icon-component': InviteIcon,
+    'settings-icon-component': SettingsIcon,
+    'person-icon-component': PersonIcon,
+  },
+  setup(props) {
+    const windowsStore = useWindows();
+    return {
+      openWindow: () => windowsStore.openWindow(props.itemId),
+      closeWindow: () => windowsStore.closeWindow(props.itemId),
+    };
+  },
+  props: {
+    itemId: {
+      type: String,
+      required: true,
     },
-    setup(props) {
-        const windowsStore = useWindows();
-        return {
-            openWindow: () => windowsStore.openWindow(props.item_id),
-            closeWindow: () => windowsStore.closeWindow(props.item_id)
-        }
+    itemName: {
+      type: String,
+      required: true,
     },
-    props: {
-        item_id: {
-            type: String,
-            required: true
-        },
-        item_name: {
-            type: String,
-            required: true
-        },
-        hide: {
-            type: Boolean,
-            required: true
-        },
-        item_type: {
-            type: String as PropType<WindowsTypes>
-        }
+    hide: {
+      type: Boolean,
+      required: true,
     },
-})
+    itemType: {
+      type: String as PropType<WindowsTypes>,
+    },
+  },
+});
 </script>
 
 <style lang="less" scoped>

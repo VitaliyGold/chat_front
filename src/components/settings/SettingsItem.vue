@@ -11,13 +11,12 @@
 import { defineComponent, PropType } from 'vue';
 import { SettingsName } from '@/types/settings';
 
-
 export default defineComponent({
-    props: {
-        setting_name: {
-            type: String as PropType<SettingsName>
-        }
-    }
+  props: {
+    settingName: {
+      type: String as PropType<SettingsName>,
+    },
+  },
 });
 
 </script>

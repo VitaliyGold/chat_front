@@ -1,25 +1,26 @@
+type WindowsTypes = 'chat' | 'settings' | 'invite'
 interface BaseWindow {
     hide: boolean,
     type: WindowsTypes,
-    window_id: string,
+    windowId: string,
     name: string
 }
 
 interface SettingsWindow extends BaseWindow {
     name: 'Настройки',
     type: 'settings',
-    window_id: 'settings'
+    windowId: 'settings'
 }
 
 interface InviteWindow extends BaseWindow {
     name: 'Создать чат',
     type: 'invite',
-    window_id: 'invite'
+    windowId: 'invite'
 }
 
 interface ChatWindow extends BaseWindow {
-    is_new_chat: boolean,
-    chat_id: string,
+    isNewChat: boolean,
+    chatId: string,
     members?: string[]
 }
 
@@ -28,19 +29,17 @@ export type WindowObject = ChatWindow | SettingsWindow | InviteWindow;
 type WindowsListType = Map<string, WindowObject>;
 
 interface ChatWindowConfig {
-    chat_id: string,
+    chatId: string,
     members?: string[],
-    is_new_chat: boolean
+    isNewChat: boolean
 }
-
-type WindowsTypes = 'chat' | 'settings' | 'invite'
 
 export {
-    BaseWindow,
-    WindowsTypes,
-    WindowsListType,
-    SettingsWindow,
-    InviteWindow,
-    ChatWindow,
-    ChatWindowConfig
-}
+  BaseWindow,
+  WindowsTypes,
+  WindowsListType,
+  SettingsWindow,
+  InviteWindow,
+  ChatWindow,
+  ChatWindowConfig,
+};

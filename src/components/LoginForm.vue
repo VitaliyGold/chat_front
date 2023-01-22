@@ -5,17 +5,17 @@
             v-model="login"
             :validationRule="v$.login"
             @update:modelValue="(value) => changeField('login', value)"
-            
+
         />
         <text-field-component
             labelText="Пароль"
             v-model="password"
             :validationRule="v$.password"
             @update:modelValue="(value) => changeField('password', value)"
-            
+
         />
-        
-        <button 
+
+        <button
             type="submit"
             class="btn submit"
         >
@@ -39,81 +39,79 @@ import { required, minLength, helpers } from '@vuelidate/validators';
 import { useRouter } from 'vue-router';
 
 import { LoginFormFields } from '@/types/auth';
-import { login } from '@/api/auth';
+import AuthController from '@/api/auth';
 import { setJwtToken, setUserId } from '@/utils/jwt';
 
 import TextField from './ui-components/TextField.vue';
 
 const rules = {
-    login: {
-        required: helpers.withMessage('Поле не может быть пустым', required),
-        minLength: helpers.withMessage('Минимальная длина 3 символа', minLength(3)),
-    },
-    password: {
-        required: helpers.withMessage('Поле не может быть пустым', required),
-        minLength: helpers.withMessage('Минимальная длина 3 символов', minLength(3)),
+  login: {
+    required: helpers.withMessage('Поле не может быть пустым', required),
+    minLength: helpers.withMessage('Минимальная длина 3 символа', minLength(3)),
+  },
+  password: {
+    required: helpers.withMessage('Поле не может быть пустым', required),
+    minLength: helpers.withMessage('Минимальная длина 3 символов', minLength(3)),
 
-    }
+  },
 };
 
 export default defineComponent({
-    components: {
-        'text-field-component': TextField
+  components: {
+    'text-field-component': TextField,
+  },
+  setup() {
+    const router = useRouter();
+
+    const login = ref('kysko3');
+    const password = ref('123456');
+
+    const v$ = useVuelidate(rules, { login, password });
+
+    const changeField = (field: LoginFormFields, value: string) => {
+      switch (field) {
+        case 'login':
+          login.value = value;
+          break;
+        case 'password':
+          password.value = value;
+          break;
+        default:
+          break;
+      }
+    };
+
+    return {
+      login,
+      password,
+      v$,
+      router,
+      changeField,
+    };
+  },
+  methods: {
+    async loginSubmit() {
+      this.v$.$touch();
+      if (this.v$.$error) {
+        return;
+      }
+      const formData = {
+        login: this.login,
+        password: this.password,
+      };
+
+      try {
+        const { data } = await AuthController.login(formData);
+        console.log(data.token);
+        setJwtToken(data.token);
+        setUserId(data.userId);
+        this.router.push('/');
+      } catch (e) {
+        console.log(e);
+      }
     },
-    setup(_, context) {
+  },
 
-        const router = useRouter();
-
-        const login = ref('kysko3');
-        const password = ref('123456');
-
-        const v$ = useVuelidate(rules, { login, password });
-
-        const changeField = (field: LoginFormFields, value: string) => {
-            switch(field) {
-                case 'login':
-                    login.value = value;
-                    break;
-                case 'password':
-                    password.value = value;
-                    break;
-            }
-        };
-
-        return {
-            login,
-            password,
-            v$,
-            router,
-            changeField
-        }
-
-        
-    },
-    methods: {
-        async loginSubmit() {
-            this.v$.$touch();
-            if (this.v$.$error) {
-                return;
-            };
-            const formData = { 
-                login: this.login, 
-                password: this.password 
-            };
-
-            try {
-                const { data } = await login(formData);
-                console.log(data.token)
-                setJwtToken(data.token);
-                setUserId(data.user_id);
-                this.router.push('/');
-            } catch(e) {
-                console.log(e);
-            }
-            
-        }
-    }
-    
-})
+});
 
 </script>

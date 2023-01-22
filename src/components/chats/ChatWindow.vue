@@ -10,16 +10,18 @@
             ошибка
         </p>
         <message-input-component
-            v-if="window.members"
+            v-if="members"
             :tempChatId="windowId"
             :chatId="chatId"
-            :members="window.members"
+            :members="members"
         />
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, PropType, toRefs, onMounted } from 'vue';
+import {
+  defineComponent, computed, PropType, toRefs, onMounted,
+} from 'vue';
 
 import { ChatWindow } from '@/types/window';
 import useProfile from '@/store/profile';
@@ -28,46 +30,41 @@ import useMessages from '@/store/messages';
 import MessageInputComponent from './MessageInput.vue';
 import MessageListComponent from './MessageList.vue';
 
-
 export default defineComponent({
-    props: {
-        window: {
-            required: true,
-            type: Object as PropType<ChatWindow>
-        }
+  props: {
+    window: {
+      required: true,
+      type: Object as PropType<ChatWindow>,
     },
-    setup(props) {
-        const profileStore = useProfile();
-        const messageStore = useMessages();
+  },
+  setup(props) {
+    const profileStore = useProfile();
+    const messageStore = useMessages();
 
-        const {
-            window
-        } = toRefs(props);
+    const {
+      window,
+    } = toRefs(props);
 
-        const userId = profileStore.user_profile.user_id;
-        
-        const messageList = computed(() => messageStore.getMessageListForId(window.value.chat_id));
-        const tempMessageList = computed(() => messageStore.getTempMessageListForId(window.value.window_id));
+    const { userId } = profileStore.userProfile;
 
-        onMounted(() => {
-            
-        })
+    const messageList = computed(() => messageStore.getMessageListForId(window.value.chatId));
+    const tempMessageList = computed(() => messageStore.getTempMessageListForId(window.value.windowId));
 
-        return {
-            window,
-            windowId: window.value.window_id,
-            userId,
-            chatId: window.value.chat_id,
-            messageList: messageList,
-            tempMessageList: tempMessageList
-        }
-    },
-    components: {
-        'message-input-component': MessageInputComponent,
-        'message-list-component': MessageListComponent
-    }
+    return {
+      members: window.value.members,
+      windowId: window.value.windowId,
+      userId,
+      chatId: window.value.chatId,
+      messageList,
+      tempMessageList,
+    };
+  },
+  components: {
+    'message-input-component': MessageInputComponent,
+    'message-list-component': MessageListComponent,
+  },
 
-})
+});
 </script>
 <style lang='less' scoped>
 .chat_window {

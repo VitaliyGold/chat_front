@@ -2,16 +2,15 @@ import { CreateChatMessage } from './message';
 
 export interface CreateChatInfoDto {
     members: Array<string>,
-    chat_type: 1 | 2 | 3,
-    start_message: string
+    chatType: 1 | 2 | 3,
+    startMessage: string
 }
 
 export interface CreateChatRequest {
     members: string[],
-    chat_type: number,
-    start_message: string
+    chatType: number,
+    startMessage: string
 }
-
 
 interface ChatMember {
     name: string,
@@ -29,11 +28,11 @@ export interface CreateChatResponse {
 export type ChatsList = Map<string, ChatDto>;
 
 // хуйню ниже нужно будет посмотреть
-export type Chat_ID = string | null;
+export type ChatID = string | null;
 
 export interface ChatDto {
-    chat_id: string,
-    owner_id: string,
-    owner_name: string,
-    chat_type: 1 | 2 | 3
+    chatId: string,
+    ownerId: string,
+    ownerName: string,
+    chatType: 1 | 2 | 3
 }

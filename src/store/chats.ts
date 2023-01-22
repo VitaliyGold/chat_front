@@ -1,18 +1,18 @@
-import { ChatDto, ChatsList } from "@/types/chats";
-import { defineStore } from "pinia";
+import { ChatDto, ChatsList } from '@/types/chats';
+import { defineStore } from 'pinia';
 
 const useChats = defineStore('profile', {
-    state: () => ({
-        chatsList: new Map() as ChatsList
-    }),
-    actions: {
-        addChat(chatInfo: ChatDto) {
-            this.chatsList.set(chatInfo.chat_id, chatInfo)
-        },
+  state: () => ({
+    chatsList: new Map() as ChatsList,
+  }),
+  actions: {
+    addChat(chatInfo: ChatDto) {
+      this.chatsList.set(chatInfo.chatId, chatInfo);
     },
-    getters: {
-        
-    }
+  },
+  getters: {
+
+  },
 });
 
 export default useChats;

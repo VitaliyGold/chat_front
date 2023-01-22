@@ -6,6 +6,6 @@ interface BaseAxiosError extends AxiosError {
     error: string
 }
 
-export { 
-    BaseAxiosError
-}
+export {
+  BaseAxiosError,
+};

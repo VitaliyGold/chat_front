@@ -1,15 +1,15 @@
 <template>
-    <div 
+    <div
         class='user-actions'
     >
-        <button 
+        <button
             class='btn'
             v-if='have_chat'
             @click='() => openChat(chat_id)'
         >
             В чат
         </button>
-        <button 
+        <button
             class='btn'
             @click='() => createChat(user_id)'
             v-else
@@ -21,58 +21,57 @@
 
 <script lang='ts'>
 import { defineComponent, PropType } from 'vue';
-const { v4: uuidv4 } = require('uuid');
 
 import useWindows from '@/store/windows';
 import useProfile from '@/store/profile';
-import { Chat_ID } from '@/types/chats';
+import { ChatID } from '@/types/chats';
+
+import { v4 as uuidv4 } from 'uuid';
 
 export default defineComponent({
-    name: 'UserActions',
-    props: {
-        have_chat: {
-            type: Boolean,
-            required: true
-        },
-        chat_id: {
-            type: String as PropType<Chat_ID>,
-            required: false,
-            default: null
-        },
-        user_id: {
-            type: String,
-            required: true
-        },
+  name: 'UserActions',
+  props: {
+    haveChat: {
+      type: Boolean,
+      required: true,
     },
-    setup() {
+    chatId: {
+      type: String as PropType<ChatID>,
+      required: false,
+      default: null,
+    },
+    userId: {
+      type: String,
+      required: true,
+    },
+  },
+  setup() {
+    const windowStore = useWindows();
 
-        const windowStore = useWindows();
+    const profileStore = useProfile();
 
-        const profileStore = useProfile();
+    const createChat = (userId: string): void => {
+      const temporalWindowId = uuidv4();
 
-        const createChat = (user_id: string):void => {
+      const currentUserId = profileStore.userProfile.userId;
 
-            const temporal_window_id = uuidv4();
+      const members = [userId, currentUserId];
 
-            const currentUserId = profileStore.user_profile.user_id;
+      windowStore.addWindow('chat', { isNewChat: true, chatId: temporalWindowId, members });
+    };
 
-            const members = [user_id, currentUserId]
+    const openChat = (chatId):void => {
+      if (!chatId) {
+        return;
+      }
+      windowStore.addWindow('chat', { chatId, isNewChat: false });
+    };
 
-            windowStore.addWindow('chat', { is_new_chat: true, chat_id: temporal_window_id, members });
-        };
-
-        const openChat = (chat_id: Chat_ID):void => {
-            if (!chat_id) {
-                return;
-            }
-            windowStore.addWindow('chat', { chat_id, is_new_chat: false });
-        }
-    
-        return {
-            createChat,
-            openChat
-        }
-    }
+    return {
+      createChat,
+      openChat,
+    };
+  },
 });
 
 </script>

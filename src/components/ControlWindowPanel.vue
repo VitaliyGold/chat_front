@@ -4,13 +4,13 @@
             {{ window_name }}
         </p>
         <div class="btn-container">
-            <button 
+            <button
                 class="btn icon"
                 @click="hideWindow"
             >
                 <arrow-collapse-icon-component/>
             </button>
-            <button 
+            <button
                 class="btn icon"
                 @click="closeWindow"
             >
@@ -21,43 +21,43 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 import CloseIcon from 'vue-material-design-icons/Close.vue';
 import ArrowCollapse from 'vue-material-design-icons/ArrowCollapse.vue';
 import useWindows from '@/store/windows';
 
 export default defineComponent({
-    name: 'ControlWindowPanel',
-    props: {
-        window_id: {
-            type: String,
-            required: true
-        },
-        window_name: {
-            type: String,
-            required: true
-        }
+  name: 'ControlWindowPanel',
+  props: {
+    windowId: {
+      type: String,
+      required: true,
     },
-    setup({ window_id, window_name }) {
-        const store = useWindows();
-        
-        const closeWindow = () => {
-            store.closeWindow(window_id);
-        };
-        const hideWindow = () => {
-            store.hideWindow(window_id);
-        };
-        return {
-            closeWindow,
-            hideWindow
-        }
+    windowName: {
+      type: String,
+      required: true,
     },
-    components: {
-        'close-icon-component': CloseIcon,
-        'arrow-collapse-icon-component': ArrowCollapse
-    }
+  },
+  setup(props) {
+    const store = useWindows();
 
-})
+    const closeWindow = () => {
+      store.closeWindow(props.windowId);
+    };
+    const hideWindow = () => {
+      store.hideWindow(props.windowId);
+    };
+    return {
+      closeWindow,
+      hideWindow,
+    };
+  },
+  components: {
+    'close-icon-component': CloseIcon,
+    'arrow-collapse-icon-component': ArrowCollapse,
+  },
+
+});
 </script>
 
 <style scoped lang="less">
@@ -72,7 +72,7 @@ export default defineComponent({
 }
 
 .window_name {
-    
+
 }
 
 </style>

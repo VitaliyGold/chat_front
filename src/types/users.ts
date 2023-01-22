@@ -1,6 +1,6 @@
-import { Profile } from "./profile";
+import { Profile } from './profile';
 
 export interface User extends Profile{
-    have_chat: boolean,
-    chat_id: null | string,
+    haveChat: boolean,
+    chatId: null | string,
 }

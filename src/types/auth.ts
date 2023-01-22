@@ -1,4 +1,3 @@
-
 interface LoginData {
     login: string,
     password: string
@@ -8,21 +7,19 @@ interface RegistrationData extends LoginData {
    name: string
 }
 
-
 interface AutorizationData {
     token: string,
-    user_id: string
+    userId: string
 }
 
 type LoginFormFields = 'login' | 'password';
 
 type RegistrationFormFields = LoginFormFields | 'name' | 'confirmPassword';
 
-
 export {
-    LoginData,
-    RegistrationData,
-    AutorizationData,
-    RegistrationFormFields,
-    LoginFormFields
-}
+  LoginData,
+  RegistrationData,
+  AutorizationData,
+  RegistrationFormFields,
+  LoginFormFields,
+};

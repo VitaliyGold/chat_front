@@ -6,7 +6,7 @@
         />
         <settings-window-component
             v-if="window.type === 'settings'"
-            
+
         />
         <invite-window-component
             v-else-if="window.type === 'invite'"
@@ -20,27 +20,26 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import ChatWindow from './chats/ChatWindow.vue';
 import ControlWindowPanel from '@/components/ControlWindowPanel.vue';
 import { WindowObject } from '@/types/window';
 import SettingsWindow from '@/components/settings/SettingsWindow.vue';
+import ChatWindow from './chats/ChatWindow.vue';
 import InviteWindow from './invite/InviteWindow.vue';
 
-
 export default defineComponent({
-    props: {
-        window: {
-            required: true,
-            type: Object as PropType<WindowObject>
-        }
+  props: {
+    window: {
+      required: true,
+      type: Object as PropType<WindowObject>,
     },
-    components: {
-        'chat-window-component': ChatWindow,
-        'settings-window-component': SettingsWindow,
-        'control-window-panel': ControlWindowPanel,
-        'invite-window-component': InviteWindow
-    }
-})
+  },
+  components: {
+    'chat-window-component': ChatWindow,
+    'settings-window-component': SettingsWindow,
+    'control-window-panel': ControlWindowPanel,
+    'invite-window-component': InviteWindow,
+  },
+});
 </script>
 
 <style scoped>

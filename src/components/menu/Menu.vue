@@ -31,25 +31,24 @@ import { defineComponent } from 'vue';
 import InviteIcon from 'vue-material-design-icons/AccountPlus.vue';
 import SettingsIcon from 'vue-material-design-icons/Cog.vue';
 
-
 export default defineComponent({
-    components: {
-        'invite-icon-component': InviteIcon,
-        'settings-icon-component': SettingsIcon
-    },
-    setup(_, { emit }) {
-        const windowsStore = useWindows();
+  components: {
+    'invite-icon-component': InviteIcon,
+    'settings-icon-component': SettingsIcon,
+  },
+  setup(_, { emit }) {
+    const windowsStore = useWindows();
 
-        const openWindow = (type: 'invite' | 'settings') => {
-            windowsStore.addWindow(type)
-            emit('openWindow')
-        }
+    const openWindow = (type: 'invite' | 'settings') => {
+      windowsStore.addWindow(type);
+      emit('openWindow');
+    };
 
-        return {
-            openWindow
-        }
-    }
-})
+    return {
+      openWindow,
+    };
+  },
+});
 
 </script>
 

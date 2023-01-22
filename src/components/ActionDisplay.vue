@@ -12,26 +12,26 @@
     </div>
 </template>
 <script lang="ts">
-import { defineComponent, computed } from 'vue';
+import { defineComponent } from 'vue';
 
 import useWindows from '@/store/windows';
 import Window from './Window.vue';
 
 export default defineComponent({
-    name: 'ActionPanel',
-    components: {
-        'window-component': Window
-    },
-    setup() {
-        const store = useWindows();
+  name: 'ActionPanel',
+  components: {
+    'window-component': Window,
+  },
+  setup() {
+    const store = useWindows();
 
-        const windowsList = store.windowsList;
+    const { windowsList } = store;
 
-        return {
-            windowsList 
-        }
-    },
-})
+    return {
+      windowsList,
+    };
+  },
+});
 </script>
 
 <style scoped>

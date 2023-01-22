@@ -15,7 +15,7 @@
             :have_chat="have_chat"
         />
     </li>
-    
+
 </template>
 
 <script lang="ts">
@@ -23,40 +23,40 @@
 import { defineComponent, PropType } from 'vue';
 
 import { Profile } from '@/types/profile';
-import { Chat_ID } from '@/types/chats';
+import { ChatID } from '@/types/chats';
 
 import PersonIcon from 'vue-material-design-icons/Account.vue';
 import UserActions from '../invite/UserActions.vue';
 
 export default defineComponent({
-    name: 'UserItem',
-    props: {
-        user_info: {
-            type: Object as PropType<Profile>,
-            required: true
-        },
-        have_chat: {
-            type: Boolean,
-            required: false,
-            default: false
-        },
-        chat_id: {
-            type: String as PropType<Chat_ID>,
-            required: false,
-            default: null
-        },
-        is_profile: {
-            type: Boolean,
-            required: false,
-            default: false
-
-        }
+  name: 'UserItem',
+  props: {
+    userInfo: {
+      type: Object as PropType<Profile>,
+      required: true,
     },
-    components: {
-        'person-icon-component': PersonIcon,
-        'user-actions-component': UserActions
-    }
-})
+    haveChat: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    chatId: {
+      type: String as PropType<ChatID>,
+      required: false,
+      default: null,
+    },
+    isProfile: {
+      type: Boolean,
+      required: false,
+      default: false,
+
+    },
+  },
+  components: {
+    'person-icon-component': PersonIcon,
+    'user-actions-component': UserActions,
+  },
+});
 
 </script>
 

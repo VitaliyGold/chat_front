@@ -1,6 +1,6 @@
 <template>
-    <div 
-        class="settings-window" 
+    <div
+        class="settings-window"
     >
         <div class="profile_data">
             <user-item-component
@@ -8,7 +8,7 @@
                 :is_profile="true"
                 v-if="user_profile"
             />
-            <p 
+            <p
                 v-else
             >
                 Пользователь не загрузился
@@ -16,7 +16,7 @@
         </div>
         <settings-list-component/>
     </div>
-    
+
 </template>
 
 <script lang="ts">
@@ -26,21 +26,20 @@ import { defineComponent } from 'vue';
 import UserItem from '../ui-components/UserItem.vue';
 import SettingsList from './SettingsList.vue';
 
-
 export default defineComponent({
-    name: 'SettingsWindow',
-    components: {
-        'user-item-component': UserItem,
-        'settings-list-component': SettingsList
-    },
-    setup() {
-        const profile_store = useProfile();
+  name: 'SettingsWindow',
+  components: {
+    'user-item-component': UserItem,
+    'settings-list-component': SettingsList,
+  },
+  setup() {
+    const profileStore = useProfile();
 
-        return {
-            user_profile: profile_store.user_profile,
-        }
-    }
-})
+    return {
+      userProfile: profileStore.userProfile,
+    };
+  },
+});
 </script>
 
 <style>

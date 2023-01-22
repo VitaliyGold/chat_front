@@ -1,6 +1,6 @@
-export type SettingsName = 
-    'Редактирование профиля' 
-    | 'Редактирование оповещений' 
+export type SettingsName =
+    'Редактирование профиля'
+    | 'Редактирование оповещений'
     | 'Выход';
 
 export type SettingsType =
@@ -9,7 +9,7 @@ export type SettingsType =
     | 'exit'
 
 export interface SettingItem {
-    setting_icon: any,
-    setting_name: SettingsName,
-    setting_type: SettingsType
+    settingIcon: any,
+    settingName: SettingsName,
+    settingType: SettingsType
 }

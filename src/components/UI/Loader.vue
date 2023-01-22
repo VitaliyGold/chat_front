@@ -15,34 +15,33 @@ import { defineComponent } from 'vue';
 import Loading from 'vue-material-design-icons/Loading.vue';
 
 export default defineComponent({
-    name: 'Loader',
-    props: {
-        size: {
-            type: Number,
-            required: false,
-            default: 32
-        },
-        addClass: {
-            type: String,
-            required: false,
-            default: 'icon-2x'
-        }
+  name: 'Loader',
+  props: {
+    size: {
+      type: Number,
+      required: false,
+      default: 32,
     },
-    components: {
-        'loading-icon-component': Loading
+    addClass: {
+      type: String,
+      required: false,
+      default: 'icon-2x',
     },
-    
-    setup({ size }) {
-        const containerViewBox = `0 0 ${size * 2} ${size * 2}`;
-        const sizeLoader = `${size}px`;
-        
-        return {
-            containerViewBox,
-            sizeLoader
-        }
+  },
+  components: {
+    'loading-icon-component': Loading,
+  },
 
-    }
-})
+  setup(props) {
+    const containerViewBox = `0 0 ${props.size * 2} ${props.size * 2}`;
+    const sizeLoader = `${props.size}px`;
+
+    return {
+      containerViewBox,
+      sizeLoader,
+    };
+  },
+});
 </script>
 
 <style lang="less">
@@ -57,7 +56,6 @@ export default defineComponent({
     animation-iteration-count: infinite;
     animation-timing-function: linear;
 
-    
     .loader-icon {
         display: flex;
         justify-content: center;

@@ -1,5 +1,5 @@
 <template>
-    <button 
+    <button
         class="btn single-icon"
         @click="changeStateMenu"
     >
@@ -14,35 +14,33 @@
     />
 </template>
 
-
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import CloseIcon from 'vue-material-design-icons/Menu.vue';
 import Menu from './Menu.vue';
 
 export default defineComponent({
-    setup() {
+  setup() {
+    const openedMenu = ref(false);
 
-        const opened_menu = ref(false);
+    const changeStateMenu = () => {
+      if (openedMenu.value) {
+        openedMenu.value = false;
+        return;
+      }
+      openedMenu.value = true;
+    };
 
-        const changeStateMenu = () => {
-            if (opened_menu.value) {
-                opened_menu.value = false;
-                return;
-            };
-            opened_menu.value = true;
-        }
-
-        return {
-            opened_menu,
-            changeStateMenu
-        }
-    },
-    components: {
-        'close-icon-component': CloseIcon,
-        'menu-component': Menu
-    }
-})
+    return {
+      openedMenu,
+      changeStateMenu,
+    };
+  },
+  components: {
+    'close-icon-component': CloseIcon,
+    'menu-component': Menu,
+  },
+});
 </script>
 
 <style lang="less" scoped>
@@ -56,7 +54,7 @@ export default defineComponent({
             .material-design-icon__svg {
                 font-size: 3em;
             }
-            
+
         }
     }
 
