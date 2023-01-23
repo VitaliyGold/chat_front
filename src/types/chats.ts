@@ -25,8 +25,6 @@ export interface CreateChatResponse {
     firstMessage: CreateChatMessage
 }
 
-export type ChatsList = Map<string, ChatDto>;
-
 // хуйню ниже нужно будет посмотреть
 export type ChatID = string | null;
 
@@ -36,3 +34,5 @@ export interface ChatDto {
     ownerName: string,
     chatType: 1 | 2 | 3
 }
+
+export type ChatsList = Map<string, ChatDto>;

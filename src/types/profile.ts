@@ -6,5 +6,5 @@ interface Profile {
 }
 
 export {
-  Profile,
+	Profile,
 };

@@ -4,26 +4,26 @@ import Registration from '@/views/Registration.vue';
 import Main from '@/views/Main.vue';
 
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: '',
-    name: 'Main',
-    component: Main,
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login,
-  },
-  {
-    path: '/registration',
-    name: 'Registration',
-    component: Registration,
-  },
+	{
+		path: '',
+		name: 'Main',
+		component: Main,
+	},
+	{
+		path: '/login',
+		name: 'Login',
+		component: Login,
+	},
+	{
+		path: '/registration',
+		name: 'Registration',
+		component: Registration,
+	},
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes,
+	history: createWebHistory(),
+	routes,
 });
 
 export default router;

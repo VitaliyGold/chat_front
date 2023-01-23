@@ -1,36 +1,36 @@
 <template>
-    <button
-        class="btn"
-        :class="type"
-    >
-        {{ btnText }}
-    </button>
+  <button
+    class="btn"
+    :class="type"
+  >
+    {{ btnText }}
+  </button>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'Button',
-  props: {
-    btnText: {
-      type: String,
-      required: false,
-    },
-    type: {
-      type: String,
-      required: false,
-    },
-  },
-  setup(_, { emit }) {
-    const clickFunction = () => {
-      emit('click');
-    };
+	name: 'ButtonComponent',
+	props: {
+		btnText: {
+			type: String,
+			required: false,
+		},
+		type: {
+			type: String,
+			required: false,
+		},
+	},
+	setup(_, { emit }) {
+		const clickFunction = () => {
+			emit('click');
+		};
 
-    return {
-      clickFunction,
-    };
-  },
+		return {
+			clickFunction,
+		};
+	},
 });
 
 </script>

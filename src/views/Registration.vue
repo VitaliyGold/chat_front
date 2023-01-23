@@ -10,10 +10,10 @@ import { defineComponent } from 'vue';
 import RegistrationForm from '@/components/RegistrationForm.vue';
 
 export default defineComponent({
-  name: 'RegistrationPage',
-  components: {
-    'registration-form-component': RegistrationForm,
-  },
+	name: 'RegistrationPage',
+	components: {
+		'registration-form-component': RegistrationForm,
+	},
 
 });
 

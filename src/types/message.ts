@@ -19,4 +19,3 @@ export interface MessageDto extends Message{
 export type MessageList = Map<string, MessageDto>;
 
 export type ChatsMessageList = Map<string, MessageList>
-

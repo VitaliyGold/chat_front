@@ -1,33 +1,29 @@
 <template>
-    <div
-        class="empty-field"
-        v-if="loading || !userList.length"
-    >
-        <p v-if="!loading && !userList.length">
-            Нет данных
-        </p>
-        <loader-component
-            v-else
-        />
-
-    </div>
-
-    <ul
-        class="users-list"
-        v-else
-    >
-    <user-item
-        v-for="user in userList"
-        :key="user.userId"
-        :user_info="user"
-        :have_chat="user.have_chat"
-        :chat_id="user.chat_id"
-        :is_profile="false"
-
+  <div
+    class="empty-field"
+    v-if="loading || !userList.length"
+  >
+    <p v-if="!loading && !userList.length">
+      Нет данных
+    </p>
+    <loader-component
+      v-else
     />
+  </div>
 
-    </ul>
-
+  <ul
+    class="users-list"
+    v-else
+  >
+    <user-item
+      v-for="user in userList"
+      :key="user.userId"
+      :user_info="user"
+      :have_chat="user.have_chat"
+      :chat_id="user.chat_id"
+      :is_profile="false"
+    />
+  </ul>
 </template>
 
 <script lang='ts'>
@@ -37,33 +33,33 @@ import { defineComponent, PropType } from 'vue';
 import { User } from '@/types/users';
 import useProfile from '@/store/profile';
 
-import UserItem from '@/components/ui-components/UserItem.vue';
-import Loader from '@/components/ui-components/Loader.vue';
+import UserItem from '@/components/UI/UserItem.vue';
+import LoaderComponent from '@/components/UI/LoaderComponent.vue';
 
 export default defineComponent({
-  name: 'UserList',
-  props: {
-    userList: {
-      required: true,
-      type: Array as PropType<User[]>,
-    },
-    loading: {
-      required: true,
-      type: Boolean,
-    },
-  },
-  setup() {
-    const profileStore = useProfile();
+	name: 'UserList',
+	props: {
+		userList: {
+			required: true,
+			type: Array as PropType<User[]>,
+		},
+		loading: {
+			required: true,
+			type: Boolean,
+		},
+	},
+	setup() {
+		const profileStore = useProfile();
 
-    return {
-      currentUserId: profileStore.userProfile?.userId,
-    };
-  },
+		return {
+			currentUserId: profileStore.userProfile?.userId,
+		};
+	},
 
-  components: {
-    'user-item': UserItem,
-    'loader-component': Loader,
-  },
+	components: {
+		'user-item': UserItem,
+		'loader-component': LoaderComponent,
+	},
 });
 </script>
 

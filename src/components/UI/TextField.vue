@@ -1,89 +1,97 @@
 <template>
-    <div class="input-wrapper">
-        <div
-            class="input-wrapper__inner"
-        >
-            <label>
-                {{ labelText }}
-            </label>
-            <input
-                :type="type"
-                v-model="inputValue"
-                :class="{ 'error': haveError }"
-            >
-        </div>
-        <span
-            class="validation-message"
-            v-if="haveError && errorMessageText"
-        >
-            {{ errorMessageText }}
-        </span>
+  <div class="input-wrapper">
+    <div
+      class="input-wrapper__inner"
+    >
+      <label>
+        {{ label }}
+      </label>
+      <input
+        :type="inputType"
+        v-model="inputValue"
+        :class="{ 'error': haveError }"
+      >
     </div>
+    <span
+      class="validation-message"
+      v-if="haveError && errorMessageText"
+    >
+      {{ errorMessageText }}
+    </span>
+  </div>
 </template>
 
 <script lang="ts">
 
-import { defineComponent, computed } from 'vue';
+import {
+	defineComponent, computed, toRefs, PropType,
+} from 'vue';
 import type { BaseValidation } from '@vuelidate/core';
 
 const haveErrorMessage = (rule: BaseValidation) => Object.keys(rule).length && rule.$errors.length;
 
 export default defineComponent({
-  emits: [
-    'update:modelValue',
-  ],
+	emits: [
+		'update:modelValue',
+	],
+	props: {
+		labelText: {
+			type: String,
+			required: false,
+		},
+		modelValue: {
+			type: String,
+			required: true,
+		},
+		validationRule: {
+			type: Object as PropType<BaseValidation>,
+			required: false,
+			default: () => {},
+		},
+		type: {
+			required: false,
+			default: 'text',
+		},
 
-  props: {
-    labelText: {
-      type: String,
-      required: false,
-    },
-    modelValue: {
-      type: String,
-      required: true,
-    },
-    validationRule: {
-      type: Object,
-      required: false,
-      default: () => {},
-    },
-    type: {
-      required: false,
-      default: 'text',
-    },
+	},
+	setup(props, { emit }) {
+		const {
+			modelValue,
+			type,
+			validationRule,
+			labelText,
+		} = toRefs(props);
 
-  },
-  setup(props, { emit }) {
-    const inputValue = computed({
-      get() {
-        return props.modelValue;
-      },
-      set(value) {
-        emit('update:modelValue', value);
-      },
-    });
+		const inputValue = computed({
+			get() {
+				return modelValue.value;
+			},
+			set(value) {
+				emit('update:modelValue', value);
+			},
+		});
 
-    const haveError = computed((): boolean => !!props.validationRule.$error);
+		const haveError = computed((): boolean => !!validationRule.value.$error);
 
-    const errorMessageText = computed(() => {
-      // костыль
-      // TODO посмотреть что за проблема с типами
-      if (haveErrorMessage(props.validationRule as BaseValidation)) {
-        return props.validationRule.$errors[0].$message;
-      }
+		const errorMessageText = computed(() => {
+			// костыль
+			// TODO посмотреть что за проблема с типами
+			if (haveErrorMessage(validationRule.value)) {
+				return validationRule.value.$errors[0].$message;
+			}
 
-      return '';
-    });
+			return '';
+		});
 
-    return {
-      labelText: props.labelText,
-      inputValue,
-      errorMessageText,
-      haveError,
-      type: props.type,
+		return {
+			label: labelText,
+			inputValue,
+			errorMessageText,
+			haveError,
+			inputType: type,
 
-    };
-  },
+		};
+	},
 });
 </script>
 

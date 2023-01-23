@@ -1,15 +1,15 @@
 <template>
-    <div class="window-header">
-        <text-field
-            v-model="searchValue"
-            labelText="Поиск по имени"
-            @update:modelValue="searchFunc"
-        />
-    </div>
-    <user-list
-        :userList="userList"
-        :loading="loading"
+  <div class="window-header">
+    <text-field
+      v-model="searchValue"
+      label-text="Поиск по имени"
+      @update:modelValue="searchFunc"
     />
+  </div>
+  <user-list
+    :user-list="userList"
+    :loading="loading"
+  />
 </template>
 
 <script lang="ts">
@@ -23,45 +23,45 @@ import usersController from '@/api/users';
 import TextField from '@/components/UI/TextField.vue';
 
 export default defineComponent({
-  name: 'InviteWindow',
-  components: {
-    'text-field': TextField,
-    'user-list': UserList,
-  },
-  setup() {
-    const searchValue = ref('');
-    const loading = ref(true);
-    const userList = ref<User[]>([]);
+	name: 'InviteWindow',
+	components: {
+		'text-field': TextField,
+		'user-list': UserList,
+	},
+	setup() {
+		const searchValue = ref('');
+		const loading = ref(true);
+		const userList = ref<User[]>([]);
 
-    const getUsers = async (name = '') => {
-      try {
-        loading.value = true;
-        userList.value = [];
-        const data = await usersController.getUsersList(0, name);
-        userList.value = data;
-      } catch (e) {
-        console.log(e);
-      } finally {
-        loading.value = false;
-      }
-    };
+		const getUsers = async (name = '') => {
+			try {
+				loading.value = true;
+				userList.value = [];
+				const data = await usersController.getUsersList(0, name);
+				userList.value = data;
+			} catch (e) {
+				console.log(e);
+			} finally {
+				loading.value = false;
+			}
+		};
 
-    const searchFunc = debounce((value: string) => {
-      searchValue.value = value;
-      getUsers(value);
-    }, 500);
+		const searchFunc = debounce((value: string) => {
+			searchValue.value = value;
+			getUsers(value);
+		}, 500);
 
-    onMounted(async () => {
-      getUsers();
-    });
+		onMounted(async () => {
+			getUsers();
+		});
 
-    return {
-      searchFunc,
-      searchValue,
-      userList,
-      loading,
-    };
-  },
+		return {
+			searchFunc,
+			searchValue,
+			userList,
+			loading,
+		};
+	},
 });
 </script>
 

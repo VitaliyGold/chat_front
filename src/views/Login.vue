@@ -10,10 +10,10 @@ import { defineComponent } from 'vue';
 import LoginForm from '@/components/LoginForm.vue';
 
 export default defineComponent({
-  name: 'LoginPage',
-  components: {
-    'login-form-component': LoginForm,
-  },
+	name: 'LoginPage',
+	components: {
+		'login-form-component': LoginForm,
+	},
 
 });
 

@@ -1,36 +1,36 @@
 <template>
-    <div class="action_display">
-        <template
-            v-for="[windowId, window] in windowsList"
-            :key="windowId"
-        >
-            <window-component
-                :window="window"
-                v-if="window.hide"
-            />
-        </template>
-    </div>
+  <div class="action_display">
+    <template
+      v-for="[windowId, window] in windowsList"
+      :key="windowId"
+    >
+      <window-component
+        :window="window"
+        v-if="window.hide"
+      />
+    </template>
+  </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
 
 import useWindows from '@/store/windows';
-import Window from './Window.vue';
+import WindowComponent from '@/components/WindowComponent.vue';
 
 export default defineComponent({
-  name: 'ActionPanel',
-  components: {
-    'window-component': Window,
-  },
-  setup() {
-    const store = useWindows();
+	name: 'ActionPanel',
+	components: {
+		'window-component': WindowComponent,
+	},
+	setup() {
+		const store = useWindows();
 
-    const { windowsList } = store;
+		const { windowsList } = store;
 
-    return {
-      windowsList,
-    };
-  },
+		return {
+			windowsList,
+		};
+	},
 });
 </script>
 

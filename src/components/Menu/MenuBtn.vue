@@ -1,45 +1,46 @@
 <template>
-    <button
-        class="btn single-icon"
-        @click="changeStateMenu"
-    >
-        <close-icon-component
-            :size="36"
-            class="icon-3x"
-        />
-    </button>
-    <menu-component
-        v-if="opened_menu"
-        @openWindow="changeStateMenu"
+  <button
+    class="btn single-icon"
+    @click="changeStateMenu"
+  >
+    <close-icon-component
+      :size="36"
+      class="icon-3x"
     />
+  </button>
+  <menu-component
+    v-if="openedMenu"
+    @openWindow="changeStateMenu"
+  />
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import CloseIcon from 'vue-material-design-icons/Menu.vue';
-import Menu from './Menu.vue';
+import MenuComponent from '@/components/Menu/MenuComponent.vue';
 
 export default defineComponent({
-  setup() {
-    const openedMenu = ref(false);
+	name: 'MenuBtn',
+	setup() {
+		const openedMenu = ref(false);
 
-    const changeStateMenu = () => {
-      if (openedMenu.value) {
-        openedMenu.value = false;
-        return;
-      }
-      openedMenu.value = true;
-    };
+		const changeStateMenu = () => {
+			if (openedMenu.value) {
+				openedMenu.value = false;
+				return;
+			}
+			openedMenu.value = true;
+		};
 
-    return {
-      openedMenu,
-      changeStateMenu,
-    };
-  },
-  components: {
-    'close-icon-component': CloseIcon,
-    'menu-component': Menu,
-  },
+		return {
+			openedMenu,
+			changeStateMenu,
+		};
+	},
+	components: {
+		'close-icon-component': CloseIcon,
+		'menu-component': MenuComponent,
+	},
 });
 </script>
 

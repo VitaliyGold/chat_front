@@ -7,5 +7,5 @@ interface BaseAxiosError extends AxiosError {
 }
 
 export {
-  BaseAxiosError,
+	BaseAxiosError,
 };

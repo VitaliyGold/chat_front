@@ -35,11 +35,11 @@ interface ChatWindowConfig {
 }
 
 export {
-  BaseWindow,
-  WindowsTypes,
-  WindowsListType,
-  SettingsWindow,
-  InviteWindow,
-  ChatWindow,
-  ChatWindowConfig,
+	BaseWindow,
+	WindowsTypes,
+	WindowsListType,
+	SettingsWindow,
+	InviteWindow,
+	ChatWindow,
+	ChatWindowConfig,
 };

@@ -1,14 +1,14 @@
 <template>
-    <div class="action_panel">
-        <action-panel-item-component
-            v-for="[windowId, window] of windowsList"
-            :key="windowId"
-            :item_id="windowId"
-            :item_name="window.name"
-            :hide="window.hide"
-            :item_type="window.type"
-        />
-    </div>
+  <div class="action_panel">
+    <action-panel-item-component
+      v-for="[windowId, window] of windowsList"
+      :key="windowId"
+      :item_id="windowId"
+      :item_name="window.name"
+      :hide="window.hide"
+      :item_type="window.type"
+    />
+  </div>
 </template>
 <script lang="ts">
 import useWindows from '@/store/windows';
@@ -16,19 +16,19 @@ import { defineComponent } from 'vue';
 import ActionPanelItem from './ActionPanelItem.vue';
 
 export default defineComponent({
-  name: 'ActionPanel',
-  components: {
-    'action-panel-item-component': ActionPanelItem,
-  },
-  setup() {
-    const windowsStore = useWindows();
+	name: 'ActionPanel',
+	components: {
+		'action-panel-item-component': ActionPanelItem,
+	},
+	setup() {
+		const windowsStore = useWindows();
 
-    const { windowsList } = windowsStore;
+		const { windowsList } = windowsStore;
 
-    return {
-      windowsList,
-    };
-  },
+		return {
+			windowsList,
+		};
+	},
 });
 </script>
 

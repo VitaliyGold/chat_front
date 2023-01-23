@@ -1,37 +1,37 @@
 <template>
-    <div class="action-panel-item"
-    :title="item_name"
+  <div
+    class="action-panel-item"
+    :title="itemName"
+  >
+    <button
+      class="btn action-panel-btn"
+      @click="openWindow"
     >
-        <button
-            class="btn action-panel-btn"
-            @click="openWindow"
-        >
-            <invite-icon-component
-                :size="36"
-                class="icon-3x"
-                v-if="item_type === 'invite'"
-            />
-            <settings-icon-component
-                :size="36"
-                class="icon-3x"
-                v-else-if="item_type === 'settings'"
-            />
-            <person-icon-component
-                :size="36"
-                class="icon-3x"
-                v-else
-            />
-        </button>
-        <button
-            class="btn single-icon"
-            @click="closeWindow"
-        >
-            <close-icon-component
-                class="icon-1x"
-            />
-        </button>
-    </div>
-
+      <invite-icon-component
+        :size="36"
+        class="icon-3x"
+        v-if="itemType === 'invite'"
+      />
+      <settings-icon-component
+        :size="36"
+        class="icon-3x"
+        v-else-if="itemType === 'settings'"
+      />
+      <person-icon-component
+        :size="36"
+        class="icon-3x"
+        v-else
+      />
+    </button>
+    <button
+      class="btn single-icon"
+      @click="closeWindow"
+    >
+      <close-icon-component
+        class="icon-1x"
+      />
+    </button>
+  </div>
 </template>
 
 <script lang="ts">
@@ -44,37 +44,38 @@ import SettingsIcon from 'vue-material-design-icons/Cog.vue';
 import { WindowsTypes } from '@/types/window';
 
 export default defineComponent({
-  name: 'ActionPanelItem',
-  components: {
-    'close-icon-component': CloseIcon,
-    'invite-icon-component': InviteIcon,
-    'settings-icon-component': SettingsIcon,
-    'person-icon-component': PersonIcon,
-  },
-  setup(props) {
-    const windowsStore = useWindows();
-    return {
-      openWindow: () => windowsStore.openWindow(props.itemId),
-      closeWindow: () => windowsStore.closeWindow(props.itemId),
-    };
-  },
-  props: {
-    itemId: {
-      type: String,
-      required: true,
-    },
-    itemName: {
-      type: String,
-      required: true,
-    },
-    hide: {
-      type: Boolean,
-      required: true,
-    },
-    itemType: {
-      type: String as PropType<WindowsTypes>,
-    },
-  },
+	name: 'ActionPanelItem',
+	components: {
+		'close-icon-component': CloseIcon,
+		'invite-icon-component': InviteIcon,
+		'settings-icon-component': SettingsIcon,
+		'person-icon-component': PersonIcon,
+	},
+	setup(props) {
+		const windowsStore = useWindows();
+		return {
+			openWindow: () => windowsStore.openWindow(props.itemId),
+			closeWindow: () => windowsStore.closeWindow(props.itemId),
+		};
+	},
+	props: {
+		itemId: {
+			type: String,
+			required: true,
+		},
+		itemName: {
+			type: String,
+			required: true,
+		},
+		hide: {
+			type: Boolean,
+			required: true,
+		},
+		itemType: {
+			required: true,
+			type: String as PropType<WindowsTypes>,
+		},
+	},
 });
 </script>
 

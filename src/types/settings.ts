@@ -1,3 +1,5 @@
+import { Component } from 'vue';
+
 export type SettingsName =
     'Редактирование профиля'
     | 'Редактирование оповещений'
@@ -9,7 +11,7 @@ export type SettingsType =
     | 'exit'
 
 export interface SettingItem {
-    settingIcon: any,
+    settingIcon: Component,
     settingName: SettingsName,
     settingType: SettingsType
 }

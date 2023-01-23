@@ -1,12 +1,13 @@
 <template>
-    <div class="loader-wrapper"
-        :style="{ height: sizeLoader, width: sizeLoader }"
-    >
-        <loading-icon-component
-            :size="size"
-            :addClass="'addClass'"
-        />
-    </div>
+  <div
+    class="loader-wrapper"
+    :style="{ height: sizeLoader, width: sizeLoader }"
+  >
+    <loading-icon-component
+      :size="size"
+      :add-class="'addClass'"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -15,32 +16,32 @@ import { defineComponent } from 'vue';
 import Loading from 'vue-material-design-icons/Loading.vue';
 
 export default defineComponent({
-  name: 'Loader',
-  props: {
-    size: {
-      type: Number,
-      required: false,
-      default: 32,
-    },
-    addClass: {
-      type: String,
-      required: false,
-      default: 'icon-2x',
-    },
-  },
-  components: {
-    'loading-icon-component': Loading,
-  },
+	name: 'LoaderComponent',
+	props: {
+		size: {
+			type: Number,
+			required: false,
+			default: 32,
+		},
+		addClass: {
+			type: String,
+			required: false,
+			default: 'icon-2x',
+		},
+	},
+	components: {
+		'loading-icon-component': Loading,
+	},
 
-  setup(props) {
-    const containerViewBox = `0 0 ${props.size * 2} ${props.size * 2}`;
-    const sizeLoader = `${props.size}px`;
+	setup(props) {
+		const containerViewBox = `0 0 ${props.size * 2} ${props.size * 2}`;
+		const sizeLoader = `${props.size}px`;
 
-    return {
-      containerViewBox,
-      sizeLoader,
-    };
-  },
+		return {
+			containerViewBox,
+			sizeLoader,
+		};
+	},
 });
 </script>
 

@@ -1,78 +1,76 @@
 <template>
-    <div class='message-textarea'>
-        <div
-            contenteditable='true'
-            @input='changeMessageField'
-            class='textarea'
-            ref='inputRef'
-            v-once
-            v-html="messageValue"
-            @focus="() => focusOnInput(true)"
-            @blur="() => focusOnInput(false)"
-            v-focus
-        >
-
-        </div>
-        <p
-            class="placeholder"
-            v-if="displayPlaceholder"
-        >
-            Введите сообщение...
-        </p>
-    </div>
+    <div class="message-textarea">
+		<div
+			contenteditable="true"
+			@input="changeMessageField"
+			class="textarea"
+			ref="inputRef"
+			v-once
+			v-html="messageValue"
+			@focus="() => focusOnInput(true)"
+			@blur="() => focusOnInput(false)"
+			v-focus
+		/>
+		<p
+		class="placeholder"
+		v-if="displayPlaceholder"
+		>
+		Введите сообщение...
+		</p>
+	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent, computed, ref } from 'vue';
 
 export default defineComponent({
-  name: 'MessageTextArea',
-  directives: {
-    focus: {
-      mounted(el) {
-        el.focus();
-      },
-    },
-  },
-  props: {
-    modelValue: {
-      type: String,
-      required: true,
-    },
-  },
-  emits: ['changeValue'],
-  setup(props, { emit }) {
-    const inputFocus = ref(true);
+	name: 'MessageTextArea',
+	directives: {
+		focus: {
+			mounted(el) {
+				el.focus();
+			},
+		},
+	},
+	props: {
+		modelValue: {
+			type: String,
+			required: true,
+		},
+	},
+	emits: ['change-value'],
+	setup(props, { emit }) {
+		const inputFocus = ref(true);
 
-    const messageValue = ref(props.modelValue);
+		const messageValue = ref(props.modelValue);
 
-    const changeMessageField = (e: Event) => {
-      const target = e.target as HTMLInputElement;
-      if (target) {
-        messageValue.value = target.innerHTML;
-      }
-      emit('changeValue', target.innerHTML);
-    };
+		const changeMessageField = (e: Event) => {
+			const target = e.target as HTMLInputElement;
+			if (target) {
+				messageValue.value = target.innerHTML;
+			}
+			emit('change-value', target.innerHTML);
+		};
 
-    const focusOnInput = (focus : boolean) => {
-      inputFocus.value = focus;
-    };
+		const focusOnInput = (focus : boolean) => {
+			inputFocus.value = focus;
+		};
 
-    const displayPlaceholder = computed(() => {
-      if (messageValue.value) {
-        return false;
-      }
-      return !inputFocus.value;
-    });
+		const displayPlaceholder = computed(() => {
+			if (messageValue.value) {
+				return false;
+			}
+			return !inputFocus.value;
+		});
 
-    return {
-      messageValue,
-      inputFocus,
-      displayPlaceholder,
-      focusOnInput,
-      changeMessageField,
-    };
-  },
+		return {
+			messageValue,
+			inputFocus,
+			displayPlaceholder,
+			focusOnInput,
+			changeMessageField,
+		};
+	},
 });
 
 </script>

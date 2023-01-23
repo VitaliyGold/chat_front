@@ -17,9 +17,9 @@ type LoginFormFields = 'login' | 'password';
 type RegistrationFormFields = LoginFormFields | 'name' | 'confirmPassword';
 
 export {
-  LoginData,
-  RegistrationData,
-  AutorizationData,
-  RegistrationFormFields,
-  LoginFormFields,
+	LoginData,
+	RegistrationData,
+	AutorizationData,
+	RegistrationFormFields,
+	LoginFormFields,
 };

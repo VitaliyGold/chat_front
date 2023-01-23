@@ -1,10 +1,10 @@
 <template>
-    <li class="settings-item">
-        <slot></slot>
-        <p>
-            {{ setting_name }}
-        </p>
-    </li>
+  <li class="settings-item">
+    <slot />
+    <p>
+      {{ setting_name }}
+    </p>
+  </li>
 </template>
 
 <script lang="ts">
@@ -12,11 +12,11 @@ import { defineComponent, PropType } from 'vue';
 import { SettingsName } from '@/types/settings';
 
 export default defineComponent({
-  props: {
-    settingName: {
-      type: String as PropType<SettingsName>,
-    },
-  },
+	props: {
+		settingName: {
+			type: String as PropType<SettingsName>,
+		},
+	},
 });
 
 </script>
