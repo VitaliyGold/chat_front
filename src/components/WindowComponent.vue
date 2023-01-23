@@ -1,20 +1,20 @@
 <template>
-  <div class="window">
-    <control-window-panel
-      :window_id="window.window_id"
-      :window_name="window.name"
-    />
-    <settings-window-component
-      v-if="window.type === 'settings'"
-    />
-    <invite-window-component
-      v-else-if="window.type === 'invite'"
-    />
-    <chat-window-component
-      :window="window"
-      v-else-if="window.type === 'chat'"
-    />
-  </div>
+	<div class="window">
+		<control-window-panel
+			:window_id="window.window_id"
+			:window_name="window.name"
+		/>
+		<settings-window-component
+			v-if="window.type === 'settings'"
+		/>
+		<invite-window-component
+			v-else-if="window.type === 'invite'"
+		/>
+		<chat-window-component
+			:window="window"
+			v-else-if="window.type === 'chat'"
+		/>
+	</div>
 </template>
 
 <script lang="ts">

@@ -1,15 +1,15 @@
 <template>
-  <div class="window-header">
-    <text-field
-      v-model="searchValue"
-      label-text="Поиск по имени"
-      @update:modelValue="searchFunc"
-    />
-  </div>
-  <user-list
-    :user-list="userList"
-    :loading="loading"
-  />
+	<div class="window-header">
+		<text-field
+			v-model="searchValue"
+			label-text="Поиск по имени"
+			@update:model-value="searchFunc"
+		/>
+	</div>
+	<user-list
+		:user-list="userList"
+		:loading="loading"
+	/>
 </template>
 
 <script lang="ts">

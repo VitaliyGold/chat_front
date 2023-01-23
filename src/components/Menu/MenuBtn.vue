@@ -1,17 +1,17 @@
 <template>
-  <button
-    class="btn single-icon"
-    @click="changeStateMenu"
-  >
-    <close-icon-component
-      :size="36"
-      class="icon-3x"
-    />
-  </button>
-  <menu-component
-    v-if="openedMenu"
-    @openWindow="changeStateMenu"
-  />
+	<button
+		class="btn single-icon"
+		@click="changeStateMenu"
+	>
+		<close-icon-component
+			:size="36"
+			class="icon-3x"
+		/>
+	</button>
+	<menu-component
+		v-if="openedMenu"
+		@open-window="changeStateMenu"
+	/>
 </template>
 
 <script lang="ts">

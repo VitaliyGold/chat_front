@@ -1,14 +1,14 @@
 <template>
-  <div class="action_panel">
-    <action-panel-item-component
-      v-for="[windowId, window] of windowsList"
-      :key="windowId"
-      :item_id="windowId"
-      :item_name="window.name"
-      :hide="window.hide"
-      :item_type="window.type"
-    />
-  </div>
+	<div class="action_panel">
+		<action-panel-item-component
+			v-for="[windowId, window] of windowsList"
+			:key="windowId"
+			:item_id="windowId"
+			:item_name="window.name"
+			:hide="window.hide"
+			:item_type="window.type"
+		/>
+	</div>
 </template>
 <script lang="ts">
 import useWindows from '@/store/windows';

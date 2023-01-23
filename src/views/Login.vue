@@ -1,7 +1,7 @@
 <template>
-  <div class="login_page">
-    <login-form-component />
-  </div>
+	<div class="login_page">
+		<login-form-component />
+	</div>
 </template>
 
 <script lang="ts">

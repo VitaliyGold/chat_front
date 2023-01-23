@@ -1,15 +1,15 @@
 <template>
-  <div class="action_display">
-    <template
-      v-for="[windowId, window] in windowsList"
-      :key="windowId"
-    >
-      <window-component
-        :window="window"
-        v-if="window.hide"
-      />
-    </template>
-  </div>
+	<div class="action_display">
+		<template
+			v-for="[windowId, window] in windowsList"
+			:key="windowId"
+		>
+			<window-component
+				:window="window"
+				v-if="window.hide"
+			/>
+		</template>
+	</div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';

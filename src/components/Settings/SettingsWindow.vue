@@ -1,21 +1,21 @@
 <template>
-  <div
-    class="settings-window"
-  >
-    <div class="profile_data">
-      <user-item-component
-        :user_info="user_profile"
-        :is_profile="true"
-        v-if="user_profile"
-      />
-      <p
-        v-else
-      >
-        Пользователь не загрузился
-      </p>
-    </div>
-    <settings-list-component />
-  </div>
+	<div
+		class="settings-window"
+	>
+		<div class="profile_data">
+			<user-item-component
+				:user_info="user_profile"
+				:is_profile="true"
+				v-if="user_profile"
+			/>
+			<p
+				v-else
+			>
+				Пользователь не загрузился
+			</p>
+		</div>
+		<settings-list-component />
+	</div>
 </template>
 
 <script lang="ts">

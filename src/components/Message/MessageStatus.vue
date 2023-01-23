@@ -1,14 +1,14 @@
 <template>
-  <div>
-    <loader-component
-      :size="20"
-      add-class="icon-2x"
-      v-if="status === 'loading'"
-    />
-    <span v-else>
-      Готово
-    </span>
-  </div>
+	<div>
+		<loader-component
+			:size="20"
+			add-class="icon-2x"
+			v-if="status === 'loading'"
+		/>
+		<span v-else>
+			Готово
+		</span>
+	</div>
 </template>
 
 <script lang="ts">

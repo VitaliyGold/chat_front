@@ -1,21 +1,21 @@
 <template>
-  <div class="chat_window">
-    <message-list-component
-      v-if="messageList || tempMessageList"
-      :user_id="userId"
-      :message-list="messageList"
-      :temp-message-list="tempMessageList"
-    />
-    <p v-else>
-      ошибка
-    </p>
-    <message-input-component
-      v-if="members"
-      :temp-chat-id="windowId"
-      :chat-id="chatId"
-      :members="members"
-    />
-  </div>
+	<div class="chat_window">
+		<message-list-component
+			v-if="messageList || tempMessageList"
+			:user_id="userId"
+			:message-list="messageList"
+			:temp-message-list="tempMessageList"
+		/>
+		<p v-else>
+			ошибка
+		</p>
+		<message-input-component
+			v-if="members"
+			:temp-chat-id="windowId"
+			:chat-id="chatId"
+			:members="members"
+		/>
+	</div>
 </template>
 
 <script lang="ts">

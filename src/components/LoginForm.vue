@@ -1,36 +1,36 @@
 <template>
-  <form
-    class="auth-form"
-    @submit.prevent="loginSubmit"
-  >
-    <text-field-component
-      label-text="Логин"
-      v-model="login"
-      :validation-rule="v$.login"
-      @update:modelValue="(value) => changeField('login', value)"
-    />
-    <text-field-component
-      label-text="Пароль"
-      v-model="password"
-      :validation-rule="v$.password"
-      @update:modelValue="(value) => changeField('password', value)"
-    />
+	<form
+		class="auth-form"
+		@submit.prevent="loginSubmit"
+	>
+		<text-field-component
+			label-text="Логин"
+			v-model="login"
+			:validation-rule="v$.login"
+			@update:model-value="(value) => changeField('login', value)"
+		/>
+		<text-field-component
+			label-text="Пароль"
+			v-model="password"
+			:validation-rule="v$.password"
+			@update:model-value="(value) => changeField('password', value)"
+		/>
 
-    <button
-      type="submit"
-      class="btn submit"
-    >
-      Авторизация
-    </button>
+		<button
+			type="submit"
+			class="btn submit"
+		>
+			Авторизация
+		</button>
 
-    <router-link
-      to="/registration"
-      class="link auth"
-      active-class="link-active"
-    >
-      У меня нет аккаунта
-    </router-link>
-  </form>
+		<router-link
+			to="/registration"
+			class="link auth"
+			active-class="link-active"
+		>
+			У меня нет аккаунта
+		</router-link>
+	</form>
 </template>
 
 <script lang="ts">

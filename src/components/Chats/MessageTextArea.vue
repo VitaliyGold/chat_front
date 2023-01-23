@@ -1,5 +1,5 @@
 <template>
-    <div class="message-textarea">
+	<div class="message-textarea">
 		<div
 			contenteditable="true"
 			@input="changeMessageField"
@@ -12,10 +12,10 @@
 			v-focus
 		/>
 		<p
-		class="placeholder"
-		v-if="displayPlaceholder"
+			class="placeholder"
+			v-if="displayPlaceholder"
 		>
-		Введите сообщение...
+			Введите сообщение...
 		</p>
 	</div>
 </template>

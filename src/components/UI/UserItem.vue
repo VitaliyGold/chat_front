@@ -1,20 +1,20 @@
 <template>
-  <li class="user">
-    <div class="user-avatar">
-      <person-icon-component
-        :size="36"
-        class="icon-3x"
-      />
-    </div>
-    <div class="user-info">
-      {{ userInfo.name }}
-    </div>
-    <user-actions-component
-      :user-id="userInfo.userId"
-      :chat-id="chatId"
-      :have-chat="haveChat"
-    />
-  </li>
+	<li class="user">
+		<div class="user-avatar">
+			<person-icon-component
+				:size="36"
+				class="icon-3x"
+			/>
+		</div>
+		<div class="user-info">
+			{{ userInfo.name }}
+		</div>
+		<user-actions-component
+			:user-id="userInfo.userId"
+			:chat-id="chatId"
+			:have-chat="haveChat"
+		/>
+	</li>
 </template>
 
 <script lang="ts">

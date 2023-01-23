@@ -1,13 +1,13 @@
 <template>
-  <div
-    class="loader-wrapper"
-    :style="{ height: sizeLoader, width: sizeLoader }"
-  >
-    <loading-icon-component
-      :size="size"
-      :add-class="'addClass'"
-    />
-  </div>
+	<div
+		class="loader-wrapper"
+		:style="{ height: sizeLoader, width: sizeLoader }"
+	>
+		<loading-icon-component
+			:size="size"
+			:add-class="'addClass'"
+		/>
+	</div>
 </template>
 
 <script lang="ts">

@@ -1,22 +1,22 @@
 <template>
-  <div
-    class="user-actions"
-  >
-    <button
-      class="btn"
-      v-if="have_chat"
-      @click="() => openChat(chat_id)"
-    >
-      В чат
-    </button>
-    <button
-      class="btn"
-      @click="() => createChat(user_id)"
-      v-else
-    >
-      Создать чат
-    </button>
-  </div>
+	<div
+		class="user-actions"
+	>
+		<button
+			class="btn"
+			v-if="haveChat"
+			@click="() => openChat(chatId)"
+		>
+			В чат
+		</button>
+		<button
+			class="btn"
+			@click="() => createChat(userId)"
+			v-else
+		>
+			Создать чат
+		</button>
+	</div>
 </template>
 
 <script lang='ts'>
@@ -60,7 +60,7 @@ export default defineComponent({
 			windowStore.addWindow('chat', { isNewChat: true, chatId: temporalWindowId, members });
 		};
 
-		const openChat = (chatId):void => {
+		const openChat = (chatId: string):void => {
 			if (!chatId) {
 				return;
 			}

@@ -6,7 +6,7 @@ const useProfile = defineStore('profile', {
 		userProfile: {} as Profile,
 	}),
 	actions: {
-		fillUserProfile(userData) {
+		fillUserProfile(userData: Profile) {
 			this.userProfile = userData;
 		},
 	},

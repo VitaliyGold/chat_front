@@ -1,17 +1,17 @@
 <template>
-  <div class="message-input">
-    <message-text-area-component
-      v-model="messageValue"
-      @change-value="changeMessageValue"
-    />
-    <div>
-      <button-component
-        :btn-text="'Отправить'"
-        :type="'medium'"
-        @click="sendMessage"
-      />
-    </div>
-  </div>
+	<div class="message-input">
+		<message-text-area-component
+			v-model="messageValue"
+			@change-value="changeMessageValue"
+		/>
+		<div>
+			<button-component
+				:btn-text="'Отправить'"
+				:type="'medium'"
+				@click="sendMessage"
+			/>
+		</div>
+	</div>
 </template>
 
 <script lang='ts'>

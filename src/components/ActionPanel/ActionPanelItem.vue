@@ -1,37 +1,37 @@
 <template>
-  <div
-    class="action-panel-item"
-    :title="itemName"
-  >
-    <button
-      class="btn action-panel-btn"
-      @click="openWindow"
-    >
-      <invite-icon-component
-        :size="36"
-        class="icon-3x"
-        v-if="itemType === 'invite'"
-      />
-      <settings-icon-component
-        :size="36"
-        class="icon-3x"
-        v-else-if="itemType === 'settings'"
-      />
-      <person-icon-component
-        :size="36"
-        class="icon-3x"
-        v-else
-      />
-    </button>
-    <button
-      class="btn single-icon"
-      @click="closeWindow"
-    >
-      <close-icon-component
-        class="icon-1x"
-      />
-    </button>
-  </div>
+	<div
+		class="action-panel-item"
+		:title="itemName"
+	>
+		<button
+			class="btn action-panel-btn"
+			@click="openWindow"
+		>
+			<invite-icon-component
+				:size="36"
+				class="icon-3x"
+				v-if="itemType === 'invite'"
+			/>
+			<settings-icon-component
+				:size="36"
+				class="icon-3x"
+				v-else-if="itemType === 'settings'"
+			/>
+			<person-icon-component
+				:size="36"
+				class="icon-3x"
+				v-else
+			/>
+		</button>
+		<button
+			class="btn single-icon"
+			@click="closeWindow"
+		>
+			<close-icon-component
+				class="icon-1x"
+			/>
+		</button>
+	</div>
 </template>
 
 <script lang="ts">

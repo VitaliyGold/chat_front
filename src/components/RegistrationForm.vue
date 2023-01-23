@@ -1,62 +1,62 @@
 <template>
-  <form
-    class="auth-form"
-    @submit.prevent="submit"
-  >
-    <div class="registration-inner-form">
-      <button
-        class="btn"
-        v-if="mode === 'inputPassword'"
-        @click="() => changeMode('inputLogin')"
-      >
-        Назад
-      </button>
-      <template v-if="mode === 'inputLogin'">
-        <text-field-component
-          label-text="Логин"
-          v-model="formData.login"
-          :validation-rule="v$.formData.login"
-          @update:modelValue="(value) => changeField('login', value)"
-        />
-        <text-field-component
-          label-text="Имя"
-          v-model="formData.name"
-          :validation-rule="v$.formData.name"
-          @update:modelValue="(value) => changeField('name', value)"
-        />
-      </template>
-      <template v-else>
-        <text-field-component
-          label-text="Пароль"
-          v-model="formData.password"
-          :validation-rule="v$.formData.password"
-          type="password"
-          @update:modelValue="(value) => changeField('password', value)"
-        />
-        <text-field-component
-          label-text="Повторите пароль"
-          v-model="confirmPassword"
-          :validation-rule="v$.confirmPassword"
-          type="password"
-          @update:modelValue="(value) => changeField('confirmPassword', value)"
-        />
-      </template>
+	<form
+		class="auth-form"
+		@submit.prevent="submit"
+	>
+		<div class="registration-inner-form">
+			<button
+				class="btn"
+				v-if="mode === 'inputPassword'"
+				@click="() => changeMode('inputLogin')"
+			>
+				Назад
+			</button>
+			<template v-if="mode === 'inputLogin'">
+				<text-field-component
+					label-text="Логин"
+					v-model="formData.login"
+					:validation-rule="v$.formData.login"
+					@update:model-value="(value) => changeField('login', value)"
+				/>
+				<text-field-component
+					label-text="Имя"
+					v-model="formData.name"
+					:validation-rule="v$.formData.name"
+					@update:model-value="(value) => changeField('name', value)"
+				/>
+			</template>
+			<template v-else>
+				<text-field-component
+					label-text="Пароль"
+					v-model="formData.password"
+					:validation-rule="v$.formData.password"
+					type="password"
+					@update:model-value="(value) => changeField('password', value)"
+				/>
+				<text-field-component
+					label-text="Повторите пароль"
+					v-model="confirmPassword"
+					:validation-rule="v$.confirmPassword"
+					type="password"
+					@update:model-value="(value) => changeField('confirmPassword', value)"
+				/>
+			</template>
 
-      <button
-        type="submit"
-        class="btn submit"
-      >
-        Регистрация
-      </button>
-    </div>
-    <router-link
-      to="/login"
-      class="link auth"
-      active-class="link-active"
-    >
-      У меня есть аккаунт
-    </router-link>
-  </form>
+			<button
+				type="submit"
+				class="btn submit"
+			>
+				Регистрация
+			</button>
+		</div>
+		<router-link
+			to="/login"
+			class="link auth"
+			active-class="link-active"
+		>
+			У меня есть аккаунт
+		</router-link>
+	</form>
 </template>
 
 <script lang="ts">

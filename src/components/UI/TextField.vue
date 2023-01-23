@@ -1,24 +1,24 @@
 <template>
-  <div class="input-wrapper">
-    <div
-      class="input-wrapper__inner"
-    >
-      <label>
-        {{ label }}
-      </label>
-      <input
-        :type="inputType"
-        v-model="inputValue"
-        :class="{ 'error': haveError }"
-      >
-    </div>
-    <span
-      class="validation-message"
-      v-if="haveError && errorMessageText"
-    >
-      {{ errorMessageText }}
-    </span>
-  </div>
+	<div class="input-wrapper">
+		<div
+			class="input-wrapper__inner"
+		>
+			<label>
+				{{ label }}
+			</label>
+			<input
+				:type="inputType"
+				v-model="inputValue"
+				:class="{ 'error': haveError }"
+			>
+		</div>
+		<span
+			class="validation-message"
+			v-if="haveError && errorMessageText"
+		>
+			{{ errorMessageText }}
+		</span>
+	</div>
 </template>
 
 <script lang="ts">
@@ -38,6 +38,7 @@ export default defineComponent({
 		labelText: {
 			type: String,
 			required: false,
+			default: '',
 		},
 		modelValue: {
 			type: String,
@@ -50,6 +51,7 @@ export default defineComponent({
 		},
 		type: {
 			required: false,
+			type: String as PropType<'text' | 'password'>,
 			default: 'text',
 		},
 
@@ -71,17 +73,20 @@ export default defineComponent({
 			},
 		});
 
-		const haveError = computed((): boolean => !!validationRule.value.$error);
+		const haveError = validationRule.value
+			? computed((): boolean => !!validationRule.value.$error)
+			:			false;
 
-		const errorMessageText = computed(() => {
-			// костыль
-			// TODO посмотреть что за проблема с типами
-			if (haveErrorMessage(validationRule.value)) {
-				return validationRule.value.$errors[0].$message;
-			}
-
-			return '';
-		});
+		const errorMessageText = validationRule.value
+			? computed(() => {
+				// костыль
+				// TODO посмотреть что за проблема с типами
+				if (haveErrorMessage(validationRule.value)) {
+					return validationRule.value.$errors[0].$message;
+				}
+				return '';
+			})
+			:			'';
 
 		return {
 			label: labelText,

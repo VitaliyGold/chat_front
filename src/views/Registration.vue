@@ -1,7 +1,7 @@
 <template>
-  <div class="registration_page">
-    <registration-form-component />
-  </div>
+	<div class="registration_page">
+		<registration-form-component />
+	</div>
 </template>
 
 <script lang="ts">

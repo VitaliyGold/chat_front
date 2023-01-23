@@ -1,28 +1,28 @@
 <template>
-  <ul>
-    <li>
-      <button
-        class="btn single-icon"
-        @click="openWindow('invite')"
-      >
-        <invite-icon-component
-          :size="36"
-          class="icon-3x"
-        />
-      </button>
-    </li>
-    <li>
-      <button
-        class="btn single-icon"
-        @click="openWindow('settings')"
-      >
-        <settings-icon-component
-          :size="36"
-          class="icon-3x"
-        />
-      </button>
-    </li>
-  </ul>
+	<ul>
+		<li>
+			<button
+				class="btn single-icon"
+				@click="openWindow('invite')"
+			>
+				<invite-icon-component
+					:size="36"
+					class="icon-3x"
+				/>
+			</button>
+		</li>
+		<li>
+			<button
+				class="btn single-icon"
+				@click="openWindow('settings')"
+			>
+				<settings-icon-component
+					:size="36"
+					class="icon-3x"
+				/>
+			</button>
+		</li>
+	</ul>
 </template>
 
 <script lang='ts'>
@@ -33,6 +33,7 @@ import SettingsIcon from 'vue-material-design-icons/Cog.vue';
 
 export default defineComponent({
 	name: 'MenuComponent',
+	emits: ['openWindow'],
 	components: {
 		'invite-icon-component': InviteIcon,
 		'settings-icon-component': SettingsIcon,

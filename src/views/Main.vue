@@ -1,10 +1,10 @@
 <template>
-  <loader-component
-    v-if="loading"
-  />
-  <main-display-component
-    v-else
-  />
+	<loader-component
+		v-if="loading"
+	/>
+	<main-display-component
+		v-else
+	/>
 </template>
 
 <script lang="ts">

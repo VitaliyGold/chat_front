@@ -1,24 +1,24 @@
 <template>
-  <div class="message-list">
-    <message-component
-      v-for="[messageId, message] of messageList"
-      :message-text="message.messageText"
-      :is-own-message="message.ownerId === userId"
-      :owner-name="message.ownerName"
-      :message-id="messageId"
-      :key="messageId"
-      :status="message.status"
-    />
-    <message-component
-      v-for="[messageId, message] of tempMessageList"
-      :message-text="message.messageText"
-      :is-own-message="message.ownerId === userId"
-      :owner-name="message.ownerName"
-      :message-id="messageId"
-      :key="messageId"
-      :status="message.status"
-    />
-  </div>
+	<div class="message-list">
+		<message-component
+			v-for="[messageId, message] of messageList"
+			:message-text="message.messageText"
+			:is-own-message="message.ownerId === userId"
+			:owner-name="message.ownerName"
+			:message-id="messageId"
+			:key="messageId"
+			:status="message.status"
+		/>
+		<message-component
+			v-for="[messageId, message] of tempMessageList"
+			:message-text="message.messageText"
+			:is-own-message="message.ownerId === userId"
+			:owner-name="message.ownerName"
+			:message-id="messageId"
+			:key="messageId"
+			:status="message.status"
+		/>
+	</div>
 </template>
 
 <script lang='ts'>

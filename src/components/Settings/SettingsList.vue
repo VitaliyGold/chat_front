@@ -1,18 +1,18 @@
 <template>
-  <ul>
-    <settings-item-component
-      v-for="setting of settings_list"
-      :key="setting.name"
-      :setting_name="setting.setting_name"
-      @click="() => selectSettingsItem(setting.setting_type)"
-    >
-      <component
-        :is="setting.setting_icon"
-        :size="36"
-        class="icon-3x"
-      />
-    </settings-item-component>
-  </ul>
+	<ul>
+		<settings-item-component
+			v-for="setting of settings_list"
+			:key="setting.name"
+			:setting_name="setting.setting_name"
+			@click="() => selectSettingsItem(setting.setting_type)"
+		>
+			<component
+				:is="setting.setting_icon"
+				:size="36"
+				class="icon-3x"
+			/>
+		</settings-item-component>
+	</ul>
 </template>
 
 <script lang="ts">

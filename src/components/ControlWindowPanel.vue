@@ -1,23 +1,23 @@
 <template>
-  <div class="header">
-    <p class="window_name">
-      {{ window_name }}
-    </p>
-    <div class="btn-container">
-      <button
-        class="btn icon"
-        @click="hideWindow"
-      >
-        <arrow-collapse-icon-component />
-      </button>
-      <button
-        class="btn icon"
-        @click="closeWindow"
-      >
-        <close-icon-component />
-      </button>
-    </div>
-  </div>
+	<div class="header">
+		<p class="window_name">
+			{{ window_name }}
+		</p>
+		<div class="btn-container">
+			<button
+				class="btn icon"
+				@click="hideWindow"
+			>
+				<arrow-collapse-icon-component />
+			</button>
+			<button
+				class="btn icon"
+				@click="closeWindow"
+			>
+				<close-icon-component />
+			</button>
+		</div>
+	</div>
 </template>
 
 <script lang="ts">

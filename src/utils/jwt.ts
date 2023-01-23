@@ -2,7 +2,7 @@ export function setJwtToken(token: string) {
 	localStorage.setItem('auth_token', token);
 }
 
-export function setUserId(userId) {
+export function setUserId(userId: string) {
 	localStorage.setItem('user_id', userId);
 }
 

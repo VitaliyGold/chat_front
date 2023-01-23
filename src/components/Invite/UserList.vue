@@ -1,29 +1,29 @@
 <template>
-  <div
-    class="empty-field"
-    v-if="loading || !userList.length"
-  >
-    <p v-if="!loading && !userList.length">
-      Нет данных
-    </p>
-    <loader-component
-      v-else
-    />
-  </div>
+	<div
+		class="empty-field"
+		v-if="loading || !userList.length"
+	>
+		<p v-if="!loading && !userList.length">
+			Нет данных
+		</p>
+		<loader-component
+			v-else
+		/>
+	</div>
 
-  <ul
-    class="users-list"
-    v-else
-  >
-    <user-item
-      v-for="user in userList"
-      :key="user.userId"
-      :user_info="user"
-      :have_chat="user.have_chat"
-      :chat_id="user.chat_id"
-      :is_profile="false"
-    />
-  </ul>
+	<ul
+		class="users-list"
+		v-else
+	>
+		<user-item
+			v-for="user in userList"
+			:key="user.userId"
+			:user-info="user"
+			:have-chat="user.haveChat"
+			:chat-id="user.chatId"
+			:is-profile="false"
+		/>
+	</ul>
 </template>
 
 <script lang='ts'>

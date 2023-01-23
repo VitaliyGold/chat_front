@@ -1,10 +1,10 @@
 <template>
-  <li class="settings-item">
-    <slot />
-    <p>
-      {{ setting_name }}
-    </p>
-  </li>
+	<li class="settings-item">
+		<slot />
+		<p>
+			{{ settingName }}
+		</p>
+	</li>
 </template>
 
 <script lang="ts">
@@ -15,6 +15,8 @@ export default defineComponent({
 	props: {
 		settingName: {
 			type: String as PropType<SettingsName>,
+			required: true,
+
 		},
 	},
 });

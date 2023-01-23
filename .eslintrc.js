@@ -33,6 +33,10 @@ module.exports = {
 				max: 1,
 			},
 		}],
+		'vue/html-indent': [
+			'error',
+			'tab',
+		],
 	},
 	overrides: [
 		{

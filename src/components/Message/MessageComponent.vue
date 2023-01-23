@@ -1,15 +1,15 @@
 <template>
-  <div class="message">
-    <p>
-      {{ ownerName }}
-    </p>
-    <p>
-      {{ messageText }}
-    </p>
-    <message-status-component
-      :status="status"
-    />
-  </div>
+	<div class="message">
+		<p>
+			{{ ownerName }}
+		</p>
+		<p>
+			{{ messageText }}
+		</p>
+		<message-status-component
+			:status="status"
+		/>
+	</div>
 </template>
 
 <script lang="ts">

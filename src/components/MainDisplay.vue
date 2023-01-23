@@ -1,9 +1,9 @@
 <template>
-  <div class="main_display">
-    <action-display-component />
-    <action-panel-component />
-    <menu-btn-component />
-  </div>
+	<div class="main_display">
+		<action-display-component />
+		<action-panel-component />
+		<menu-btn-component />
+	</div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
