@@ -1,8 +1,8 @@
 <template>
 	<div class="window">
 		<control-window-panel
-			:window_id="window.window_id"
-			:window_name="window.name"
+			:window-id="window.windowId"
+			:window-name="window.name"
 		/>
 		<settings-window-component
 			v-if="window.type === 'settings'"

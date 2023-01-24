@@ -10,6 +10,7 @@
 			{{ userInfo.name }}
 		</div>
 		<user-actions-component
+			v-if="!isProfile"
 			:user-id="userInfo.userId"
 			:chat-id="chatId"
 			:have-chat="haveChat"

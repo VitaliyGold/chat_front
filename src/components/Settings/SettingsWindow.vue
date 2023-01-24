@@ -4,9 +4,9 @@
 	>
 		<div class="profile_data">
 			<user-item-component
-				:user_info="user_profile"
-				:is_profile="true"
-				v-if="user_profile"
+				:user-info="userProfile"
+				:is-profile="true"
+				v-if="userProfile"
 			/>
 			<p
 				v-else

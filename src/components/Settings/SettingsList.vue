@@ -1,13 +1,13 @@
 <template>
 	<ul>
 		<settings-item-component
-			v-for="setting of settings_list"
-			:key="setting.name"
-			:setting_name="setting.setting_name"
-			@click="() => selectSettingsItem(setting.setting_type)"
+			v-for="setting of settingsList"
+			:key="setting.settingName"
+			:setting-name="setting.settingName"
+			@click="() => selectSettingsItem(setting.settingType)"
 		>
 			<component
-				:is="setting.setting_icon"
+				:is="setting.settingIcon"
 				:size="36"
 				class="icon-3x"
 			/>

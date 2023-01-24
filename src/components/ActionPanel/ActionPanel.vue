@@ -3,10 +3,10 @@
 		<action-panel-item-component
 			v-for="[windowId, window] of windowsList"
 			:key="windowId"
-			:item_id="windowId"
-			:item_name="window.name"
+			:item-id="windowId"
+			:item-name="window.name"
 			:hide="window.hide"
-			:item_type="window.type"
+			:item-type="window.type"
 		/>
 	</div>
 </template>

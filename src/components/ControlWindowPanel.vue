@@ -1,7 +1,7 @@
 <template>
 	<div class="header">
 		<p class="window_name">
-			{{ window_name }}
+			{{ windowName }}
 		</p>
 		<div class="btn-container">
 			<button

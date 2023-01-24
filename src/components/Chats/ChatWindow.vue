@@ -2,7 +2,7 @@
 	<div class="chat_window">
 		<message-list-component
 			v-if="messageList || tempMessageList"
-			:user_id="userId"
+			:user-id="userId"
 			:message-list="messageList"
 			:temp-message-list="tempMessageList"
 		/>

@@ -2,7 +2,9 @@ import AccountEdit from 'vue-material-design-icons/AccountEdit.vue';
 import AccountAlert from 'vue-material-design-icons/AccountAlert.vue';
 import ExitToApp from 'vue-material-design-icons/ExitToApp.vue';
 
-export const settingsListData = [
+import { SettingItem } from '@/types/settings';
+
+export const settingsListData: SettingItem[] = [
 	{
 		settingIcon: AccountEdit,
 		settingName: 'Редактирование профиля',
