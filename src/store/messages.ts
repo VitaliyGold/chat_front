@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ChatsMessageList } from '@/types/message';
+import { ChatsMessageList, MessagesEntries } from '@/types/message';
 
 const useMessages = defineStore('messages', {
 	state: () => ({
@@ -30,13 +30,21 @@ const useMessages = defineStore('messages', {
 		addTempChatMessageList(chatId: string) {
 			this.tempChatsMessagesList.set(chatId, new Map());
 		},
+		addMessages(chatId: string, messagesList: MessagesEntries) {
+			if (!this.chatsMessageList.get(chatId)) {
+				this.chatsMessageList.set(chatId, new Map(messagesList));
+			} else {
+				for (let i = 0; i < messagesList.length; i++) {
+					this.chatsMessageList.get(chatId)?.set(messagesList[i][0], messagesList[i][1]);
+				}
+			}
+		},
 		transferMessageFromTemp(
 			tempMessageId: string,
 			messageId: string,
 			tempChatId: string,
 			chatId: string,
 		) {
-			console.log(arguments);
 			const messageList = this.tempChatsMessagesList.get(tempChatId);
 			if (!messageList) {
 				return;
@@ -46,7 +54,6 @@ const useMessages = defineStore('messages', {
 				return;
 			}
 			const copyMessage = { ...message };
-			copyMessage.chatId = chatId;
 			copyMessage.status = 'delivered';
 			copyMessage.messageId = messageId;
 			if (!this.chatsMessageList.get(chatId)) {

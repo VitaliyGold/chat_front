@@ -1,7 +1,7 @@
+import { MessageDto } from '@/types/message';
 import axiosInstance from '@/utils/axios';
-import { AxiosResponse } from 'axios';
 
-async function getMessages(chatId: string, page = 0): Promise<AxiosResponse> {
+async function getMessages(chatId: string, page = 0): Promise<MessageDto[]> {
 	const { data } = await axiosInstance.get('messages/getListMessages', {
 		params: {
 			chatId,

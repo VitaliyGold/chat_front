@@ -5,13 +5,13 @@
 		<button
 			class="btn"
 			v-if="haveChat"
-			@click="() => openChat(chatId)"
+			@click="openChat"
 		>
 			В чат
 		</button>
 		<button
 			class="btn"
-			@click="() => createChat(userId)"
+			@click="createChat"
 			v-else
 		>
 			Создать чат
@@ -45,26 +45,27 @@ export default defineComponent({
 			required: true,
 		},
 	},
-	setup() {
+	setup(props) {
 		const windowStore = useWindows();
 
 		const profileStore = useProfile();
 
-		const createChat = (userId: string): void => {
+		const currentUserId = profileStore.userProfile.userId;
+
+		const members = [props.userId, currentUserId];
+
+		const createChat = (): void => {
 			const temporalWindowId = uuidv4();
-
-			const currentUserId = profileStore.userProfile.userId;
-
-			const members = [userId, currentUserId];
 
 			windowStore.addWindow('chat', { isNewChat: true, chatId: temporalWindowId, members });
 		};
 
-		const openChat = (chatId: string):void => {
-			if (!chatId) {
+		const openChat = (): void => {
+			if (!props.chatId) {
 				return;
 			}
-			windowStore.addWindow('chat', { chatId, isNewChat: false });
+
+			windowStore.addWindow('chat', { chatId: props.chatId, isNewChat: false, members });
 		};
 
 		return {

@@ -37,6 +37,7 @@ module.exports = {
 			'error',
 			'tab',
 		],
+		'no-plusplus': 'off',
 	},
 	overrides: [
 		{

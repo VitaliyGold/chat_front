@@ -1,22 +1,29 @@
 <template>
 	<div class="message-list">
-		<message-component
-			v-for="[messageId, message] of messageList"
-			:message-text="message.messageText"
-			:is-own-message="message.ownerId === userId"
-			:owner-name="message.ownerName"
-			:message-id="messageId"
-			:key="messageId"
-			:status="message.status"
-		/>
-		<message-component
-			v-for="[messageId, message] of tempMessageList"
-			:message-text="message.messageText"
-			:is-own-message="message.ownerId === userId"
-			:owner-name="message.ownerName"
-			:message-id="messageId"
-			:key="messageId"
-			:status="message.status"
+		<template
+			v-if="loading"
+		>
+			<message-component
+				v-for="[messageId, message] of messageList"
+				:message-text="message.messageText"
+				:is-own-message="message.ownerId === userId"
+				:owner-name="message.name"
+				:message-id="messageId"
+				:key="messageId"
+				:status="message.status"
+			/>
+			<message-component
+				v-for="[messageId, message] of tempMessageList"
+				:message-text="message.messageText"
+				:is-own-message="message.ownerId === userId"
+				:owner-name="message.name"
+				:message-id="messageId"
+				:key="messageId"
+				:status="message.status"
+			/>
+		</template>
+		<loader-component
+			v-else
 		/>
 	</div>
 </template>
@@ -27,11 +34,13 @@ import { defineComponent, PropType } from 'vue';
 import { MessageList } from '@/types/message';
 
 import Message from '@/components/Message/MessageComponent.vue';
+import LoaderComponent from '../UI/LoaderComponent.vue';
 
 export default defineComponent({
 	name: 'MessageList',
 	components: {
 		'message-component': Message,
+		'loader-component': LoaderComponent,
 	},
 	props: {
 		messageList: {
@@ -44,6 +53,10 @@ export default defineComponent({
 		},
 		userId: {
 			type: String,
+			required: true,
+		},
+		loading: {
+			type: Boolean,
 			required: true,
 		},
 	},

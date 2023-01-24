@@ -5,6 +5,7 @@
 			:user-id="userId"
 			:message-list="messageList"
 			:temp-message-list="tempMessageList"
+			:loading="loadingChat"
 		/>
 		<p v-else>
 			ошибка
@@ -21,11 +22,14 @@
 <script lang="ts">
 import {
 	defineComponent, computed, PropType, toRefs,
+	ref, onMounted,
 } from 'vue';
 
 import { ChatWindow } from '@/types/window';
 import useProfile from '@/store/profile';
 import useMessages from '@/store/messages';
+import MessagesController from '@/api/messages';
+import { MessagesEntries } from '@/types/message';
 
 import MessageInputComponent from './MessageInput.vue';
 import MessageListComponent from './MessageList.vue';
@@ -41,6 +45,8 @@ export default defineComponent({
 		const profileStore = useProfile();
 		const messageStore = useMessages();
 
+		const loadingChat = ref(true);
+
 		const {
 			window,
 		} = toRefs(props);
@@ -54,10 +60,25 @@ export default defineComponent({
 			() => messageStore.getTempMessageListForId(window.value.windowId),
 		);
 
+		onMounted(async () => {
+			if (window.value.chatId) {
+				const messages = await MessagesController.getMessages(window.value.chatId);
+
+				const messagesEntries: MessagesEntries = messages.map(
+					(message) => [message.messageId, message],
+				);
+
+				messageStore.addMessages(window.value.chatId, messagesEntries);
+			} else {
+				loadingChat.value = false;
+			}
+		});
+
 		return {
 			members: window.value.members,
 			windowId: window.value.windowId,
 			userId,
+			loadingChat,
 			chatId: window.value.chatId,
 			messageList,
 			tempMessageList,

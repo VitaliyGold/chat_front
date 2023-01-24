@@ -73,7 +73,7 @@ export default defineComponent({
 				messageText: messageValue.value,
 				ownerId: profileStore.userProfile.userId,
 				createdAt: new Date().toLocaleString(),
-				ownerName: profileStore.userProfile.name,
+				name: profileStore.userProfile.name,
 			};
 
 			if (!messageStore.tempChatsMessagesList.get(props.tempChatId)) {

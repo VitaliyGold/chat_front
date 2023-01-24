@@ -3,18 +3,20 @@ export interface CreateChatMessage {
     messageText: string,
     createdAt: string,
     ownerId: string,
-    ownerName: string
+    chatId: string
 }
 
 export type MessageStatus = 'loading' | 'delivered' | 'read'
 
 export interface Message extends CreateChatMessage{
-    chatId: string,
+    name: string
 }
 
 export interface MessageDto extends Message{
     status: MessageStatus,
 }
+
+export type MessagesEntries = [string, MessageDto][]
 
 export type MessageList = Map<string, MessageDto>;
 
