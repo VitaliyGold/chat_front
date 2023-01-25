@@ -1,27 +1,26 @@
 <template>
-	<div class="message-textarea">
+	<div
+		class="message-textarea"
+		@click="() => focusOnInput(true)"
+	>
 		<div
 			contenteditable="true"
 			@input="changeMessageField"
 			class="textarea"
 			ref="inputRef"
 			v-once
-			v-html="messageValue"
+			v-html="inputValue"
 			@focus="() => focusOnInput(true)"
 			@blur="() => focusOnInput(false)"
 			v-focus
 		/>
-		<p
-			class="placeholder"
-			v-if="displayPlaceholder"
-		>
-			Введите сообщение...
-		</p>
 	</div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from 'vue';
+import {
+	defineComponent, computed, ref, toRef, watch,
+} from 'vue';
 
 export default defineComponent({
 	name: 'MessageTextArea',
@@ -33,22 +32,25 @@ export default defineComponent({
 		},
 	},
 	props: {
-		modelValue: {
+		messageText: {
 			type: String,
 			required: true,
 		},
 	},
 	emits: ['change-value'],
 	setup(props, { emit }) {
-		const inputFocus = ref(true);
+		const inputRef = ref<null | HTMLElement>(null);
 
-		const messageValue = ref(props.modelValue);
+		watch(() => props.messageText, (first, second) => {
+			if (first === '' && inputRef.value) {
+				inputRef.value!.innerHTML = '';
+			}
+		});
+
+		const inputFocus = ref(true);
 
 		const changeMessageField = (e: Event) => {
 			const target = e.target as HTMLInputElement;
-			if (target) {
-				messageValue.value = target.innerHTML;
-			}
 			emit('change-value', target.innerHTML);
 		};
 
@@ -57,15 +59,16 @@ export default defineComponent({
 		};
 
 		const displayPlaceholder = computed(() => {
-			if (messageValue.value) {
+			if (props.messageText) {
 				return false;
 			}
 			return !inputFocus.value;
 		});
 
 		return {
-			messageValue,
+			inputValue: props.messageText,
 			inputFocus,
+			inputRef,
 			displayPlaceholder,
 			focusOnInput,
 			changeMessageField,
@@ -78,18 +81,19 @@ export default defineComponent({
 <style scoped lang="less">
 
 .message-textarea {
-    position: relative;
-    .placeholder {
-        position: absolute;
-        top: 8px;
-        left: 8px;
-    }
 
     .textarea {
         outline: 1px solid blue;
         padding: 8px;
         height: 80px;
         border: 1px solid gray;
+		position: relative;
+		&:empty:not(:focus)::before {
+			content: 'Введите сообщение';
+			position: absolute;
+			left: 8px;
+			right: 8px;
+		}
     }
 }
 

@@ -67,7 +67,8 @@ export default defineComponent({
 <style scoped lang="less">
 
 .message-list {
-    height: calc(100vh - 300px);
+    height: calc(100vh - 315px);
+	overflow: auto;
 }
 
 </style>

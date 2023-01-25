@@ -1,14 +1,14 @@
 <template>
 	<div class="message-input">
 		<message-text-area-component
-			v-model="messageValue"
+			:message-text="messageValue"
 			@change-value="changeMessageValue"
 		/>
 		<div>
 			<button-component
 				:btn-text="'Отправить'"
 				:type="'medium'"
-				@click="sendMessage"
+				@click="submitInput"
 			/>
 		</div>
 	</div>
@@ -17,12 +17,13 @@
 <script lang='ts'>
 import { defineComponent, ref, PropType } from 'vue';
 
-import chatController from '@/api/chats';
+import ChatController from '@/api/chats';
+import MessageController from '@/api/messages';
 import useMessages from '@/store/messages';
 import useProfile from '@/store/profile';
 import useWindows from '@/store/windows';
 
-import { MessageDto } from '@/types/message';
+import { CreateNewMessage, MessageDto } from '@/types/message';
 import { v4 as uuidv4 } from 'uuid';
 import Button from '@/components/UI/ButtonComponent.vue';
 import MessageTextArea from './MessageTextArea.vue';
@@ -91,13 +92,32 @@ export default defineComponent({
 		const sendMessage = async () => {
 			const tempId = addTempMessage();
 
+			const message: CreateNewMessage = {
+				messageType: 1,
+				messageText: messageValue.value,
+				chatId: props.chatId,
+			};
+
+			const createdMessages = await MessageController.sendMessage(message);
+
+			messageStore.transferMessageFromTemp(
+				tempId,
+				createdMessages.messageId,
+				props.tempChatId,
+				createdMessages.chatId,
+			);
+		};
+
+		const createChat = async () => {
+			const tempId = addTempMessage();
+
 			const chatData = {
 				members: props.members,
 				chatType: 1,
 				startMessage: messageValue.value,
 			};
 
-			const chat = await chatController.createChat(chatData);
+			const chat = await ChatController.createChat(chatData);
 
 			windowStore.setChatId(props.tempChatId, chat.chatId);
 
@@ -109,10 +129,19 @@ export default defineComponent({
 			);
 		};
 
+		const submitInput = () => {
+			if (!props.chatId) {
+				createChat();
+			} else {
+				sendMessage();
+			}
+			changeMessageValue('');
+		};
+
 		return {
 			messageValue,
 			changeMessageValue,
-			sendMessage,
+			submitInput,
 		};
 	},
 	components: {

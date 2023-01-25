@@ -2,6 +2,7 @@
 	<button
 		class="btn"
 		:class="type"
+		@click="clickFunction"
 	>
 		{{ btnText }}
 	</button>

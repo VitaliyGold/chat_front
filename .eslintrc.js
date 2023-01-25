@@ -25,6 +25,7 @@ module.exports = {
 		'import/prefer-default-export': 'off',
 		'prefer-rest-params': 'off',
 		'@typescript-eslint/no-empty-function': ['error', { allow: ['arrowFunctions'] }],
+		'vuejs-accessibility/click-events-have-key-events': 'off',
 		'vue/max-attributes-per-line': ['error', {
 			singleline: {
 				max: 1,

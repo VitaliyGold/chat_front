@@ -1,3 +1,11 @@
+// to backend
+export interface CreateNewMessage {
+    messageType: 1 | 2 | 3,
+    messageText: string,
+    chatId: string,
+}
+
+// from backend
 export interface CreateChatMessage {
     messageId: string,
     messageText: string,
@@ -14,6 +22,7 @@ export interface Message extends CreateChatMessage{
 
 export interface MessageDto extends Message{
     status: MessageStatus,
+    createdAt: string
 }
 
 export type MessagesEntries = [string, MessageDto][]

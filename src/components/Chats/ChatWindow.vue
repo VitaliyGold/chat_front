@@ -94,6 +94,10 @@ export default defineComponent({
 <style lang='less' scoped>
 .chat_window {
     padding: 5px;
+	display: flex;
+	flex-direction: column;
+	height: calc(100% - 40px);
+	justify-content: space-between;
 }
 
 </style>
