@@ -10,6 +10,7 @@ module.exports = {
 	],
 	plugins: [
 		'custom',
+		'only-warn',
 	],
 	parserOptions: {
 		ecmaVersion: 2020,

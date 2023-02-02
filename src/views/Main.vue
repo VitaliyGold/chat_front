@@ -17,6 +17,9 @@ import ProfileController from '@/api/profile';
 import useProfile from '@/store/profile';
 import Loader from '@/components/UI/LoaderComponent.vue';
 
+import WebSocketConnect from '@/sockets';
+import { getJwtToken } from '@/utils/jwt';
+
 export default defineComponent({
 	name: 'MainPage',
 	setup() {
@@ -27,11 +30,16 @@ export default defineComponent({
 		onMounted(async () => {
 			try {
 				const userProfile = await ProfileController.getProfile();
-
-				console.log(userProfile);
-
 				profileStore.fillUserProfile(userProfile);
+				const token = getJwtToken();
+				if (token) {
+					const socket = new WebSocketConnect(token);
+					socket.connect();
+					console.log(socket);
+				}
 			} catch (e) {
+				console.log(e);
+				// вот тут дописать обработку ошибок
 				router.push('login');
 			} finally {
 				loading.value = false;
