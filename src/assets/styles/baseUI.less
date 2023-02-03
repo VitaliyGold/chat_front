@@ -1,0 +1,34 @@
+::-webkit-scrollbar {
+    width: 8px;
+    background-color: #e6dbdb;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #7c80d2;
+    border-radius: 4px;
+}
+
+
+.material-design-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.icon-3x {
+    &.material-design-icon {
+        width: 3em;
+        height: 3em;
+    }
+    &.material-design-icon > .material-design-icon__svg {
+        width: 2em;
+        height: 2em;
+    }
+}
+
+.material-design-icon > .material-design-icon__svg {
+    bottom: 0;
+    position: relative;
+}

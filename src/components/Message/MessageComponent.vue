@@ -60,7 +60,7 @@ export default defineComponent({
 		border: 1px solid #7c80d2;
 		&.own-message {
 			background-color: #7c80d2;
-			margin: 10px 0 10px 40px;
+			margin: 10px 5px 10px 40px;
 			color: white;
 			.header {
 				border-color: white;

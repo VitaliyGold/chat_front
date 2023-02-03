@@ -16,15 +16,16 @@
 
 <script lang='ts'>
 import { defineComponent, ref, PropType } from 'vue';
+import { v4 as uuidv4 } from 'uuid';
 
 import ChatController from '@/api/chats';
 import MessageController from '@/api/messages';
 import useMessages from '@/store/messages';
 import useProfile from '@/store/profile';
 import useWindows from '@/store/windows';
-
+import emitter from '@/utils/emitter';
 import { CreateNewMessage, MessageDto } from '@/types/message';
-import { v4 as uuidv4 } from 'uuid';
+
 import Button from '@/components/UI/ButtonComponent.vue';
 import MessageTextArea from './MessageTextArea.vue';
 
@@ -97,6 +98,8 @@ export default defineComponent({
 				messageText: messageValue.value,
 				chatId: props.chatId,
 			};
+
+			emitter.emit('sendMessage');
 
 			const createdMessages = await MessageController.sendMessage(message);
 

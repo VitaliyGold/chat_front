@@ -13,7 +13,7 @@
 <script lang="ts">
 
 import { defineComponent } from 'vue';
-import Loading from 'vue-material-design-icons/Loading.vue';
+import LoadingIcon from 'vue-material-design-icons/Loading.vue';
 
 export default defineComponent({
 	name: 'LoaderComponent',
@@ -30,7 +30,7 @@ export default defineComponent({
 		},
 	},
 	components: {
-		'loading-icon-component': Loading,
+		'loading-icon-component': LoadingIcon,
 	},
 
 	setup(props) {

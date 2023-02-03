@@ -1,15 +1,11 @@
 <template>
 	<div class="chat_window">
-		<message-list-component
-			v-if="messageList || tempMessageList"
+		<message-wrapper-component
 			:user-id="userId"
 			:message-list="messageList"
 			:temp-message-list="tempMessageList"
 			:loading="loadingChat"
 		/>
-		<p v-else>
-			ошибка
-		</p>
 		<message-input-component
 			v-if="members"
 			:temp-chat-id="windowId"
@@ -32,7 +28,7 @@ import MessagesController from '@/api/messages';
 import { MessagesEntries } from '@/types/message';
 
 import MessageInputComponent from './MessageInput.vue';
-import MessageListComponent from './MessageList.vue';
+import MessagesWrapper from './MessagesWrapper.vue';
 
 export default defineComponent({
 	props: {
@@ -69,9 +65,8 @@ export default defineComponent({
 				);
 
 				messageStore.addMessages(window.value.chatId, messagesEntries);
-			} else {
-				loadingChat.value = false;
 			}
+			loadingChat.value = false;
 		});
 
 		return {
@@ -86,7 +81,7 @@ export default defineComponent({
 	},
 	components: {
 		'message-input-component': MessageInputComponent,
-		'message-list-component': MessageListComponent,
+		'message-wrapper-component': MessagesWrapper,
 	},
 
 });

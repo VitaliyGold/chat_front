@@ -36,7 +36,6 @@ export default defineComponent({
 
 <style scoped>
     .action_display {
-        background-color: red;
         height: 85vh;
         width: 95%;
         padding: 10px;
