@@ -25,8 +25,8 @@ export interface MessageDto extends Message{
     createdAt: string
 }
 
-export type MessagesEntries = [string, MessageDto][]
+export type TempMessageList = Map<string, MessageDto>;
 
-export type MessageList = Map<string, MessageDto>;
+export type MessageList = MessageDto[];
 
-export type ChatsMessageList = Map<string, MessageList>
+export type ChatsMessageList<T> = Map<string, T>

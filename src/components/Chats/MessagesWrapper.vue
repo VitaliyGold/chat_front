@@ -8,6 +8,7 @@
 			:user-id="userId"
 			:message-list="messageList"
 			:temp-message-list="tempMessageList"
+			:chat-id="chatId"
 		/>
 	</div>
 </template>
@@ -15,7 +16,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 
-import { MessageList } from '@/types/message';
+import { MessageList, TempMessageList } from '@/types/message';
 
 import LoaderComponent from '@/components/UI/LoaderComponent.vue';
 import MessagesList from '@/components/Chats/MessageList.vue';
@@ -28,11 +29,11 @@ export default defineComponent({
 	},
 	props: {
 		messageList: {
-			type: Map as PropType<MessageList>,
+			type: Array as PropType<MessageList>,
 			required: true,
 		},
 		tempMessageList: {
-			type: Map as PropType<MessageList>,
+			type: Map as PropType<TempMessageList>,
 			required: true,
 		},
 		userId: {
@@ -43,6 +44,10 @@ export default defineComponent({
 			type: Boolean,
 			required: true,
 		},
+		chatId: {
+			type: String,
+			required: true
+		}
 	},
 });
 

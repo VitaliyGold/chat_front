@@ -6,7 +6,7 @@
 		>
 			<window-component
 				:window="window"
-				v-if="window.hide"
+				v-show="window.hide"
 			/>
 		</template>
 	</div>

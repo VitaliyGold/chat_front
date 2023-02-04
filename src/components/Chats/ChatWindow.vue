@@ -4,6 +4,7 @@
 			:user-id="userId"
 			:message-list="messageList"
 			:temp-message-list="tempMessageList"
+			:chat-id="chatId"
 			:loading="loadingChat"
 		/>
 		<message-input-component
@@ -25,7 +26,6 @@ import { ChatWindow } from '@/types/window';
 import useProfile from '@/store/profile';
 import useMessages from '@/store/messages';
 import MessagesController from '@/api/messages';
-import { MessagesEntries } from '@/types/message';
 
 import MessageInputComponent from './MessageInput.vue';
 import MessagesWrapper from './MessagesWrapper.vue';
@@ -39,7 +39,7 @@ export default defineComponent({
 	},
 	setup(props) {
 		const profileStore = useProfile();
-		const messageStore = useMessages();
+		const messagesStore = useMessages();
 
 		const loadingChat = ref(true);
 
@@ -50,21 +50,17 @@ export default defineComponent({
 		const { userId } = profileStore.userProfile;
 
 		const messageList = computed(
-			() => messageStore.getMessageListForId(window.value.chatId),
+			() => messagesStore.getMessageListForId(window.value.chatId),
 		);
 		const tempMessageList = computed(
-			() => messageStore.getTempMessageListForId(window.value.windowId),
+			() => messagesStore.getTempMessageListForId(window.value.windowId),
 		);
 
 		onMounted(async () => {
 			if (window.value.chatId) {
 				const messages = await MessagesController.getMessages(window.value.chatId);
 
-				const messagesEntries: MessagesEntries = messages.map(
-					(message) => [message.messageId, message],
-				);
-
-				messageStore.addMessages(window.value.chatId, messagesEntries);
+				messagesStore.addMessages(window.value.chatId, messages);
 			}
 			loadingChat.value = false;
 		});
