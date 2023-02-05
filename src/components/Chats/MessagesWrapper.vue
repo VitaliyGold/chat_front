@@ -46,8 +46,8 @@ export default defineComponent({
 		},
 		chatId: {
 			type: String,
-			required: true
-		}
+			required: true,
+		},
 	},
 });
 

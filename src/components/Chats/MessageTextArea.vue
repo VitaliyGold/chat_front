@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import {
-	defineComponent, computed, ref, toRef, watch,
+	defineComponent, computed, ref, watch,
 } from 'vue';
 
 export default defineComponent({
@@ -41,8 +41,8 @@ export default defineComponent({
 	setup(props, { emit }) {
 		const inputRef = ref<null | HTMLElement>(null);
 
-		watch(() => props.messageText, (first, second) => {
-			if (first === '' && inputRef.value) {
+		watch(() => props.messageText, (newValue) => {
+			if (newValue === '' && inputRef.value) {
 				inputRef.value!.innerHTML = '';
 			}
 		});
@@ -89,7 +89,8 @@ export default defineComponent({
         border: 1px solid gray;
 		position: relative;
 		&:empty:not(:focus)::before {
-			content: 'Введите сообщение';
+			content: 'Введите сообщение...';
+			color: gray;
 			position: absolute;
 			left: 8px;
 			right: 8px;

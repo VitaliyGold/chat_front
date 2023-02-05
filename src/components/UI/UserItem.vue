@@ -12,6 +12,7 @@
 		<user-actions-component
 			v-if="!isProfile"
 			:user-id="userInfo.userId"
+			:user-name="userInfo.name"
 			:chat-id="chatId"
 			:have-chat="haveChat"
 		/>

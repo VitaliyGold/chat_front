@@ -1,9 +1,9 @@
 <template>
 	<div class="action_panel">
 		<action-panel-item-component
-			v-for="[windowId, window] of windowsList"
-			:key="windowId"
-			:item-id="windowId"
+			v-for="window of windowsList"
+			:key="window.windowId"
+			:item-id="window.windowId"
 			:item-name="window.name"
 			:hide="window.hide"
 			:item-type="window.type"

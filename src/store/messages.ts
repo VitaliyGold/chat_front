@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia';
-import { ChatsMessageList, MessageDto, MessageList, TempMessageList } from '@/types/message';
+import {
+	ChatsMessageList, Message, MessageList, TempMessageList,
+} from '@/types/message';
 
 const useMessages = defineStore('messages', {
 	state: () => ({
@@ -32,14 +34,13 @@ const useMessages = defineStore('messages', {
 		},
 		addMessages(chatId: string, messagesList: MessageList) {
 			const oldMessageList = this.chatsMessageList.get(chatId);
-			console.log(oldMessageList)
 			if (oldMessageList) {
-				this.chatsMessageList.set(chatId, [ ...messagesList, ... oldMessageList ]);
+				this.chatsMessageList.set(chatId, [...messagesList, ...oldMessageList]);
 			} else {
 				this.chatsMessageList.set(chatId, messagesList);
 			}
 		},
-		addMessageToChat(chatId: string, messageId: string, message: MessageDto) {
+		addMessageToChat(chatId: string, message: Message) {
 			const chat = this.chatsMessageList.get(chatId);
 			if (chat) {
 				chat.push(message);

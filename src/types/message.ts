@@ -16,17 +16,16 @@ export interface CreateChatMessage {
 
 export type MessageStatus = 'loading' | 'delivered' | 'read'
 
-export interface Message extends CreateChatMessage{
-    name: string
-}
-
-export interface MessageDto extends Message{
+export interface MessageDto extends CreateChatMessage {
+    name: string,
     status: MessageStatus,
     createdAt: string
 }
 
-export type TempMessageList = Map<string, MessageDto>;
+export type Message = MessageDto
 
-export type MessageList = MessageDto[];
+export type TempMessageList = Map<string, Message>;
+
+export type MessageList = Message[];
 
 export type ChatsMessageList<T> = Map<string, T>

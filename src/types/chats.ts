@@ -6,33 +6,33 @@ export interface CreateChatInfoDto {
     startMessage: string
 }
 
-export interface CreateChatRequest {
-    members: string[],
-    chatType: number,
-    startMessage: string
-}
-
-interface ChatMember {
+export interface ChatMember {
     name: string,
     userId: string
 }
 
-export interface CreateChatResponse {
+export interface CreateChatRequest {
+    members: ChatMember[],
+    chatType: number,
+    startMessage: string
+}
+
+export interface ChatDto {
     chatId: string,
     ownerId: string,
-    createdAt: string,
+    ownerName: string,
+    chatType: 1 | 2 | 3,
     members: ChatMember[]
+}
+export interface CreateChatResponse extends ChatDto {
     firstMessage: CreateChatMessage
 }
 
 // хуйню ниже нужно будет посмотреть
 export type ChatID = string | null;
 
-export interface ChatDto {
-    chatId: string,
-    ownerId: string,
-    ownerName: string,
-    chatType: 1 | 2 | 3
+export interface Chat extends ChatDto{
+    endMessageList: boolean,
 }
 
-export type ChatsList = Map<string, ChatDto>;
+export type ChatsList = Record<string, Chat>;

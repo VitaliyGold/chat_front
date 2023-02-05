@@ -1,8 +1,8 @@
 import {
 	ChatWindow,
+	ChatWindowConfig,
 	InviteWindow,
 	SettingsWindow,
-	ChatWindowConfig,
 } from '@/types/window';
 
 export function getSettingsWindow(): SettingsWindow {

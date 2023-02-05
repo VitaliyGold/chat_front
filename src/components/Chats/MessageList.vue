@@ -1,6 +1,7 @@
 <template>
 	<div
 		class="messages-list"
+		:class="!messageList.length && !tempMessageList.size ? 'empty-list' : ''"
 		@scroll="scrollListHandler"
 		ref="messagesListRef"
 	>
@@ -33,6 +34,7 @@
 <script lang='ts'>
 import {
 	defineComponent, PropType, ref, onMounted, nextTick,
+	computed,
 } from 'vue';
 
 import { MessageList, TempMessageList } from '@/types/message';
@@ -40,15 +42,14 @@ import { ScrollEvent } from '@/types/events';
 import emitter from '@/utils/emitter';
 import MessagesController from '@/api/messages';
 import useMessages from '@/store/messages';
+import useChats from '@/store/chats';
 
 import MessageComponent from '@/components/Message/MessageComponent.vue';
-import LoaderComponent from '../UI/LoaderComponent.vue';
 
 export default defineComponent({
 	name: 'MessageList',
 	components: {
 		'message-component': MessageComponent,
-		'loader-component': LoaderComponent,
 	},
 	props: {
 		messageList: {
@@ -65,42 +66,49 @@ export default defineComponent({
 		},
 		chatId: {
 			type: String,
-			required: true
-		}
+			required: true,
+		},
 	},
 	setup(props) {
 		const messagesListRef = ref<null | HTMLDivElement>(null);
 
 		const messagesStore = useMessages();
+		const chatsStore = useChats();
 
 		let page = 0;
-		let messagesListEnd = false;
+		const endMessageList = computed(() => chatsStore.chatsList[props.chatId].endMessageList);
 		let loadingMessages = false;
 
+		const setListEnd = (chatId: string) => {
+			chatsStore.$patch((state) => {
+				state.chatsList[chatId].endMessageList = true;
+			});
+		};
+
 		const getDataWithScroll = async (event: ScrollEvent) => {
-			//console.log(event.target.scrollHeight);
-			
-			const needRequest = event.target.scrollTop <= 500 && !loadingMessages && !messagesListEnd;
+			// console.log(event.target.scrollHeight);
+
+			const needRequest = 				event.target.scrollTop <= 500
+				&& !loadingMessages
+				&& !endMessageList.value;
 
 			if (needRequest) {
 				console.log('запрос');
 				page += 1;
 				loadingMessages = true;
 				const messages = await MessagesController.getMessages(props.chatId, page);
-				if (!messages.length) {
-					messagesListEnd = true;
+				if (messages.length < 50) {
+					setListEnd(props.chatId);
 					return;
 				}
 
 				messagesStore.addMessages(props.chatId, messages);
 			}
-		}
+		};
 
 		const scrollListHandler = (e: UIEvent) => {
 			const event = e as ScrollEvent;
 			getDataWithScroll(event);
-			
-			
 		};
 
 		const scrollToBottom = () => {
@@ -122,11 +130,9 @@ export default defineComponent({
 		});
 
 		onMounted(() => {
-			console.log(1)
 			if (!messagesListRef.value) {
 				return;
 			}
-
 			scrollToBottom();
 		});
 
@@ -152,7 +158,14 @@ export default defineComponent({
 	width: 100%;
 	height: 100%;
 	overflow-y: auto;
-	overflow-x: hidden;
+	display: flex;
+    overflow-x: hidden;
+    flex-direction: column;
+    justify-content: flex-end;
+	&.empty-list {
+		justify-content: center;
+		align-items: center;
+	}
 }
 
 </style>

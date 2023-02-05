@@ -1,45 +1,37 @@
-type WindowsTypes = 'chat' | 'settings' | 'invite'
-interface BaseWindow {
+import { ChatMember } from './chats';
+
+export type WindowsTypes = 'chat' | 'settings' | 'invite'
+export interface BaseWindow {
     hide: boolean,
     type: WindowsTypes,
     windowId: string,
     name: string
 }
 
-interface SettingsWindow extends BaseWindow {
+export interface SettingsWindow extends BaseWindow {
     name: 'Настройки',
     type: 'settings',
     windowId: 'settings'
 }
 
-interface InviteWindow extends BaseWindow {
+export interface InviteWindow extends BaseWindow {
     name: 'Создать чат',
     type: 'invite',
     windowId: 'invite'
 }
 
-interface ChatWindow extends BaseWindow {
+export interface ChatWindow extends BaseWindow {
     isNewChat: boolean,
     chatId: string,
-    members?: string[]
+    members: ChatMember[]
 }
 
 export type WindowObject = ChatWindow | SettingsWindow | InviteWindow;
 
-type WindowsListType = Map<string, WindowObject>;
+export type WindowsList = Record<string, WindowObject>;
 
-interface ChatWindowConfig {
+export interface ChatWindowConfig {
     chatId: string,
-    members?: string[],
+    members: ChatMember[],
     isNewChat: boolean
 }
-
-export {
-	BaseWindow,
-	WindowsTypes,
-	WindowsListType,
-	SettingsWindow,
-	InviteWindow,
-	ChatWindow,
-	ChatWindowConfig,
-};

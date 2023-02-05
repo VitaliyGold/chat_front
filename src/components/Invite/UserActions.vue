@@ -23,7 +23,6 @@
 import { defineComponent, PropType } from 'vue';
 
 import useWindows from '@/store/windows';
-import useProfile from '@/store/profile';
 import { ChatID } from '@/types/chats';
 
 import { v4 as uuidv4 } from 'uuid';
@@ -40,6 +39,10 @@ export default defineComponent({
 			required: false,
 			default: null,
 		},
+		userName: {
+			type: String,
+			required: true,
+		},
 		userId: {
 			type: String,
 			required: true,
@@ -48,16 +51,16 @@ export default defineComponent({
 	setup(props) {
 		const windowStore = useWindows();
 
-		const profileStore = useProfile();
-
-		const currentUserId = profileStore.userProfile.userId;
-
-		const members = [props.userId, currentUserId];
+		const members = [{ userId: props.userId, name: props.userName }];
 
 		const createChat = (): void => {
 			const temporalWindowId = uuidv4();
 
-			windowStore.addWindow('chat', { isNewChat: true, chatId: temporalWindowId, members });
+			windowStore.addWindow('chat', {
+				isNewChat: true,
+				chatId: temporalWindowId,
+				members,
+			});
 		};
 
 		const openChat = (): void => {
@@ -65,7 +68,11 @@ export default defineComponent({
 				return;
 			}
 
-			windowStore.addWindow('chat', { chatId: props.chatId, isNewChat: false, members });
+			windowStore.addWindow('chat', {
+				chatId: props.chatId,
+				isNewChat: false,
+				members,
+			});
 		};
 
 		return {

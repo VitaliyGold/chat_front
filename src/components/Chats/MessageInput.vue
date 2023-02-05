@@ -18,15 +18,18 @@
 import { defineComponent, ref, PropType } from 'vue';
 import { v4 as uuidv4 } from 'uuid';
 
+import emitter from '@/utils/emitter';
 import ChatController from '@/api/chats';
 import MessageController from '@/api/messages';
 import useMessages from '@/store/messages';
 import useProfile from '@/store/profile';
 import useWindows from '@/store/windows';
-import emitter from '@/utils/emitter';
+import useChats from '@/store/chats';
 import { CreateNewMessage, MessageDto } from '@/types/message';
+import { CreateChatResponse, ChatMember } from '@/types/chats';
 
 import Button from '@/components/UI/ButtonComponent.vue';
+import { ChatWindow } from '@/types/window';
 import MessageTextArea from './MessageTextArea.vue';
 
 export default defineComponent({
@@ -41,7 +44,7 @@ export default defineComponent({
 	props: {
 		members: {
 			required: true,
-			type: Array as PropType<string[]>,
+			type: Array as PropType<ChatMember[]>,
 		},
 		tempChatId: {
 			required: true,
@@ -60,6 +63,8 @@ export default defineComponent({
 		const profileStore = useProfile();
 
 		const windowStore = useWindows();
+
+		const chatsStore = useChats();
 
 		const changeMessageValue = (messageText: string) => {
 			messageValue.value = messageText;
@@ -111,6 +116,30 @@ export default defineComponent({
 			);
 		};
 
+		const setWindowInfo = (windowId: string, chatId: string, chatName: string) => {
+			const oldWindow = windowStore.windowsList[windowId] as ChatWindow;
+
+			windowStore.$patch((state) => {
+				state.windowsList[windowId] = {
+					...oldWindow,
+					isNewChat: false,
+					chatId,
+					name: chatName,
+				};
+			});
+		};
+
+		const setChat = (chatInfo: CreateChatResponse) => {
+			chatsStore.chatsList[chatInfo.chatId] = {
+				chatId: chatInfo.chatId,
+				ownerId: chatInfo.ownerId,
+				ownerName: chatInfo.ownerName,
+				chatType: chatInfo.chatType,
+				members: chatInfo.members,
+				endMessageList: true,
+			};
+		};
+
 		const createChat = async () => {
 			const tempId = addTempMessage();
 
@@ -121,6 +150,9 @@ export default defineComponent({
 			};
 
 			const chat = await ChatController.createChat(chatData);
+
+			setWindowInfo(props.tempChatId, chat.chatId, chat.members[0].name);
+			setChat(chat);
 
 			windowStore.setChatId(props.tempChatId, chat.chatId);
 

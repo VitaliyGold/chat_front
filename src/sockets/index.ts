@@ -14,9 +14,10 @@ class WebSocketConnect {
 	}
 
 	connect() {
+		const connectString = `${'ws://localhost:5000/ws?' + 'authorization=Bearer '}${this.token}`;
+
 		try {
-			this.socket = new WebSocket(`${'ws://localhost:5000/ws?' + 'authorization=Bearer '}${this.token}`);
-			console.log(111);
+			this.socket = new WebSocket(connectString);
 			setTimeout(() => this.subscribeEvents.call(this), 100);
 		} catch (e) {
 			console.log(e);
@@ -26,8 +27,8 @@ class WebSocketConnect {
 	subscribeEvents() {
 		if (this.socket) {
 			console.log('Подписался');
-			this.socket.onmessage = (message: MessageEvent) => {
-				const event: SocketEvent = JSON.parse(message.data);
+			this.socket.onmessage = (wsEvent: MessageEvent) => {
+				const event: SocketEvent = JSON.parse(wsEvent.data);
 				switch (event.type) {
 				case 'SEND_MESSAGE':
 					const message = event.data as MessageDto;
@@ -35,8 +36,8 @@ class WebSocketConnect {
 					emitter.emit('getMessage');
 					break;
 				case 'ADD_CHAT':
+					console.log('добавить чат');
 					break;
-					// делаю что-то с чатом
 				default:
 					console.log(event.type);
 				}
@@ -46,7 +47,7 @@ class WebSocketConnect {
 
 	addMessage(message: MessageDto) {
 		const messagesStore = useMessages();
-		messagesStore.addMessageToChat(message.chatId, message.messageId, message);
+		messagesStore.addMessageToChat(message.chatId, message);
 	}
 }
 
