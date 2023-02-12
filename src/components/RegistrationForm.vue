@@ -14,31 +14,31 @@
 			<template v-if="mode === 'inputLogin'">
 				<text-field-component
 					label-text="Логин"
-					v-model="formData.login"
+					value="formData.login"
 					:validation-rule="v$.formData.login"
-					@update:model-value="(value) => changeField('login', value)"
+					@updateValue="(value) => changeField('login', value)"
 				/>
 				<text-field-component
 					label-text="Имя"
-					v-model="formData.name"
+					value="formData.name"
 					:validation-rule="v$.formData.name"
-					@update:model-value="(value) => changeField('name', value)"
+					@updateValue="(value) => changeField('name', value)"
 				/>
 			</template>
 			<template v-else>
 				<text-field-component
 					label-text="Пароль"
-					v-model="formData.password"
+					value="formData.password"
 					:validation-rule="v$.formData.password"
 					type="password"
-					@update:model-value="(value) => changeField('password', value)"
+					@updateValue="(value) => changeField('password', value)"
 				/>
 				<text-field-component
 					label-text="Повторите пароль"
-					v-model="confirmPassword"
+					value="confirmPassword"
 					:validation-rule="v$.confirmPassword"
 					type="password"
-					@update:model-value="(value) => changeField('confirmPassword', value)"
+					@updateValue="(value) => changeField('confirmPassword', value)"
 				/>
 			</template>
 

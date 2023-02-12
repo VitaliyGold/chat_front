@@ -5,15 +5,15 @@
 	>
 		<text-field-component
 			label-text="Логин"
-			v-model="login"
+			value="login"
 			:validation-rule="v$.login"
-			@update:model-value="(value) => changeField('login', value)"
+			@updateValue="(value) => changeField('login', value)"
 		/>
 		<text-field-component
 			label-text="Пароль"
-			v-model="password"
+			value="password"
 			:validation-rule="v$.password"
-			@update:model-value="(value) => changeField('password', value)"
+			@updateValue="(value) => changeField('password', value)"
 		/>
 
 		<button
@@ -103,7 +103,6 @@ export default defineComponent({
 
 			try {
 				const { data } = await AuthController.login(formData);
-				console.log(data.token);
 				setJwtToken(data.token);
 				setUserId(data.userId);
 				this.router.push('/');

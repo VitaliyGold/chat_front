@@ -24,15 +24,17 @@
 <script lang="ts">
 
 import {
-	defineComponent, computed, toRefs, PropType,
+	defineComponent, computed, Ref, PropType,
 } from 'vue';
 import type { BaseValidation } from '@vuelidate/core';
+
+import { CustomError } from '@/types/ui';
 
 const haveErrorMessage = (rule: BaseValidation) => Object.keys(rule).length && rule.$errors.length;
 
 export default defineComponent({
 	emits: [
-		'update:modelValue',
+		'updateValue',
 	],
 	props: {
 		labelText: {
@@ -40,7 +42,7 @@ export default defineComponent({
 			required: false,
 			default: '',
 		},
-		modelValue: {
+		value: {
 			type: String,
 			required: true,
 		},
@@ -48,6 +50,16 @@ export default defineComponent({
 			type: Object as PropType<BaseValidation>,
 			required: false,
 			default: () => {},
+		},
+		customError: {
+			type: Object as PropType<CustomError>,
+			required: false,
+			default: () => {
+				return {
+					haveError: false, 
+					errorText: '' 
+				}
+			}
 		},
 		type: {
 			required: false,
@@ -57,43 +69,37 @@ export default defineComponent({
 
 	},
 	setup(props, { emit }) {
-		const {
-			modelValue,
-			type,
-			validationRule,
-			labelText,
-		} = toRefs(props);
-
 		const inputValue = computed({
 			get() {
-				return modelValue.value;
+				return props.value;
 			},
 			set(value) {
-				emit('update:modelValue', value);
+				emit('updateValue', value);
 			},
 		});
 
-		const haveError = validationRule.value
-			? computed((): boolean => !!validationRule.value.$error)
-			:			false;
+		const getErrorText = computed((): string | Ref<string> => {
+			if (props.customError.errorText) {
+				return props.customError.errorText;
+			} else if (haveErrorMessage(props.validationRule)) {
+				return props.validationRule.$errors[0].$message;
+			}
+			return '';
+		});
 
-		const errorMessageText = validationRule.value
-			? computed(() => {
-				// костыль
-				// TODO посмотреть что за проблема с типами
-				if (haveErrorMessage(validationRule.value)) {
-					return validationRule.value.$errors[0].$message;
-				}
-				return '';
-			})
-			:			'';
+		const haveError = computed(() => {
+			return  props.customError.haveError || !!props.validationRule.$error
+		});
+
+
+		const errorMessageText = props.validationRule ? getErrorText : '';
 
 		return {
-			label: labelText,
+			label: props.labelText,
 			inputValue,
 			errorMessageText,
 			haveError,
-			inputType: type,
+			inputType: props.type,
 
 		};
 	},
