@@ -34,16 +34,11 @@ export default defineComponent({
 		const userList = ref<User[]>([]);
 
 		const getUsers = async (name = '') => {
-			try {
-				loading.value = true;
-				userList.value = [];
-				const data = await usersController.getUsersList(0, name);
-				userList.value = data;
-			} catch (e) {
-				console.log(e);
-			} finally {
-				loading.value = false;
-			}
+			loading.value = true;
+			userList.value = [];
+			const data = await usersController.getUsersList(0, name);
+			userList.value = data;
+			loading.value = false;
 		};
 
 		const searchFunc = debounce((value: string) => {
@@ -51,7 +46,7 @@ export default defineComponent({
 			getUsers(value);
 		}, 500);
 
-		onMounted(async () => {
+		onMounted(() => {
 			getUsers();
 		});
 

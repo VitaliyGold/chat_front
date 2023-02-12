@@ -19,11 +19,11 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import ControlWindowPanel from '@/components/ControlWindowPanel.vue';
+import ControlWindowPanel from '@/components/MainPage/ControlWindowPanel.vue';
 import { WindowObject } from '@/types/window';
 import ChatWindow from '@/components/Chats/ChatWindow.vue';
 import SettingsWindow from '@/components/Settings/SettingsWindow.vue';
-import InviteWindow from './Invite/InviteWindow.vue';
+import InviteWindow from '@/components/Invite/InviteWindow.vue';
 
 export default defineComponent({
 	props: {

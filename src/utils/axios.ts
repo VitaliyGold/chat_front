@@ -1,11 +1,12 @@
 import axios from 'axios';
 import AuthController from '@/api/auth';
+import emitter from './emitter';
 import { getJwtToken, setJwtToken } from './jwt';
 
 let retryInterseptor = false;
 
 const axiosInstance = axios.create({
-	baseURL: 'http://localhost:5000',
+	baseURL: '/api',
 	timeout: 1000,
 	validateStatus(status) {
 		return status >= 200 && status < 300;
@@ -24,7 +25,10 @@ axiosInstance.interceptors.request.use(
 		}
 		return config;
 	},
-	(error) => Promise.reject(error),
+	(error) => {
+		emitter.emit('error', error);
+		Promise.reject(error);
+	},
 );
 
 axiosInstance.interceptors.response.use(
@@ -44,12 +48,11 @@ axiosInstance.interceptors.response.use(
 				setJwtToken(token);
 
 				return axiosInstance(originalConfig);
-			} catch (Error) {
-				return Promise.reject(Error);
+			} catch (e) {
+				emitter.emit('error', { message: 'auth_error' });
 			}
 		}
-
-		return Promise.reject(err);
+		emitter.emit('error', { message: 'auth_error' });
 	},
 );
 

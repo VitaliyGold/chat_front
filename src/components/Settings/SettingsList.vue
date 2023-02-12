@@ -17,9 +17,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useRouter } from 'vue-router';
 
 import { SettingsType } from '@/types/settings';
+import AuthController from '@/api/auth';
+import { removeJwtToken, removeUserId } from '@/utils/jwt';
 import { settingsListData } from './consts';
+
 import SettingsItem from './SettingsItem.vue';
 
 export default defineComponent({
@@ -27,6 +31,15 @@ export default defineComponent({
 		'settings-item-component': SettingsItem,
 	},
 	setup() {
+		const router = useRouter();
+
+		const logOut = async () => {
+			await AuthController.logout();
+			removeJwtToken();
+			removeUserId();
+			router.push('login');
+		};
+
 		const selectSettingsItem = (type: SettingsType) => {
 			switch (type) {
 			case 'edit':
@@ -36,7 +49,7 @@ export default defineComponent({
 				console.log('Открыть настройки оповещений');
 				break;
 			case 'exit':
-				console.log('Логаут');
+				logOut();
 				break;
 			default:
 				break;
