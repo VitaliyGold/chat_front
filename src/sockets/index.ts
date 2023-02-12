@@ -14,7 +14,7 @@ class WebSocketConnect {
 	}
 
 	connect() {
-		const connectString = `${'ws://localhost:5000/ws?' + 'authorization=Bearer '}${this.token}`;
+		const connectString = `${'ws://localhost:5000/api/ws?' + 'authorization=Bearer '}${this.token}`;
 
 		try {
 			this.socket = new WebSocket(connectString);

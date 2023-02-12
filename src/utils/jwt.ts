@@ -10,6 +10,14 @@ export function getJwtToken() {
 	return localStorage.getItem('auth_token');
 }
 
+export function removeJwtToken() {
+	localStorage.removeItem('auth_token');
+}
+
 export function getUserId() {
 	localStorage.get('user_id');
+}
+
+export function removeUserId() {
+	localStorage.removeItem('user_id');
 }

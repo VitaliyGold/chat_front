@@ -15,7 +15,7 @@
 import { defineComponent } from 'vue';
 
 import useWindows from '@/store/windows';
-import WindowComponent from '@/components/WindowComponent.vue';
+import WindowComponent from '@/components/MainPage/WindowComponent.vue';
 
 export default defineComponent({
 	name: 'ActionPanel',

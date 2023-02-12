@@ -17,8 +17,14 @@ Promise<AxiosResponse<AutorizationData>> {
 	return axiosInstance.post('auth/refresh');
 }
 
+function logout():
+Promise<AxiosResponse<boolean>> {
+	return axiosInstance.post('auth/logout');
+}
+
 export default {
 	registration,
 	login,
 	refresh,
+	logout,
 };
