@@ -7,7 +7,7 @@
 <script lang="ts">
 
 import { defineComponent } from 'vue';
-import RegistrationForm from '@/components/RegistrationForm.vue';
+import RegistrationForm from '@/components/Registration/RegistrationForm.vue';
 
 export default defineComponent({
 	name: 'RegistrationPage',

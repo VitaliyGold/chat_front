@@ -15,13 +15,11 @@
 				<text-field-component
 					label-text="Логин"
 					value="formData.login"
-					:validation-rule="v$.formData.login"
 					@updateValue="(value) => changeField('login', value)"
 				/>
 				<text-field-component
 					label-text="Имя"
 					value="formData.name"
-					:validation-rule="v$.formData.name"
 					@updateValue="(value) => changeField('name', value)"
 				/>
 			</template>
@@ -29,14 +27,12 @@
 				<text-field-component
 					label-text="Пароль"
 					value="formData.password"
-					:validation-rule="v$.formData.password"
 					type="password"
 					@updateValue="(value) => changeField('password', value)"
 				/>
 				<text-field-component
 					label-text="Повторите пароль"
 					value="confirmPassword"
-					:validation-rule="v$.confirmPassword"
 					type="password"
 					@updateValue="(value) => changeField('confirmPassword', value)"
 				/>
@@ -65,17 +61,13 @@ import {
 	defineComponent, ref, reactive, computed,
 } from 'vue';
 import type { Ref } from 'vue';
-import { useVuelidate } from '@vuelidate/core';
-import {
-	required, minLength, helpers, sameAs,
-} from '@vuelidate/validators';
 import { useRouter } from 'vue-router';
 
 import { setJwtToken, setUserId } from '@/utils/jwt';
 import AuthController from '@/api/auth';
 import { RegistrationFormFields } from '@/types/auth';
 
-import TextField from './UI/TextField.vue';
+import TextField from '../UI/TextInputField.vue';
 
 type FormMode = 'inputLogin' | 'inputPassword';
 
@@ -90,6 +82,12 @@ export default defineComponent({
 			name: '',
 			password: '',
 		});
+
+		const formError = reactive({
+			login: '',
+			name: '',
+			password: ''
+		})
 
 		const confirmPassword = ref('');
 
@@ -117,58 +115,19 @@ export default defineComponent({
 		const changeMode = (newMode: FormMode) => {
 			mode.value = newMode;
 		};
-
-		const rules = computed(() => {
-			if (mode.value === 'inputLogin') {
-				return {
-					formData: {
-						login: {
-							required: helpers.withMessage('Поле не может быть пустым', required),
-							minLength: helpers.withMessage('Минимальная длина 3 символа', minLength(3)),
-						},
-						password: {},
-						name: {
-							required: helpers.withMessage('Поле не может быть пустым', required),
-						},
-					},
-					confirmPassword: {},
-				};
-			}
-			return {
-				formData: {
-					login: {},
-					name: {},
-					password: {
-						required: helpers.withMessage('Поле не может быть пустым', required),
-						minLength: helpers.withMessage('Минимальная длина 3 символа', minLength(3)),
-						sameAs: helpers.withMessage('Минимальная длина 3 символа', sameAs(confirmPassword)),
-					},
-				},
-				confirmPassword: {
-					sameAs: helpers.withMessage('Пароли не совпадают', sameAs(formData.password)),
-					required: helpers.withMessage('Поле не может быть пустым', required),
-				},
-
-			};
-		});
-
-		const v$ = useVuelidate(rules, { formData, confirmPassword });
 		return {
 			formData,
+			formError,
 			confirmPassword,
 			mode,
 			changeField,
 			changeMode,
-			router,
-			v$,
+			router
 		};
 	},
 	methods: {
 		async submit() {
-			this.v$.$touch();
-			if (this.v$.$error) {
-				return;
-			}
+			
 			if (this.mode === 'inputLogin') {
 				this.changeMode('inputPassword');
 				return;

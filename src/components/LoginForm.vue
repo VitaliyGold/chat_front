@@ -43,7 +43,7 @@ import { LoginFormFields } from '@/types/auth';
 import AuthController from '@/api/auth';
 import { setJwtToken, setUserId } from '@/utils/jwt';
 
-import TextField from '@/components/UI/TextField.vue';
+import TextField from '@/components/UI/TextInputField.vue';
 
 const rules = {
 	login: {

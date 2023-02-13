@@ -20,7 +20,7 @@ import UserList from '@/components/Invite/UserList.vue';
 import { debounce } from '@/utils/helpers';
 import { User } from '@/types/users';
 import usersController from '@/api/users';
-import TextField from '@/components/UI/TextField.vue';
+import TextField from '@/components/UI/TextInputField.vue';
 
 export default defineComponent({
 	name: 'InviteWindow',

@@ -12,6 +12,11 @@ Promise<AxiosResponse<AutorizationData>> {
 	return axiosInstance.post('auth/login', loginData);
 }
 
+function checkLogin(login: string)
+:Promise<AxiosResponse<boolean>> {
+	return axiosInstance.post('auth/checkLogin');
+}
+
 function refresh():
 Promise<AxiosResponse<AutorizationData>> {
 	return axiosInstance.post('auth/refresh');
