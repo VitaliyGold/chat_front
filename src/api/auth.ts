@@ -32,4 +32,5 @@ export default {
 	login,
 	refresh,
 	logout,
+	checkLogin
 };

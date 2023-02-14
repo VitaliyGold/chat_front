@@ -26,11 +26,6 @@
 import {
 	defineComponent, computed, Ref, PropType,
 } from 'vue';
-import type { BaseValidation } from '@vuelidate/core';
-
-import { CustomError } from '@/types/ui';
-
-const haveErrorMessage = (rule: BaseValidation) => Object.keys(rule).length && rule.$errors.length;
 
 export default defineComponent({
 	emits: [
@@ -45,11 +40,6 @@ export default defineComponent({
 		value: {
 			type: String,
 			required: true,
-		},
-		validationRule: {
-			type: Object as PropType<BaseValidation>,
-			required: false,
-			default: () => {},
 		},
 		customError: {
 			type: Object as PropType<CustomError>,

@@ -14,7 +14,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs, PropType } from 'vue';
+import { defineComponent, toRefs, PropType, computed } from 'vue';
+import { useVuelidate } from '@vuelidate/core'
+import { required, minLength } from '@vuelidate/validators'
 
 import AuthController from '@/api/auth';
 
@@ -22,6 +24,17 @@ import TextInputField from '@/components/UI/TextInputField.vue';
 
 type FieldsType = 'login' | 'name';
 
+
+const validationRules = {
+	login: {
+		required,
+		minLength: minLength(3)
+	},
+	name: {
+		required,
+		minLength: minLength(3)
+	}
+}
 
 export default defineComponent({
     name: 'LoginStep',
@@ -45,24 +58,23 @@ export default defineComponent({
             name,
         } = toRefs(props);
 
+		const v$ = useVuelidate(validationRules, { login, name });
+
         const checkLogin = async () => {
             try {
-                const result = AuthController.checkLogin(login);
+                const result = AuthController.checkLogin(login.value);
                 return result; 
             } catch(e) {
                 console.log(e)
             };
         };
 
-        const validationData = () => {
-            
-        };
-
-        const submitLoginStep = async () => {
-
-
-
-        };
+        const loginError = computed(() => {
+			if (!v$.value.login.$invalid) {
+				return '';
+			} else if ()
+			console.log(v$.value.);
+		});
 
         const changeField = (value: string, field: FieldsType) => {
             emit('updateValue', { field, value });
@@ -71,6 +83,7 @@ export default defineComponent({
         return {
             login,
             name,
+			v$,
             changeField
         }
 
