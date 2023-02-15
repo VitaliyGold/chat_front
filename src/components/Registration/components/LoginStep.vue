@@ -1,94 +1,137 @@
 <template>
-    <form @submit="submitLoginStep">
-        <text-field-component
+    <form @submit.prevent="submitLoginStep">
+        <ui-text-input
             label-text="Логин"
-            value="formData.login"
-            @updateValue="(value) => changeField('login', value)"
+            :value="login"
+            :error="loginError"
+            @updateValue="(value: string) => changeField('login', value)"
         />
-        <text-field-component
+        <ui-text-input
             label-text="Имя"
-            value="formData.name"
-            @updateValue="(value) => changeField('name', value)"
+            :value="name"
+            :error="nameError"
+            @updateValue="(value: string) => changeField('name', value)"
         />
+        <ui-button
+            type="submit"
+            :full-width="true"
+        >
+            Далее
+        </ui-button>
     </form>
 </template>
 
-<script lang="ts">
-import { defineComponent, toRefs, PropType, computed } from 'vue';
-import { useVuelidate } from '@vuelidate/core'
-import { required, minLength } from '@vuelidate/validators'
+<script lang="ts" setup>
+import { toRefs, computed, defineEmits, defineProps, ref } from 'vue';
+import { useVuelidate } from '@vuelidate/core';
+import { required, minLength, helpers } from '@vuelidate/validators';
 
 import AuthController from '@/api/auth';
 
-import TextInputField from '@/components/UI/TextInputField.vue';
+import UiTextInput from '@/components/UI/UiTextInput.vue';
+import UiButton from '@/components/UI/UiButton.vue';
+
 
 type FieldsType = 'login' | 'name';
 
 
 const validationRules = {
 	login: {
-		required,
-		minLength: minLength(3)
+		required: helpers.withMessage('Это обязательное поле', required),
+		minLength: helpers.withMessage(({ $params }) => `Минимальная длина ${$params.min} символа`, minLength(3))
 	},
 	name: {
-		required,
-		minLength: minLength(3)
+		required: helpers.withMessage('Это обязательное поле', required),
+		minLength: helpers.withMessage(({ $params }) => `Минимальная длина ${$params.min} символа`, minLength(3))
 	}
 }
 
-export default defineComponent({
-    name: 'LoginStep',
-    components: {
-        'text-input-field': TextInputField
+interface Emits {
+    ( e: 'updateValue', data: { field: FieldsType, value: string } ): void
+    ( e: 'nextStep' ): void,
+    ( e: 'setLoading', data: boolean ): void;
+};
+
+
+const props = defineProps({
+    login: {
+        type: String,
+        required: true
     },
-    props: {
-        login: {
-            type: String as PropType<string>,
-            required: true
-        },
-        name: {
-            type: String as PropType<string>,
-            required: true
-        }
-    },
-    setup(props, { emit }) {
-
-        const {
-            login,
-            name,
-        } = toRefs(props);
-
-		const v$ = useVuelidate(validationRules, { login, name });
-
-        const checkLogin = async () => {
-            try {
-                const result = AuthController.checkLogin(login.value);
-                return result; 
-            } catch(e) {
-                console.log(e)
-            };
-        };
-
-        const loginError = computed(() => {
-			if (!v$.value.login.$invalid) {
-				return '';
-			} else if ()
-			console.log(v$.value.);
-		});
-
-        const changeField = (value: string, field: FieldsType) => {
-            emit('updateValue', { field, value });
-        };
-
-        return {
-            login,
-            name,
-			v$,
-            changeField
-        }
-
-
+    name: {
+        type: String,
+        required: true
     }
-})
+});
+
+const emit = defineEmits<Emits>();
+
+const { login, name } = toRefs(props);
+
+const isUniqueLogin = ref<boolean>(true);
+
+
+
+const v$ = useVuelidate(validationRules, { login, name });
+
+const checkLogin = async () => {
+    try {
+        const result = AuthController.checkLogin(login.value);
+        return result; 
+    } catch(e) {
+        console.log(e);
+        return false;
+    };
+};
+
+const submitLoginStep = async () => {
+    v$.value.$touch();
+    if (v$.value.$errors.length) {
+        return;
+    };
+    emit('setLoading', true);
+    const result = await checkLogin();
+    if (result) {
+        emit('setLoading', false);
+        emit('nextStep');
+    } else {
+        emit('setLoading', false);
+        isUniqueLogin.value = false;
+    }
+    
+}
+
+const loginError = computed(() => {
+    if (!isUniqueLogin.value) {
+        return {
+            haveError: true,
+            errorText: 'Такой логин уже используется'
+        };
+    };
+
+    return v$.value.login.$errors.length ? 
+    {
+        haveError: true,
+        errorText: v$.value.login.$errors[0].$message
+    }
+    : 
+    undefined;
+});
+
+const nameError = computed(() => {
+    return v$.value.name.$errors.length ? 
+    {
+        haveError: true,
+        errorText: v$.value.name.$errors[0].$message
+    }
+    : 
+    undefined;
+});
+
+const changeField = (field: FieldsType, value: string) => {
+    v$.value[field].$reset();
+    isUniqueLogin.value = true;
+    emit('updateValue', { field, value });
+};
 
 </script>

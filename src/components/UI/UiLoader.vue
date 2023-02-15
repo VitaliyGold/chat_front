@@ -1,11 +1,17 @@
 <template>
 	<div
 		class="loader-wrapper"
-		:style="{ height: sizeLoader, width: sizeLoader }"
+		:style="{ 
+			height: sizeLoader, 
+			width: sizeLoader
+		}"
+		:class="{
+			'full': fullWindow
+		}"
 	>
 		<loading-icon-component
 			:size="size"
-			:add-class="'addClass'"
+			:add-class="addClass"
 		/>
 	</div>
 </template>
@@ -28,6 +34,11 @@ export default defineComponent({
 			required: false,
 			default: 'icon-2x',
 		},
+		fullWindow: {
+			type: Boolean,
+			required: false,
+			default: false
+		}
 	},
 	components: {
 		'loading-icon-component': LoadingIcon,
@@ -35,7 +46,7 @@ export default defineComponent({
 
 	setup(props) {
 		const containerViewBox = `0 0 ${props.size * 2} ${props.size * 2}`;
-		const sizeLoader = `${props.size}px`;
+		const sizeLoader = props.fullWindow ? '100%' : `${props.size}px`;
 
 		return {
 			containerViewBox,
@@ -52,14 +63,23 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: center;
-    animation-name: rotation;
-    animation-duration: 2.5s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
 
-    .loader-icon {
+	&.full {
+		position: absolute;
+		left: 0;
+		top: 0;
+		z-index: 5;
+		border-radius: 8px;
+		background-color: rgba(255, 255, 255, 0.7);
+	}
+
+    .loading-icon {
         display: flex;
         justify-content: center;
+		animation-name: rotation;
+		animation-duration: 2.5s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
     }
 }
 

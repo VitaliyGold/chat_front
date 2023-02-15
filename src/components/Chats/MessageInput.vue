@@ -28,7 +28,7 @@ import useChats from '@/store/chats';
 import { CreateNewMessage, MessageDto } from '@/types/message';
 import { CreateChatResponse, ChatMember } from '@/types/chats';
 
-import Button from '@/components/UI/ButtonComponent.vue';
+import Button from '@/components/UI/UiButton.vue';
 import { ChatWindow } from '@/types/window';
 import MessageTextArea from './MessageTextArea.vue';
 

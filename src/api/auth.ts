@@ -2,9 +2,9 @@ import axiosInstance from '@/utils/axios';
 import { RegistrationData, AutorizationData, LoginData } from '@/types/auth';
 import { AxiosResponse } from 'axios';
 
-function registration(registrationData: RegistrationData):
-Promise<AxiosResponse<AutorizationData>> {
-	return axiosInstance.post('auth/registration', registrationData);
+async function registration(registrationData: RegistrationData):Promise<AutorizationData> {
+	const { data } = await axiosInstance.post('auth/registration', registrationData);
+	return data
 }
 
 function login(loginData: LoginData):
@@ -12,9 +12,9 @@ Promise<AxiosResponse<AutorizationData>> {
 	return axiosInstance.post('auth/login', loginData);
 }
 
-function checkLogin(login: string)
-:Promise<AxiosResponse<boolean>> {
-	return axiosInstance.post('auth/checkLogin');
+async function checkLogin(login: string):Promise<boolean> {
+	const { data } = await axiosInstance.post('auth/checkLogin', { login });
+	return data.result;
 }
 
 function refresh():

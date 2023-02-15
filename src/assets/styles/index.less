@@ -17,52 +17,12 @@ ul {
     height: 100vh;
     width: 100%;
     overflow: hidden;
+    font-size: 12px;
 }
 
 :root {
     --error-color: #F5000F;
     --background-color: #E8E8E8;
-}
-
-
-.btn {
-    cursor: pointer;
-    padding: 6px 8px;
-    border: none;
-    border-radius: 5px;
-    &.action-panel-btn {
-        width: 50px;
-        height: 50px;
-        display: flex;
-        border-radius: 50%;
-        justify-content: center;
-        align-items: center;
-    }
-    &.icon {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: inherit;
-        height: 24px;
-        &:hover {
-            background-color: gray;
-            .material-design-icon__svg {
-                color: white;
-            }
-        }
-    }
-    &.single-icon {
-        background: transparent;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        &:hover {
-            background-color: gray;
-            .material-design-icon__svg {
-                color: white;
-            }
-        }
-    }
 }
 
 .link {
@@ -72,6 +32,10 @@ ul {
     }
 }
 
-.btn-container {
-    display: flex;
+input:-webkit-autofill {
+    background-color: white !important;
+    appearance: none;
+    background-image: none !important;
+    color: inherit !important;
+    -webkit-box-shadow: 0 0 0px 40rem #ffff inset;
 }

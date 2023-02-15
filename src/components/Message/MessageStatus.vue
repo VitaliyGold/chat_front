@@ -14,7 +14,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { MessageStatus } from '@/types/message';
-import LoaderComponent from '@/components/UI/LoaderComponent.vue';
+import LoaderComponent from '@/components/UI/UiLoader.vue';
 
 export default defineComponent({
 	props: {
