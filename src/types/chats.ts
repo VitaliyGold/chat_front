@@ -12,7 +12,7 @@ export interface ChatMember {
 }
 
 export interface CreateChatRequest {
-    members: ChatMember[],
+    members: string[],
     chatType: number,
     startMessage: string
 }

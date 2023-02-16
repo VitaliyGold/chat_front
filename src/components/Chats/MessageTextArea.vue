@@ -12,6 +12,7 @@
 			v-html="inputValue"
 			@focus="() => focusOnInput(true)"
 			@blur="() => focusOnInput(false)"
+			@keydown.enter.prevent="submitMessage"
 			v-focus
 		/>
 	</div>
@@ -37,7 +38,7 @@ export default defineComponent({
 			required: true,
 		},
 	},
-	emits: ['change-value'],
+	emits: ['change-value', 'submit'],
 	setup(props, { emit }) {
 		const inputRef = ref<null | HTMLElement>(null);
 
@@ -58,6 +59,10 @@ export default defineComponent({
 			inputFocus.value = focus;
 		};
 
+		const submitMessage = () => {
+			emit('submit');
+		};
+
 		const displayPlaceholder = computed(() => {
 			if (props.messageText) {
 				return false;
@@ -71,6 +76,7 @@ export default defineComponent({
 			inputRef,
 			displayPlaceholder,
 			focusOnInput,
+			submitMessage,
 			changeMessageField,
 		};
 	},

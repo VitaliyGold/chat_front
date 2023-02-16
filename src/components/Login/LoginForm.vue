@@ -1,12 +1,12 @@
 <template>
 	<div class="auth-form">
 		<ui-loader
-            v-if="loading"
+			v-if="loading"
 			:full-window="true"
-        />
+		/>
 		<p class="page-title">
-            Войти в MyChat
-        </p>
+			Войти в MyChat
+		</p>
 		<form
 			@submit.prevent="loginSubmit"
 		>
@@ -14,17 +14,17 @@
 				label-text="Логин"
 				:value="loginFormData.login"
 				:error="loginError"
-				@updateValue="(value: string) => changeField('login', value)"
+				@update-value="(value: string) => changeField('login', value)"
 			/>
 			<ui-text-input
 				label-text="Пароль"
 				:value="loginFormData.password"
 				:error="passwordError"
-				@updateValue="(value: string) => changeField('password', value)"
+				@update-value="(value: string) => changeField('password', value)"
 			/>
 			<button-container
-            	direction="column"
-        	>
+				direction="column"
+			>
 				<ui-button
 					type="submit"
 					:full-width="true"
@@ -39,10 +39,9 @@
 				>
 					У меня еще нет MyChat ID
 				</ui-button>
-        	</button-container>
+			</button-container>
 		</form>
 	</div>
-	
 </template>
 
 <script lang="ts" setup>
@@ -70,7 +69,7 @@ const validationRules = {
 			minLength: helpers.withMessage('Минимальная длина 5 символов', minLength(5)),
 
 		},
-	}
+	},
 };
 
 const router = useRouter();
@@ -81,46 +80,41 @@ const loading = ref<boolean>(false);
 
 const loginFormData = reactive({
 	login: '',
-	password: ''
+	password: '',
 });
 
 const v$ = useVuelidate(validationRules, { loginFormData });
 
-
 const loginError = computed(() => {
-
 	if (incorrectAuthData.value) {
 		return {
 			haveError: true,
-			errorText: "Некорректная связка логин/пароль"
-    	}
+			errorText: 'Некорректная связка логин/пароль',
+		};
 	}
 
-    return v$.value.loginFormData.login.$errors.length ? 
-    {
-        haveError: true,
-        errorText: v$.value.loginFormData.login.$errors[0].$message
-    }
-    : 
-    undefined;
+	return v$.value.loginFormData.login.$errors.length
+		? {
+			haveError: true,
+			errorText: v$.value.loginFormData.login.$errors[0].$message,
+		}
+		: undefined;
 });
 
 const passwordError = computed(() => {
-
 	if (incorrectAuthData.value) {
 		return {
 			haveError: true,
-			errorText: "Некорректная связка логин/пароль"
-    	}
+			errorText: 'Некорректная связка логин/пароль',
+		};
 	}
 
-    return v$.value.loginFormData.password.$errors.length ? 
-    {
-        haveError: true,
-        errorText: v$.value.loginFormData.password.$errors[0].$message
-    }
-    : 
-    undefined;
+	return v$.value.loginFormData.password.$errors.length
+		? {
+			haveError: true,
+			errorText: v$.value.loginFormData.password.$errors[0].$message,
+		}
+		: undefined;
 });
 
 const changeField = (field: 'login' | 'password', value: string) => {
@@ -129,7 +123,7 @@ const changeField = (field: 'login' | 'password', value: string) => {
 		loginFormData.login = value;
 	} else {
 		loginFormData.password = value;
-	};
+	}
 };
 
 const loginSubmit = async () => {
@@ -147,13 +141,12 @@ const loginSubmit = async () => {
 		incorrectAuthData.value = true;
 		loading.value = false;
 		console.log(e);
-	};
+	}
 };
 
-
 const toRegistrationPage = () => {
-	router.push('/registration')
-}
+	router.push('/registration');
+};
 
 </script>
 

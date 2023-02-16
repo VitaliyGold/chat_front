@@ -1,6 +1,6 @@
 import type { Ref } from 'vue';
 
 export interface CustomError {
-    haveError: Boolean,
+    haveError: boolean,
     errorText: string | Ref<string>
 }

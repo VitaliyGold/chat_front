@@ -1,12 +1,12 @@
 <template>
 	<div class="auth-form">
 		<ui-loader
-            v-if="loading"
+			v-if="loading"
 			:full-window="true"
-        />
+		/>
 		<p class="page-title">
-            Создать ID в MyChat
-        </p>
+			Создать ID в MyChat
+		</p>
 		<login-step
 			v-if="currentStep === 'login'"
 			:login="registrationFormData.login"
@@ -50,21 +50,19 @@ interface UpdateFieldsData {
 
 type Step = 'login' | 'password';
 
-
 export default defineComponent({
 	components: {
 		'login-step': LoginStep,
 		'password-step': PasswordStep,
-		'ui-loader': UiLoader
+		'ui-loader': UiLoader,
 	},
 	setup() {
-
 		const router = useRouter();
 
 		const registrationFormData = reactive({
 			login: '',
 			name: '',
-			password: ''
+			password: '',
 		});
 
 		const currentStep = ref<Step>('login');
@@ -102,10 +100,9 @@ export default defineComponent({
 			updateFormData,
 			changeStep,
 			registration,
-			setLoading
+			setLoading,
 		};
-		
-	}
+	},
 });
 
 </script>

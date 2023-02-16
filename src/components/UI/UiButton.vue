@@ -1,17 +1,17 @@
 <template>
 	<button
 		class="btn"
-        :class="{
-            [variant]: true,
-            [color]: true,
-            [size]: true,
-            'full-width': fullWidth
-        }"
+		:class="{
+			[variant]: true,
+			[color]: true,
+			[size]: true,
+			'full-width': fullWidth
+		}"
 		:type="type"
-        :disabled="disabled"
+		:disabled="disabled"
 		@click="clickFunction"
 	>
-		<slot></slot>
+		<slot />
 	</button>
 </template>
 
@@ -33,31 +33,31 @@ export default defineComponent({
 			required: false,
 			default: 'button',
 		},
-        variant: {
-            type: String as PropType<BtnVariants>,
-            required: false,
-            default: 'contained'
-        },
-        color: {
-            type: String as PropType<Colors>,
-            required: false,
-            default: 'blue'
-        },
-        size: {
-            type: String as PropType<Size>,
-            required: false,
-            default: 'medium'
-        },
-        disabled: {
-            type: Boolean,
-            required: false,
-            default: false
-        },
-        fullWidth: {
-            type: Boolean,
-            required: false,
-            default: false
-        }
+		variant: {
+			type: String as PropType<BtnVariants>,
+			required: false,
+			default: 'contained',
+		},
+		color: {
+			type: String as PropType<Colors>,
+			required: false,
+			default: 'blue',
+		},
+		size: {
+			type: String as PropType<Size>,
+			required: false,
+			default: 'medium',
+		},
+		disabled: {
+			type: Boolean,
+			required: false,
+			default: false,
+		},
+		fullWidth: {
+			type: Boolean,
+			required: false,
+			default: false,
+		},
 	},
 	setup(_, { emit }) {
 		const clickFunction = () => {
@@ -86,6 +86,10 @@ export default defineComponent({
     &.medium {
         width: 135px;
         height: 34px;
+    }
+    &.small {
+        width: 100px;
+        height: auto;
     }
     &.blue {
         background-color: @blue-color;

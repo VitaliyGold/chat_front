@@ -49,7 +49,7 @@ export default defineComponent({
 		error: {
 			type: Object as PropType<CustomError>,
 			required: false,
-			default: undefined
+			default: undefined,
 		},
 		type: {
 			required: false,
@@ -59,27 +59,24 @@ export default defineComponent({
 
 	},
 	setup(props, { emit }) {
-
-
 		const {
 			value,
 			type,
 			error,
-			labelText
+			labelText,
 		} = toRefs(props);
 
 		const inputValue = computed({
 			get() {
 				return value.value;
 			},
-			set(value) {
-				emit('updateValue', value);
+			set(newValue) {
+				emit('updateValue', newValue);
 			},
 		});
-		const errorMessageText = computed(() => error.value ? error.value.errorText : '');
+		const errorMessageText = computed(() => (error.value ? error.value.errorText : ''));
 
-
-		const haveError = computed(() => error.value ? error.value.haveError : false);
+		const haveError = computed(() => (error.value ? error.value.haveError : false));
 
 		return {
 			label: labelText,
@@ -107,7 +104,7 @@ export default defineComponent({
 			background: white;
 			padding: 0 3px;
 			display: block;
-        	font-size: 12px;
+			font-size: 12px;
 			color: #9e9e9e;
 		}
 
@@ -123,7 +120,7 @@ export default defineComponent({
 		input.error + label {
 			color: var(--error-color);
 		}
-		
+
 	}
     input {
         width: 100%;
@@ -133,7 +130,7 @@ export default defineComponent({
         border: 1px solid #e7e7eb;
         outline: none;
 		background-color: white !important;
-		
+
 		&:hover {
 			border: 1px solid #99bdff;
 		}
@@ -146,7 +143,7 @@ export default defineComponent({
 		&.error {
             border: 1px solid var(--error-color);
         }
-		
+
     }
     .validation-message {
         font-size: 10px;

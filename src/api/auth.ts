@@ -4,7 +4,7 @@ import { AxiosResponse } from 'axios';
 
 async function registration(registrationData: RegistrationData):Promise<AutorizationData> {
 	const { data } = await axiosInstance.post('auth/registration', registrationData);
-	return data
+	return data;
 }
 
 function login(loginData: LoginData):
@@ -12,8 +12,8 @@ Promise<AxiosResponse<AutorizationData>> {
 	return axiosInstance.post('auth/login', loginData);
 }
 
-async function checkLogin(login: string):Promise<boolean> {
-	const { data } = await axiosInstance.post('auth/checkLogin', { login });
+async function checkLogin(checkedLogin: string):Promise<boolean> {
+	const { data } = await axiosInstance.post('auth/checkLogin', { login: checkedLogin });
 	return data.result;
 }
 
@@ -32,5 +32,5 @@ export default {
 	login,
 	refresh,
 	logout,
-	checkLogin
+	checkLogin,
 };

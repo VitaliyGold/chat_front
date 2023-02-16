@@ -1,12 +1,12 @@
 <template>
-    <div 
-        class="btn-container"
-        :class="{
-            [direction]: true
-        }"
-    >
-        <slot></slot>
-    </div>
+	<div
+		class="btn-container"
+		:class="{
+			[direction]: true
+		}"
+	>
+		<slot />
+	</div>
 </template>
 
 <script lang="ts" setup>
@@ -15,17 +15,16 @@ import { defineProps, PropType, toRefs } from 'vue';
 type Direction = 'row' | 'column';
 
 const props = defineProps({
-    direction: {
-        type: String as PropType<Direction>,
-        required: false,
-        default: 'row'
-    }
+	direction: {
+		type: String as PropType<Direction>,
+		required: false,
+		default: 'row',
+	},
 });
 
 const {
-    direction
+	direction,
 } = toRefs(props);
-
 
 </script>
 

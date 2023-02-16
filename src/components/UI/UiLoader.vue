@@ -1,8 +1,8 @@
 <template>
 	<div
 		class="loader-wrapper"
-		:style="{ 
-			height: sizeLoader, 
+		:style="{
+			height: sizeLoader,
 			width: sizeLoader
 		}"
 		:class="{
@@ -37,8 +37,8 @@ export default defineComponent({
 		fullWindow: {
 			type: Boolean,
 			required: false,
-			default: false
-		}
+			default: false,
+		},
 	},
 	components: {
 		'loading-icon-component': LoadingIcon,
