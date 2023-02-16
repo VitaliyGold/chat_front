@@ -32,7 +32,7 @@ import { v4 as uuidv4 } from 'uuid';
 import useWindows from '@/store/windows';
 import { ChatID } from '@/types/chats';
 
-import UiButton from '../UI/UiButton.vue';
+import UiButton from '../../UI/UiButton.vue';
 
 export default defineComponent({
 	name: 'UserActions',
@@ -93,3 +93,12 @@ export default defineComponent({
 });
 
 </script>
+
+<style scoped lang="less">
+
+.user-actions {
+	position: absolute;
+	right: 8px;
+}
+
+</style>

@@ -14,6 +14,7 @@
 		/>
 		<button-container
 			direction="column"
+			:styles="{ marginTop: '12px' }"
 		>
 			<ui-button
 				type="submit"

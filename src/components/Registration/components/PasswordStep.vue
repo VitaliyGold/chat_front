@@ -15,7 +15,9 @@
 			:error="passwordRepeatError"
 			@update-value="changeRepeatPassword"
 		/>
-		<button-container>
+		<button-container
+			:styles="{ marginTop: '12px' }"
+		>
 			<ui-button
 				type="reset"
 				:full-width="true"

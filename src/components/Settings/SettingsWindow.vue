@@ -22,7 +22,7 @@
 import useProfile from '@/store/profile';
 import { defineComponent } from 'vue';
 
-import UserItem from '@/components/SharedUi/UserItem.vue';
+import UserItem from '@/components/SharedUi/UserItem/UserItem.vue';
 import SettingsList from './SettingsList.vue';
 
 export default defineComponent({

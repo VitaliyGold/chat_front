@@ -4,13 +4,16 @@
 		:class="{
 			[direction]: true
 		}"
+		:style="styles"
 	>
 		<slot />
 	</div>
 </template>
 
 <script lang="ts" setup>
-import { defineProps, PropType, toRefs } from 'vue';
+import {
+	defineProps, PropType, StyleValue, toRefs,
+} from 'vue';
 
 type Direction = 'row' | 'column';
 
@@ -19,6 +22,11 @@ const props = defineProps({
 		type: String as PropType<Direction>,
 		required: false,
 		default: 'row',
+	},
+	styles: {
+		type: Object as PropType<StyleValue>,
+		required: false,
+		default: () => {},
 	},
 });
 
@@ -30,7 +38,6 @@ const {
 
 <style scoped lang="less">
     .btn-container {
-        margin-top: 12px;
         display: flex;
         gap: 20px;
         &.column {

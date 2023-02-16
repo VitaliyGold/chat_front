@@ -4,14 +4,17 @@
 			class="input-wrapper__inner"
 		>
 			<input
-				:type="inputType"
+				:type="type"
 				v-model="inputValue"
 				id="registration-input"
 				placeholder=" "
-				:class="{ 'error': haveError }"
+				:class="{
+					'error': haveError,
+					[variant]: true
+				}"
 			>
 			<label for="registration-input">
-				{{ label }}
+				{{ labelText }}
 			</label>
 		</div>
 		<span
@@ -23,71 +26,70 @@
 	</div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 
 import {
-	defineComponent, computed, toRefs, PropType,
+	computed, toRefs, PropType, defineProps, defineEmits,
 } from 'vue';
 
 import { CustomError } from '@/types/ui';
 
-export default defineComponent({
-	emits: [
-		'updateValue',
-	],
-	name: 'UiTextInput',
-	props: {
-		labelText: {
-			type: String,
-			required: false,
-			default: '',
-		},
-		value: {
-			type: String,
-			required: true,
-		},
-		error: {
-			type: Object as PropType<CustomError>,
-			required: false,
-			default: undefined,
-		},
-		type: {
-			required: false,
-			type: String as PropType<'text' | 'password'>,
-			default: 'text',
-		},
+type InputVariants = 'searchField' | 'inputField';
 
+interface Emits {
+    (e: 'updateValue', data: string): void
+}
+
+const emit = defineEmits<Emits>();
+
+const props = defineProps({
+	labelText: {
+		type: String,
+		required: false,
+		default: '',
 	},
-	setup(props, { emit }) {
-		const {
-			value,
-			type,
-			error,
-			labelText,
-		} = toRefs(props);
-
-		const inputValue = computed({
-			get() {
-				return value.value;
-			},
-			set(newValue) {
-				emit('updateValue', newValue);
-			},
-		});
-		const errorMessageText = computed(() => (error.value ? error.value.errorText : ''));
-
-		const haveError = computed(() => (error.value ? error.value.haveError : false));
-
-		return {
-			label: labelText,
-			inputValue,
-			errorMessageText,
-			haveError,
-			inputType: type,
-
-		};
+	value: {
+		type: String,
+		required: true,
+	},
+	error: {
+		type: Object as PropType<CustomError>,
+		required: false,
+		default: undefined,
+	},
+	variant: {
+		type: String as PropType<InputVariants>,
+		required: false,
+		default: 'inputField',
+	},
+	type: {
+		required: false,
+		type: String as PropType<'text' | 'password'>,
+		default: 'text',
 	},
 });
+
+const {
+	value,
+	type,
+	error,
+	labelText,
+	variant,
+} = toRefs(props);
+
+const inputValue = computed({
+	get() {
+		return value.value;
+	},
+	set(newValue) {
+		emit('updateValue', newValue);
+	},
+});
+
+const errorMessageText = computed(() => error?.value?.errorText ?? '');
+
+const haveError = computed(() => error?.value?.haveError ?? false);
+
 </script>
 
 <style scoped lang="less">
@@ -109,6 +111,9 @@ export default defineComponent({
 		}
 
 		input:hover + label {
+			color: #99bdff;
+		}
+		input.searchField + label {
 			color: #99bdff;
 		}
 		input:not(:placeholder-shown) + label {
@@ -135,6 +140,9 @@ export default defineComponent({
 			border: 1px solid #99bdff;
 		}
 		&:not(:placeholder-shown) {
+			border: 1px solid #99bdff;
+		}
+		&.searchField {
 			border: 1px solid #99bdff;
 		}
 		&:focus {

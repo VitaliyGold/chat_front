@@ -33,7 +33,7 @@ import { defineComponent, PropType } from 'vue';
 import { User } from '@/types/users';
 import useProfile from '@/store/profile';
 
-import UserItem from '@/components/SharedUi/UserItem.vue';
+import UserItem from '@/components/SharedUi/UserItem/UserItem.vue';
 import LoaderComponent from '@/components/UI/UiLoader.vue';
 
 export default defineComponent({

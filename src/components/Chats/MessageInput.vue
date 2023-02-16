@@ -146,8 +146,7 @@ export default defineComponent({
 		const createChat = async () => {
 			const tempId = addTempMessage();
 
-
-			const chatMembers = [...props.members.map(member => member.userId), profileStore.userProfile.userId];
+			const chatMembers = [...props.members.map((member) => member.userId), profileStore.userProfile.userId];
 
 			const chatData = {
 				members: chatMembers,

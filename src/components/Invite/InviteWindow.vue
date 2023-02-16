@@ -3,6 +3,7 @@
 		<ui-text-input
 			:value="searchValue"
 			label-text="Поиск по имени"
+			variant="searchField"
 			@update-value="searchFunc"
 		/>
 	</div>
