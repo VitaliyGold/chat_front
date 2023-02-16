@@ -12,12 +12,24 @@
             :error="nameError"
             @updateValue="(value: string) => changeField('name', value)"
         />
-        <ui-button
-            type="submit"
-            :full-width="true"
+        <button-container
+            direction="column"
         >
-            Далее
-        </ui-button>
+            <ui-button
+                type="submit"
+                :full-width="true"
+            >
+                Далее
+            </ui-button>
+            <ui-button
+                type="button"
+                variant="outlined"
+                :full-width="true"
+                @click="toLoginPage"
+            >
+                У меня уже есть id
+            </ui-button>
+        </button-container>
     </form>
 </template>
 
@@ -25,12 +37,13 @@
 import { toRefs, computed, defineEmits, defineProps, ref } from 'vue';
 import { useVuelidate } from '@vuelidate/core';
 import { required, minLength, helpers } from '@vuelidate/validators';
+import { useRouter } from 'vue-router';
 
 import AuthController from '@/api/auth';
 
 import UiTextInput from '@/components/UI/UiTextInput.vue';
 import UiButton from '@/components/UI/UiButton.vue';
-
+import ButtonContainer from '@/components/UI/ButtonContainer.vue';
 
 type FieldsType = 'login' | 'name';
 
@@ -66,10 +79,11 @@ const props = defineProps({
 
 const emit = defineEmits<Emits>();
 
+const router = useRouter();
+
 const { login, name } = toRefs(props);
 
 const isUniqueLogin = ref<boolean>(true);
-
 
 
 const v$ = useVuelidate(validationRules, { login, name });
@@ -127,6 +141,10 @@ const nameError = computed(() => {
     : 
     undefined;
 });
+
+const toLoginPage = () => {
+    router.push('/login');
+};
 
 const changeField = (field: FieldsType, value: string) => {
     v$.value[field].$reset();

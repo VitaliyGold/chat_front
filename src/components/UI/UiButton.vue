@@ -29,7 +29,7 @@ export default defineComponent({
 	emits: ['click'],
 	props: {
 		type: {
-			type: String as PropType<'submit' | 'button'>,
+			type: String as PropType<'submit' | 'button' | 'reset'>,
 			required: false,
 			default: 'button',
 		},
@@ -74,6 +74,10 @@ export default defineComponent({
 
 <style scoped lang="less">
 
+@blue-color: #005bff;
+@blue-dark-color: darken(@blue-color, 20%);
+@blue-light-color: lighten(@blue-color, 20%);
+
 .btn {
     cursor: pointer;
     padding: 6px 8px;
@@ -84,16 +88,32 @@ export default defineComponent({
         height: 34px;
     }
     &.blue {
-        background-color: #005bff;
+        background-color: @blue-color;
         color: #f2f5f9;
         font-weight: 700;
         &:hover {
-            background-color: #0050e0;
+            background-color: @blue-dark-color;
         }
         &:disabled {
-            background-color: #99bdff;
+            background-color: @blue-light-color;
         }
     }
+    &.outlined {
+        border: 1px solid @blue-color;
+        color: @blue-color;
+        background-color: transparent;
+        &:hover {
+            border-color: @blue-light-color;
+            color: @blue-light-color;
+            background-color: transparent;
+        }
+        &:disabled {
+            border-color: #99bdff;
+            color: #99bdff;
+            background-color: transparent;
+        }
+    }
+
     &.full-width {
         width: 100%;
     }
