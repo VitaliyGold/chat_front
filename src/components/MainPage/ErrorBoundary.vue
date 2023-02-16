@@ -23,6 +23,8 @@ export default defineComponent({
 				case 'auth_error':
 					router.push('login');
 					break;
+				default:
+					console.log(error.message);
 				}
 			} catch (e) {
 				console.dir(error);
@@ -32,7 +34,7 @@ export default defineComponent({
 
 		emitter.on('error', (e) => processingError(e as AppError));
 
-		onErrorCaptured((error, vm, info) => {
+		onErrorCaptured((error) => {
 			const appError = error as AppError;
 			processingError(appError);
 
@@ -44,7 +46,9 @@ export default defineComponent({
 		};
 	},
 	errorCaptured(err, vm, info) {
-		console.error(222);
+		console.error(err);
+		console.log(vm);
+		console.log(info);
 		return false;
 	},
 });

@@ -3,14 +3,16 @@
 		<message-text-area-component
 			:message-text="messageValue"
 			@change-value="changeMessageValue"
+			@submit="submitInput"
 		/>
-		<div>
-			<button-component
-				:btn-text="'Отправить'"
-				:type="'medium'"
-				@click="submitInput"
-			/>
-		</div>
+		<button-container>
+			<ui-button
+				size="medium"
+				type="submit"
+			>
+				Отправить
+			</ui-button>
+		</button-container>
 	</div>
 </template>
 
@@ -28,8 +30,9 @@ import useChats from '@/store/chats';
 import { CreateNewMessage, MessageDto } from '@/types/message';
 import { CreateChatResponse, ChatMember } from '@/types/chats';
 
-import Button from '@/components/UI/ButtonComponent.vue';
+import UiButton from '@/components/UI/UiButton.vue';
 import { ChatWindow } from '@/types/window';
+import ButtonContainer from '../UI/ButtonContainer.vue';
 import MessageTextArea from './MessageTextArea.vue';
 
 export default defineComponent({
@@ -143,8 +146,11 @@ export default defineComponent({
 		const createChat = async () => {
 			const tempId = addTempMessage();
 
+
+			const chatMembers = [...props.members.map(member => member.userId), profileStore.userProfile.userId];
+
 			const chatData = {
-				members: props.members,
+				members: chatMembers,
 				chatType: 1,
 				startMessage: messageValue.value,
 			};
@@ -180,8 +186,9 @@ export default defineComponent({
 		};
 	},
 	components: {
-		'button-component': Button,
+		'ui-button': UiButton,
 		'message-text-area-component': MessageTextArea,
+		'button-container': ButtonContainer,
 	},
 
 });

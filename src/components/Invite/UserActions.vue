@@ -2,33 +2,43 @@
 	<div
 		class="user-actions"
 	>
-		<button
+		<ui-button
+			size="small"
+			type="button"
+			variant="outlined"
 			class="btn"
 			v-if="haveChat"
 			@click="openChat"
 		>
 			В чат
-		</button>
-		<button
+		</ui-button>
+		<ui-button
 			class="btn"
 			@click="createChat"
+			size="small"
+			type="button"
+			variant="outlined"
 			v-else
 		>
 			Создать чат
-		</button>
+		</ui-button>
 	</div>
 </template>
 
 <script lang='ts'>
 import { defineComponent, PropType } from 'vue';
+import { v4 as uuidv4 } from 'uuid';
 
 import useWindows from '@/store/windows';
 import { ChatID } from '@/types/chats';
 
-import { v4 as uuidv4 } from 'uuid';
+import UiButton from '../UI/UiButton.vue';
 
 export default defineComponent({
 	name: 'UserActions',
+	components: {
+		'ui-button': UiButton,
+	},
 	props: {
 		haveChat: {
 			type: Boolean,

@@ -23,7 +23,7 @@ import emitter from '@/utils/emitter';
 import ActionDisplay from '@/components/MainPage/ActionDisplay.vue';
 import ActionPanel from '@/components/ActionPanel/ActionPanel.vue';
 import MenuBtn from '@/components/Menu/MenuBtn.vue';
-import LoaderComponent from '@/components/UI/LoaderComponent.vue';
+import LoaderComponent from '@/components/UI/UiLoader.vue';
 
 export default defineComponent({
 	components: {

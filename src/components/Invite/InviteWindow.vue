@@ -1,9 +1,9 @@
 <template>
 	<div class="window-header">
-		<text-field
-			v-model="searchValue"
+		<ui-text-input
+			:value="searchValue"
 			label-text="Поиск по имени"
-			@update:model-value="searchFunc"
+			@update-value="searchFunc"
 		/>
 	</div>
 	<user-list
@@ -20,12 +20,12 @@ import UserList from '@/components/Invite/UserList.vue';
 import { debounce } from '@/utils/helpers';
 import { User } from '@/types/users';
 import usersController from '@/api/users';
-import TextField from '@/components/UI/TextField.vue';
+import UiTextInput from '@/components/UI/UiTextInput.vue';
 
 export default defineComponent({
 	name: 'InviteWindow',
 	components: {
-		'text-field': TextField,
+		'ui-text-input': UiTextInput,
 		'user-list': UserList,
 	},
 	setup() {

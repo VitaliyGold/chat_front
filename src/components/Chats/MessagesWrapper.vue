@@ -18,7 +18,7 @@ import { defineComponent, PropType } from 'vue';
 
 import { MessageList, TempMessageList } from '@/types/message';
 
-import LoaderComponent from '@/components/UI/LoaderComponent.vue';
+import LoaderComponent from '@/components/UI/UiLoader.vue';
 import MessagesList from '@/components/Chats/MessageList.vue';
 
 export default defineComponent({
