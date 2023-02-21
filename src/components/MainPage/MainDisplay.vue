@@ -17,7 +17,7 @@ import { defineComponent, onMounted, ref } from 'vue';
 import useProfile from '@/store/profile';
 import ProfileController from '@/api/profile';
 import WebSocketConnect from '@/sockets';
-import { getJwtToken } from '@/utils/jwt';
+import { getJwtToken, getUserId } from '@/utils/jwt';
 import emitter from '@/utils/emitter';
 
 import ActionDisplay from '@/components/MainPage/ActionDisplay.vue';
@@ -43,7 +43,13 @@ export default defineComponent({
 
 		const getProfile = async () => {
 			try {
-				const userProfile = await ProfileController.getProfile();
+				const userId = getUserId();
+
+				if (!userId) {
+					throw new Error('Ошибка в типах');
+				}
+
+				const userProfile = await ProfileController.getProfile(userId);
 				profileStore.fillUserProfile(userProfile);
 				const token = getJwtToken();
 				if (token) {

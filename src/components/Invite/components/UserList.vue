@@ -21,7 +21,6 @@
 			:user-info="user"
 			:have-chat="user.haveChat"
 			:chat-id="user.chatId"
-			:is-profile="false"
 		/>
 	</ul>
 </template>
@@ -33,8 +32,8 @@ import { defineComponent, PropType } from 'vue';
 import { User } from '@/types/users';
 import useProfile from '@/store/profile';
 
-import UserItem from '@/components/SharedUi/UserItem/UserItem.vue';
 import LoaderComponent from '@/components/UI/UiLoader.vue';
+import UserItem from './UserItem/UserItem.vue';
 
 export default defineComponent({
 	name: 'UserList',
@@ -69,7 +68,7 @@ export default defineComponent({
     padding: 5px;
     margin-top: 10px;
     display: grid;
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: repeat(2, auto);
     row-gap: 10px;
     column-gap: 20px;
 }

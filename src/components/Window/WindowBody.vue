@@ -8,8 +8,5 @@
 </script>
 
 <style scoped lang="less">
-    .window-body {
-        padding: 8px;
-    }
 
 </style>

@@ -1,48 +1,24 @@
 <template>
-	<div
-		class="settings-window"
-	>
-		<div class="profile_data">
-			<user-item-component
-				:user-info="userProfile"
-				:is-profile="true"
-				v-if="userProfile"
-			/>
-			<p
-				v-else
-			>
-				Пользователь не загрузился
-			</p>
-		</div>
-		<settings-list-component />
-	</div>
+	<profile-component
+		:user-id="userProfile.userId"
+		:is-own-profile="true"
+		:profile-data="userProfile"
+	/>
+	<settings-list />
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import useProfile from '@/store/profile';
-import { defineComponent } from 'vue';
 
-import UserItem from '@/components/SharedUi/UserItem/UserItem.vue';
-import SettingsList from './SettingsList.vue';
+import ProfileComponent from '@/components/Profile/ProfileComponent.vue';
+import SettingsList from './components/SettingsList.vue';
 
-export default defineComponent({
-	name: 'SettingsWindow',
-	components: {
-		'user-item-component': UserItem,
-		'settings-list-component': SettingsList,
-	},
-	setup() {
-		const profileStore = useProfile();
+const profileStore = useProfile();
 
-		return {
-			userProfile: profileStore.userProfile,
-		};
-	},
-});
+const { userProfile } = profileStore;
+
 </script>
 
-<style>
-    .settings-window {
-        padding: 5px 10px;
-    }
+<style scoped lang="less">
+
 </style>

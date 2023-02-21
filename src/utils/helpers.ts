@@ -19,11 +19,13 @@ export function getInviteWindow(): InviteWindow {
 		hide: true,
 		type: 'invite',
 		windowId: 'invite',
-		name: 'Создать чат',
+		name: 'Найти контакт',
+		windowMode: 'invite',
+		selectedUserId: '',
 	};
 }
 
-export function getChatWindow({ chatId = '', isNewChat, members } : ChatWindowConfig): ChatWindow {
+export function getChatWindow({ chatId = '', isNewChat, memberNames } : ChatWindowConfig): ChatWindow {
 	return {
 		hide: true,
 		type: 'chat',
@@ -31,7 +33,7 @@ export function getChatWindow({ chatId = '', isNewChat, members } : ChatWindowCo
 		windowId: chatId,
 		chatId: isNewChat ? '' : chatId,
 		isNewChat,
-		members,
+		memberNames,
 		name: 'Чат',
 	};
 }

@@ -15,7 +15,7 @@ export function removeJwtToken() {
 }
 
 export function getUserId() {
-	localStorage.get('user_id');
+	return localStorage.getItem('user_id');
 }
 
 export function removeUserId() {

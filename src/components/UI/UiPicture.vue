@@ -5,6 +5,7 @@
 		}"
 	>
 		<img
+			class="picture"
 			:src="pictureSrc"
 		>
 	</div>
@@ -12,7 +13,7 @@
 <script setup lang="ts">
 import { PropType, defineProps, toRefs } from 'vue';
 
-type PictureSize = 'small_avatar';
+type PictureSize = 'small_avatar' | 'profile_background';
 
 const props = defineProps({
 	pictureSize: {
@@ -33,3 +34,20 @@ const {
 } = toRefs(props);
 
 </script>
+
+<style scoped lang="less">
+	.picture {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.small_avatar {
+		width: 50px;
+    	height: 50px;
+	}
+	.profile_background {
+		width: 100%;
+		height: 100%;
+	}
+
+</style>

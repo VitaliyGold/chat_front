@@ -22,7 +22,7 @@ import { useRouter } from 'vue-router';
 import { SettingsType } from '@/types/settings';
 import AuthController from '@/api/auth';
 import { removeJwtToken, removeUserId } from '@/utils/jwt';
-import { settingsListData } from './consts';
+import { settingsListData } from '../consts';
 
 import SettingsItem from './SettingsItem.vue';
 
@@ -68,7 +68,7 @@ export default defineComponent({
 
 <style scoped lang="less">
     ul {
-        border: 1px solid black;
+
         margin-top: 20px;
         border-radius: 4px;
     }

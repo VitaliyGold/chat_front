@@ -28,18 +28,14 @@ export default defineComponent({
         display: flex;
         align-items: center;
         cursor: pointer;
+        height: 50px;
+        padding: 0 10px;
         p {
             font-size: 16px;
         }
         &:hover {
-            background-color: gray;
-            p {
-                color: white;
-            }
-            .material-design-icon > .material-design-icon__svg {
-                fill: white;
-            }
-        }
+		    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+	    }
     }
 
 </style>

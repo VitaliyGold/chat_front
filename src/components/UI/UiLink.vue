@@ -1,37 +1,33 @@
 <template>
 	<router-link
-		:to="to"
+		:to="link"
 		class="link"
-		:class="customClass"
 		active-class="link-active"
 	>
 		<slot />
 	</router-link>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 
-import { PropType, defineComponent } from 'vue';
+import { defineProps, toRef } from 'vue';
 
-export default defineComponent({
-	name: 'UiLink',
-	props: {
-		link: {
-			type: String as PropType<string>,
-			required: true,
-		},
-		addClass: {
-			type: String as PropType<string>,
-			required: false,
-			default: '',
-		},
-	},
-	setup(props) {
-		return {
-			to: props.link,
-			customClass: props.addClass,
-		};
+const props = defineProps({
+	link: {
+		type: String,
+		required: true,
 	},
 });
 
+const link = toRef(props, 'link');
+
 </script>
+<style scoped lang="less">
+	.link {
+		color: #005bff;
+		text-decoration: none;
+		&:hover {
+			color: #0050e0;
+		}
+	}
+</style>

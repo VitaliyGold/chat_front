@@ -1,11 +1,8 @@
 <template>
-	<div
-		class="user-actions"
-	>
+	<div>
 		<ui-button
 			size="small"
 			type="button"
-			variant="outlined"
 			class="btn"
 			v-if="haveChat"
 			@click="openChat"
@@ -32,7 +29,7 @@ import { v4 as uuidv4 } from 'uuid';
 import useWindows from '@/store/windows';
 import { ChatID } from '@/types/chats';
 
-import UiButton from '../../UI/UiButton.vue';
+import UiButton from '@/components/UI/UiButton.vue';
 
 export default defineComponent({
 	name: 'UserActions',
@@ -40,14 +37,18 @@ export default defineComponent({
 		'ui-button': UiButton,
 	},
 	props: {
+		isProfile: {
+			type: Boolean,
+			required: false,
+			default: false,
+		},
 		haveChat: {
 			type: Boolean,
 			required: true,
 		},
 		chatId: {
-			type: String as PropType<ChatID>,
-			required: false,
-			default: null,
+			type: null as unknown as PropType<string | null>,
+			required: true,
 		},
 		userName: {
 			type: String,
@@ -61,7 +62,7 @@ export default defineComponent({
 	setup(props) {
 		const windowStore = useWindows();
 
-		const members = [{ userId: props.userId, name: props.userName }];
+		const memberNames = [{ userId: props.userId, name: props.userName }];
 
 		const createChat = (): void => {
 			const temporalWindowId = uuidv4();
@@ -69,7 +70,7 @@ export default defineComponent({
 			windowStore.addWindow('chat', {
 				isNewChat: true,
 				chatId: temporalWindowId,
-				members,
+				memberNames,
 			});
 		};
 
@@ -81,7 +82,7 @@ export default defineComponent({
 			windowStore.addWindow('chat', {
 				chatId: props.chatId,
 				isNewChat: false,
-				members,
+				memberNames,
 			});
 		};
 

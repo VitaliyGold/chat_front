@@ -1,6 +1,7 @@
 import { ChatMember } from './chats';
 
-export type WindowsTypes = 'chat' | 'settings' | 'invite'
+export type WindowsTypes = 'chat' | 'settings' | 'invite';
+
 export interface BaseWindow {
     hide: boolean,
     type: WindowsTypes,
@@ -15,15 +16,17 @@ export interface SettingsWindow extends BaseWindow {
 }
 
 export interface InviteWindow extends BaseWindow {
-    name: 'Создать чат',
+    name: 'Найти контакт',
     type: 'invite',
-    windowId: 'invite'
+    windowId: 'invite',
+    windowMode: 'invite' | 'profile',
+    selectedUserId: string
 }
 
 export interface ChatWindow extends BaseWindow {
     isNewChat: boolean,
     chatId: string,
-    members: ChatMember[]
+    memberNames: ChatMember[]
 }
 
 export type WindowObject = ChatWindow | SettingsWindow | InviteWindow;
@@ -32,6 +35,6 @@ export type WindowsList = Record<string, WindowObject>;
 
 export interface ChatWindowConfig {
     chatId: string,
-    members: ChatMember[],
+    memberNames: ChatMember[],
     isNewChat: boolean
 }

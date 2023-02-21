@@ -38,6 +38,7 @@ const {
             font-weight: 600;
         }
         .description {
+			margin-top: 4px;
             font-size: 12px;
             color: gray;
         }
