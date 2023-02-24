@@ -65,7 +65,7 @@ export default defineComponent({
 
 			if (!needRequest || props.window.isNewChat) {
 				const chatName = props.window.isNewChat
-					? props.window.members[0].name
+					? props.window.memberNames[0].name
 					:					chatsStore.chatsList[props.window.chatId].members[0].name;
 
 				windowStore.$patch((state) => {
@@ -104,7 +104,7 @@ export default defineComponent({
 		});
 
 		return {
-			members: props.window.members,
+			members: props.window.memberNames,
 			windowId: props.window.windowId,
 			userId,
 			loadingChat,

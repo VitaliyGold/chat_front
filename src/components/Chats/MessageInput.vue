@@ -9,6 +9,7 @@
 			<ui-button
 				size="medium"
 				type="submit"
+				add-class="mt-1"
 			>
 				Отправить
 			</ui-button>

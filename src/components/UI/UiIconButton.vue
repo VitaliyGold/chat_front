@@ -1,7 +1,7 @@
 <template>
 	<button
 		class="icon-button"
-		:class="btnType"
+		:class="{ btnType, addClass }"
 		@click="clickFunction"
 	>
 		<component :is="componentIcon" />
@@ -10,8 +10,10 @@
 
 <script setup lang="ts">
 import {
-	ref, defineProps, PropType, markRaw, defineEmits, StyleValue,
+	ref, defineProps, PropType, markRaw, defineEmits, toRefs,
 } from 'vue';
+
+import { ButtonEmits } from '@/types/ui';
 
 import CloseIcon from 'vue-material-design-icons/Close.vue';
 import ArrowCollapse from 'vue-material-design-icons/ArrowCollapse.vue';
@@ -41,7 +43,17 @@ const props = defineProps({
 		required: false,
 		default: '',
 	},
+    addClass: {
+        type: String,
+        required: false,
+        default: ''
+    }
 });
+
+const {
+    addClass,
+    btnType
+} = toRefs(props);
 
 const componentIcon = ref<null | object>(null);
 

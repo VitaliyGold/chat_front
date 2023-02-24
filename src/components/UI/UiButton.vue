@@ -5,7 +5,8 @@
 			[variant]: true,
 			[color]: true,
 			[size]: true,
-			'full-width': fullWidth
+			'full-width': fullWidth,
+			addClass
 		}"
 		:type="type"
 		:disabled="disabled"
@@ -15,8 +16,9 @@
 	</button>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue';
+<script setup lang="ts">
+import { defineProps, PropType, defineEmits, toRefs } from 'vue';
+
 
 type BtnVariants = 'contained' | 'outlined' | 'text';
 
@@ -24,51 +26,64 @@ type Colors = 'blue' | 'transparent' | 'white';
 
 type Size = 'big' | 'medium' | 'small';
 
-export default defineComponent({
-	name: 'UiButton',
-	emits: ['click'],
-	props: {
-		type: {
-			type: String as PropType<'submit' | 'button' | 'reset'>,
-			required: false,
-			default: 'button',
-		},
-		variant: {
-			type: String as PropType<BtnVariants>,
-			required: false,
-			default: 'contained',
-		},
-		color: {
-			type: String as PropType<Colors>,
-			required: false,
-			default: 'blue',
-		},
-		size: {
-			type: String as PropType<Size>,
-			required: false,
-			default: 'medium',
-		},
-		disabled: {
-			type: Boolean,
-			required: false,
-			default: false,
-		},
-		fullWidth: {
-			type: Boolean,
-			required: false,
-			default: false,
-		},
-	},
-	setup(_, { emit }) {
-		const clickFunction = () => {
-			emit('click');
-		};
+interface Emits {
+    (e: 'click'): void
+}
 
-		return {
-			clickFunction,
-		};
+const props = defineProps({
+	type: {
+		type: String as PropType<'submit' | 'button' | 'reset'>,
+		required: false,
+		default: 'button',
 	},
+	variant: {
+		type: String as PropType<BtnVariants>,
+		required: false,
+		default: 'contained',
+	},
+	color: {
+		type: String as PropType<Colors>,
+		required: false,
+		default: 'blue',
+	},
+	size: {
+		type: String as PropType<Size>,
+		required: false,
+		default: 'medium',
+	},
+	disabled: {
+		type: Boolean,
+		required: false,
+		default: false,
+	},
+	fullWidth: {
+		type: Boolean,
+		required: false,
+		default: false,
+	},
+	addClass: {
+		type: String,
+		required: false,
+		default: ''
+	}
 });
+
+const {
+	type,
+	variant,
+	color,
+	size,
+	disabled,
+	fullWidth,
+	addClass
+} = toRefs(props);
+
+const emit = defineEmits<Emits>();
+
+
+const clickFunction = () => {
+	emit('click');
+};
 
 </script>
 
