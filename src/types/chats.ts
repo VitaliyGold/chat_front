@@ -1,10 +1,6 @@
 import { CreateChatMessage } from './message';
 
-export interface CreateChatInfoDto {
-    members: Array<string>,
-    chatType: 1 | 2 | 3,
-    startMessage: string
-}
+export type CreateTempChatConfig = Omit<ChatDto, 'chatId'>
 
 export interface ChatMember {
     name: string,

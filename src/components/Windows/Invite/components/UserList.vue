@@ -30,9 +30,9 @@
 import { defineComponent, PropType } from 'vue';
 
 import { User } from '@/types/users';
+import LoaderComponent from '@/components/UI/UiLoader.vue';
 import useProfile from '@/store/profile';
 
-import LoaderComponent from '@/components/UI/UiLoader.vue';
 import UserItem from './UserItem/UserItem.vue';
 
 export default defineComponent({

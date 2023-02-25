@@ -17,8 +17,9 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, PropType, defineEmits, toRefs } from 'vue';
-
+import {
+	defineProps, PropType, defineEmits, toRefs,
+} from 'vue';
 
 type BtnVariants = 'contained' | 'outlined' | 'text';
 
@@ -64,8 +65,8 @@ const props = defineProps({
 	addClass: {
 		type: String,
 		required: false,
-		default: ''
-	}
+		default: '',
+	},
 });
 
 const {
@@ -75,11 +76,10 @@ const {
 	size,
 	disabled,
 	fullWidth,
-	addClass
+	addClass,
 } = toRefs(props);
 
 const emit = defineEmits<Emits>();
-
 
 const clickFunction = () => {
 	emit('click');

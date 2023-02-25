@@ -22,76 +22,90 @@
 	</div>
 </template>
 
-<script lang='ts'>
-import { defineComponent, PropType } from 'vue';
+<script setup lang='ts'>
+import { PropType, defineProps, toRefs } from 'vue';
 import { v4 as uuidv4 } from 'uuid';
 
 import useWindows from '@/store/windows';
-import { ChatID } from '@/types/chats';
+import useChats from '@/store/chats';
+import useOwnProfile from '@/store/ownProfile';
+import { getChatModel } from '@/utils/createChat';
+import { getUserId } from '@/utils/jwt';
 
 import UiButton from '@/components/UI/UiButton.vue';
 
-export default defineComponent({
-	name: 'UserActions',
-	components: {
-		'ui-button': UiButton,
+const props = defineProps({
+	isProfile: {
+		type: Boolean,
+		required: false,
+		default: false,
 	},
-	props: {
-		isProfile: {
-			type: Boolean,
-			required: false,
-			default: false,
-		},
-		haveChat: {
-			type: Boolean,
-			required: true,
-		},
-		chatId: {
-			type: null as unknown as PropType<string | null>,
-			required: true,
-		},
-		userName: {
-			type: String,
-			required: true,
-		},
-		userId: {
-			type: String,
-			required: true,
-		},
+	haveChat: {
+		type: Boolean,
+		required: true,
 	},
-	setup(props) {
-		const windowStore = useWindows();
-
-		const memberNames = [{ userId: props.userId, name: props.userName }];
-
-		const createChat = (): void => {
-			const temporalWindowId = uuidv4();
-
-			windowStore.addWindow('chat', {
-				isNewChat: true,
-				chatId: temporalWindowId,
-				memberNames,
-			});
-		};
-
-		const openChat = (): void => {
-			if (!props.chatId) {
-				return;
-			}
-
-			windowStore.addWindow('chat', {
-				chatId: props.chatId,
-				isNewChat: false,
-				memberNames,
-			});
-		};
-
-		return {
-			createChat,
-			openChat,
-		};
+	chatId: {
+		type: null as unknown as PropType<string | null>,
+		required: true,
+	},
+	userName: {
+		type: String,
+		required: true,
+	},
+	userId: {
+		type: String,
+		required: true,
 	},
 });
+
+const {
+	isProfile,
+	haveChat,
+	chatId,
+	userName,
+	userId,
+} = toRefs(props);
+
+const windowStore = useWindows();
+const chatStore = useChats();
+const ownProfileStore = useOwnProfile();
+
+const members = [{ userId: props.userId, name: props.userName }];
+
+const createChat = (): void => {
+	const temporalWindowId = uuidv4();
+
+	const ownerId = getUserId() ?? '';
+	const ownerName = ownProfileStore.ownProfile.name;
+
+	const tempChat = getChatModel({
+		members,
+		ownerId,
+		ownerName,
+		chatType: 1,
+		chatId: temporalWindowId,
+	});
+
+	chatStore.addChat(tempChat);
+
+	windowStore.addWindow('chat', {
+		isNewChat: true,
+		chatId: temporalWindowId,
+		name: userName.value,
+	});
+};
+
+const openChat = (): void => {
+	if (!props.chatId) {
+		return;
+	}
+
+	windowStore.addWindow('chat', {
+		chatId: props.chatId,
+		isNewChat: false,
+		name: userName.value,
+	});
+};
 
 </script>
 

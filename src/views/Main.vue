@@ -8,8 +8,8 @@
 
 import { defineComponent } from 'vue';
 
-import MainDisplay from '@/components/MainPage/MainDisplay.vue';
-import ErrorBoundary from '@/components/MainPage/ErrorBoundary.vue';
+import MainDisplay from '@/components/MainLayout/MainDisplay.vue';
+import ErrorBoundary from '@/components/MainLayout/ErrorBoundary.vue';
 
 export default defineComponent({
 	name: 'MainPage',

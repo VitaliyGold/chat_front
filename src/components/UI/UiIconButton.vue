@@ -13,8 +13,6 @@ import {
 	ref, defineProps, PropType, markRaw, defineEmits, toRefs,
 } from 'vue';
 
-import { ButtonEmits } from '@/types/ui';
-
 import CloseIcon from 'vue-material-design-icons/Close.vue';
 import ArrowCollapse from 'vue-material-design-icons/ArrowCollapse.vue';
 import ArrowLeft from 'vue-material-design-icons/ArrowLeft.vue';
@@ -43,16 +41,16 @@ const props = defineProps({
 		required: false,
 		default: '',
 	},
-    addClass: {
-        type: String,
-        required: false,
-        default: ''
-    }
+	addClass: {
+		type: String,
+		required: false,
+		default: '',
+	},
 });
 
 const {
-    addClass,
-    btnType
+	addClass,
+	btnType,
 } = toRefs(props);
 
 const componentIcon = ref<null | object>(null);

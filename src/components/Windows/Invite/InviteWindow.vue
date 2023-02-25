@@ -1,11 +1,5 @@
 <template>
 	<div class="invite-window">
-		<ui-icon-button
-			v-if="inviteWindow.windowMode === 'profile'"
-			icon-type="arrowLeft"
-			@click="goToInvite"
-			:btn-type="'btn-back'"
-		/>
 		<div
 			v-if="inviteWindow.windowMode === 'invite'"
 			class="invite-container"
@@ -43,7 +37,6 @@ import useUsers from '@/store/users';
 import UiTextInput from '@/components/UI/UiTextInput.vue';
 import UserList from '@/components/Invite/components/UserList.vue';
 import ProfileComponent from '@/components/Profile/ProfileComponent.vue';
-import UiIconButton from '@/components/UI/UiIconButton.vue';
 
 const windowStore = useWindows();
 const usersStore = useUsers();

@@ -14,16 +14,17 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
 
-import useProfile from '@/store/profile';
+import useOwnProfile from '@/store/ownProfile';
 import ProfileController from '@/api/profile';
 import WebSocketConnect from '@/sockets';
 import { getJwtToken, getUserId } from '@/utils/jwt';
 import emitter from '@/utils/emitter';
+import { getProfileModel } from '@/components/Windows/Profile/helpers';
 
-import ActionDisplay from '@/components/MainPage/ActionDisplay.vue';
 import ActionPanel from '@/components/ActionPanel/ActionPanel.vue';
 import MenuBtn from '@/components/Menu/MenuBtn.vue';
 import LoaderComponent from '@/components/UI/UiLoader.vue';
+import ActionDisplay from '@/components/MainPage/ActionDisplay.vue';
 
 export default defineComponent({
 	components: {
@@ -33,33 +34,30 @@ export default defineComponent({
 		'loader-component': LoaderComponent,
 	},
 	setup() {
-		const profileStore = useProfile();
+		const ownProfileStore = useOwnProfile();
 		const loading = ref(true);
 
-		const socketConnect = (token: string) => {
-			const socket = new WebSocketConnect(token);
-			socket.connect();
+		const socketConnect = () => {
+			const token = getJwtToken();
+			if (token) {
+				const socket = new WebSocketConnect(token);
+				socket.connect();
+			} else {
+				emitter.emit('error', {
+					message: 'socket_connect_error',
+				});
+			}
 		};
 
 		const getProfile = async () => {
 			try {
 				const userId = getUserId();
-
 				if (!userId) {
 					throw new Error('Ошибка в типах');
 				}
 
 				const userProfile = await ProfileController.getProfile(userId);
-				profileStore.fillUserProfile(userProfile);
-				const token = getJwtToken();
-				if (token) {
-					socketConnect(token);
-				} else {
-					emitter.emit('error', {
-						message: 'socket_connect_error',
-					});
-					return;
-				}
+				ownProfileStore.fillOwnProfile(getProfileModel(userProfile, true));
 				loading.value = false;
 			} catch (e) {
 				emitter.emit('error', {
@@ -70,6 +68,7 @@ export default defineComponent({
 
 		onMounted(() => {
 			getProfile();
+			socketConnect();
 		});
 
 		return {

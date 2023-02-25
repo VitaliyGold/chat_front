@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import {
 	WindowsList, WindowsTypes, ChatWindow, ChatWindowConfig, InviteWindow,
 } from '@/types/window';
-import { getChatWindow, getInviteWindow, getSettingsWindow } from '@/utils/helpers';
+import { getChatWindow, getInviteWindow, getSettingsWindow } from '@/utils/createWindows';
 import useMessages from './messages';
 
 const useWindows = defineStore('windows', {
@@ -56,24 +56,10 @@ const useWindows = defineStore('windows', {
 				} as ChatWindow;
 			}
 		},
-		// пока такой тип, позже нужно будет подумать над чем-то более надежным, мб каким-то дженериком
-		// пока используем только для invite
-		changeModeWindow(windowId: string, mode: 'invite' | 'profile', selectedUserId = '') {
-			if (!this.windowsList[windowId]) {
-				console.log('хуета');
-			}
-			switch (this.windowsList[windowId].type) {
-			case 'invite':
-				const window = this.windowsList[windowId] as InviteWindow;
-				this.windowsList[windowId] = {
-					...window,
-					selectedUserId,
-					windowMode: mode,
-				};
-				break;
-			default:
-				console.log('опять хуета');
-			}
+	},
+	getters: {
+		getCountWindows(state) {
+			return Object.keys(state.windowsList).length;
 		},
 	},
 });

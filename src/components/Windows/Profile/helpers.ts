@@ -1,6 +1,6 @@
 import { Profile } from '@/types/profile';
 
-export const getProfileModel = (data: Profile | null): Profile => {
+export const getProfileModel = (data: Profile | null, isOwnProfile = false): Profile => {
 	if (!data) {
 		return {
 			name: '',
@@ -10,6 +10,7 @@ export const getProfileModel = (data: Profile | null): Profile => {
 			userDescription: '',
 			chatId: '',
 			haveChat: false,
+			isOwnProfile,
 		};
 	}
 	return {
@@ -20,5 +21,6 @@ export const getProfileModel = (data: Profile | null): Profile => {
 		userDescription: data.userDescription ?? '',
 		chatId: data.chatId ?? null,
 		haveChat: data.haveChat ?? false,
+		isOwnProfile,
 	};
 };

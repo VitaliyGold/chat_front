@@ -33,9 +33,9 @@ import { useRouter } from 'vue-router';
 import { setJwtToken, setUserId } from '@/utils/jwt';
 import AuthController from '@/api/auth';
 
+import UiLoader from '@/components/UI/UiLoader.vue';
 import LoginStep from '@/components/Registration/components/LoginStep.vue';
 import PasswordStep from '@/components/Registration/components/PasswordStep.vue';
-import UiLoader from '@/components/UI/UiLoader.vue';
 
 interface RegistrationFormData {
 	login: string,
